@@ -38,7 +38,7 @@
 												<td>{{$file->firstName}}</td>
 												<td>{{$file->created_at}}</td>
 												
-												<td><a href="{{ url('/fileGenerate') }}" ><i class="fa fa-cogs" aria-hidden="true" title="Generate"></i></a></td>	
+												<td><a href="{{ url('/generateHtmlPreview') }}" ><i class="fa fa-cogs" aria-hidden="true" title="Generate"></i></a></td>	
 												<td><a href="{{ url('/download') }}"><i class="material-icons"  title="PDF" >picture_as_pdf</i> </a></td>	
 												<td><a href="" ><i class="fa fa-file-word-o " aria-hidden="true" title="Word"></i></a></td>
 												

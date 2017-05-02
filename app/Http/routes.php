@@ -23,14 +23,19 @@
 */
 
 	$this->post('/auth', 'API\AuthController@checkUser');
-	$this->get('/importExcel', 'ImportExcelData@importExcel');
-	$this->get('/backgroundWork', 'ImportExcelData@backgroundWork');
-	$this->get('/flipbook', 'FlipbookData@flipbook');
+	$this->get('/importExcel', 'ImportExcelDataController@importExcel');
+	$this->get('/backgroundWork', 'ImportExcelDataController@backgroundWork');
+	$this->get('/flipbook', 'FlipbookDataController@flipbook');
+
+
 
 
 	//$this->get('/auth', 'API\AuthController@checkUser');
 
 Route::group(['middleware' => ['web']], function () {
+	
+		$this->get('/generateHtmlPreview', 'HtmlPreviewPdfController@generateHtmlPreview');
+
 	
 	$this->get('/', 'Auth\AuthController@showLoginForm')->middleware('revalidate');
 

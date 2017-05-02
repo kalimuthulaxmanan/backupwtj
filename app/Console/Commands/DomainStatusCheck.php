@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;
 use DB;
-use App\Http\Controllers\ImportExcelData;
+use App\Http\Controllers\ImportExcelDataController;
 
 
 class DomainStatusCheck extends Command
@@ -39,8 +39,8 @@ class DomainStatusCheck extends Command
 		{
 				
 			
-				$ImportExcelData=new ImportExcelData();
-			$ImportExcelData->importExcel($value->file_path.'/'.$value->file_name);
+				$ImportExcelData=new ImportExcelDataController();
+			$ImportExcelData->importExcel($value);
 			
 				DB::table('files_directory')->where('id', $value->id)->update(array('status' => 1));
 		

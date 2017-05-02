@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Artisan;
 use PHPExcel_IOFactory;
-class FlipbookData extends BaseController
+class FlipbookDataController extends BaseController
 {
 	
 	public function flipbook()

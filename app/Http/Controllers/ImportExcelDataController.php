@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Artisan;
 use PHPExcel_IOFactory;
-class ImportExcelData extends BaseController
+class ImportExcelDataController extends BaseController
 {
 	public $Filevalue;
 	public function backgroundWork()
@@ -256,8 +256,8 @@ class ImportExcelData extends BaseController
 			'no_of_persons',
 			'start_date',
 			'end_date',
-			'place',
 			'country',
+			'place',
 			'signature', 
 			'logo',
 			'front_page_image', 
@@ -284,7 +284,17 @@ class ImportExcelData extends BaseController
 		$data=[];
 		foreach($fillableRow as $key=>$value)
 		{
-			$data[$array[$key]]=$row[$value];
+			if($array[$key]=="start_date" || $array[$key]=="end_date")
+			{
+			  $data[$array[$key]]=date('Y-m-d',strtotime($row[$value]));
+			}
+			else
+			{
+				$data[$array[$key]]=$row[$value];
+			}
+								//'event_date'=>date('Y-m-d',strtotime($value)),
+
+			
 			
 		}
 		return $data;

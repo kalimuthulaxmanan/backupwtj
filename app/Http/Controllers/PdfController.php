@@ -26,7 +26,8 @@ class PdfController extends Controller
  
 public function __construct()
     {
-	
+	//$sessionData=Session::all();
+	//	dd($sessionData);
 		   if(session('is_login')==false)
 			{
 				Redirect::to('login')->send();
