@@ -320,7 +320,7 @@ class ImportExcelDataController extends BaseController
 	{
 		//dd($value);
 		$this->Filevalue=$value;
-		 $path='uploads/'.$value->file_name; //die;
+		 $path=$value->upload_path.'/'.$value->file_name; //die;
 
     //  $path='/home/kenhike/Downloads/Antonio Compton.xlsx';
 //dd($path);

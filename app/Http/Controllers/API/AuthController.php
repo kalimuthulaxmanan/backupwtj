@@ -9,47 +9,91 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use DB;
+use ZipArchive;
+use File;
 class AuthController extends Controller
 { 
+	
+	public function validationInput($data)
+	{
+		$error=[];
+		$param=['client_name','api_token','file_name'];
+		
+		foreach($param as $key=>$value)
+		{
+			if(!isset($data[$value]))
+			{
+				$error['error'][]="Request must contain ".$value." param";
+				$error['status']=406;
+
+			}
+			
+			
+		}
+		//dd($error);
+		
+		if(!empty($error))
+		{
+			return $error;
+			
+		}
+		
+		foreach($param as $key=>$value)
+		{
+			if($data[$value]=="")
+			{
+				$error['error'][]="".$value." can not be empty";
+				$error['status']=422;
+
+			}
+			
+		}
+		
+		return $error;
+		
+		
+	}
  
 
 	
 	public function checkUser(Request $request)
 	{
-		$v=Validator::make($request->all(), [
-            'client_name' => 'required',
-            'api_token' => 'required|min:6',
-			'file_name' => 'required|min:6',
-			'image_path' => 'required|min:6',
-        ]);
-		if ($v->fails())
-		{	
-			return response()->json($v->errors());
-
-		}
-
+		
 
 		//$this->saveRegister($request->all());
 		$data=$request->all();
 		
-		if($data['api_token']!=env('API_TOKEN'))
+		$validationError=$this->validationInput($data);
+		
+		if(!empty($validationError))
 		{
-			return response()->json(['Error'=>'Invalid user.'],300);
+			return response()->json(['msg'=>$validationError['error']],$validationError['status']);
 
 		}
 		
-		 $user = DB::table('users')->where('email', $data['client_name'])->first();
-		$this->recurse_copy($data['image_path'],'uploads/');
 		
-		//dd($user);
+		
+		if($data['api_token']!=env('API_TOKEN'))
+		{
+			return response()->json(['msg'=>'Invalid Auth token.'],401);
+
+		}
+		
+		$staticPath="/home/kenhike/Downloads/test/".$data['file_name'];
+		
+		
+		
+		 $user = DB::table('users')->where('email', $data['client_name'])->first();
+		$returnDirData=$this->recurse_copy($staticPath,'uploads/');
+		
 		if($user)
 		{
-			$data=['user_id'=>$user->id,'file_path'=>$data['image_path'],'file_name'=>$data['file_name'],'status'=>0,'created_at'=>date('Y-m-d H:i:s')];
+			$data=['user_id'=>$user->id,'upload_path'=>$returnDirData['upload_path'],'file_name'=>$returnDirData['file_name'],'status'=>0,'created_at'=>date('Y-m-d H:i:s')];
 			$status=DB::table('files_directory')->insert($data);
 			
 			 $this->callBackgroundUrl();
 			
-			return response()->json(['Success'=>'User has imported successfully'],200);
+			return response()->json(['Success'=>'Data submission success'],200);
 		}
 		else
 		{
@@ -57,12 +101,12 @@ class AuthController extends Controller
 			
 			$dataImport=['email'=>$data['client_name'],'role_id'=>2];
 			$status=DB::table('users')->insertGetId($dataImport);
-			$filedata=['user_id'=>$status,'file_path'=>$data['image_path'],'file_name'=>$data['file_name'],'status'=>0,'created_at'=>date('Y-m-d H:i:s')];
+			$filedata=['user_id'=>$status,'upload_path'=>$returnDirData['upload_path'],'file_name'=>$returnDirData['file_name'],'status'=>0,'created_at'=>date('Y-m-d H:i:s')];
 
 			$status=DB::table('files_directory')->insert($filedata);
 			
 			 $this->callBackgroundUrl();
-			return response()->json(['Success'=>'User has imported successfully'],200);
+			return response()->json(['Success'=>'Data submission success'],200);
 		}
 		
 
@@ -85,19 +129,75 @@ class AuthController extends Controller
 	}
 	
 	function recurse_copy($src,$dst) { 
-        $dir = opendir($src); 
+		
+		$directoryName=strtotime(date('Y-m-d H:i:s'));
+		
+		$result = File::makeDirectory($dst.$directoryName, 0777, true);
+		
+		$destinationDir=$dst.$directoryName;
+
+		
+		$zip = new ZipArchive;
+if ($zip->open($src) === TRUE) {
+    $returnDatas=$zip->extractTo($destinationDir);
+	//dd($returnDatas);
+    $zip->close();
+} else {
+    echo "Fail to open";
+}
+		$SourcesFile="";
+        $dir = opendir($destinationDir); 
         @mkdir($dst); 
         while(false !== ( $file = readdir($dir)) ) { 
-            if (( $file != '.' ) && ( $file != '..' )) { 
-                if ( is_dir($src . '/' . $file) ) { 
-                    recurse_copy($src . '/' . $file,$dst . '/' . $file); 
-                } 
-                else { 
-                    copy($src . '/' . $file,$dst . '/' . $file); 
-                } 
-            } 
+				if (( $file != '.' ) && ( $file != '..' )) { 
+					if ( is_dir($destinationDir . '/' . $file) ) { 
+						 $dir1 = opendir($destinationDir . '/' . $file); 
+									while(false !== ( $file1 = readdir($dir1)) ) { 
+								if (( $file1 != '.' ) && ( $file1 != '..' )) { 
+									if ( is_dir($destinationDir . '/' . $file. '/' . $file1) ) { 
+										//recurse_copy($src . '/' . $file,$dst . '/' . $file); 
+									} 
+									else { 
+										
+												//$extension = end(explode('.', $file1));
+												$tmp = explode('.', $file1);
+												$extension = end($tmp);
+												//dd($file1);
+												if($extension == 'cvs' || $extension == 'xls' || $extension == 'xlsx')
+												{
+												  $SourcesFile=$file1;
+												}
+
+										//copy($src . '/' . $file,$dst . '/' . $file); 
+									} 
+								} 
+
+							 } 
+						
+						$destinationDir=$destinationDir . '/' . $file;
+					} 
+					else { 
+						                       												//$extension = end(explode('.', $file1));
+												$tmp = explode('.', $file);
+												$extension = end($tmp);
+												//dd($file1);
+
+												if($extension == 'cvs' || $extension == 'xls' || $extension == 'xlsx')
+												{
+												  $SourcesFile=$file;
+												}
+					} 
+				} 
+				else
+				{
+
+					
+				
+			}
         } 
-        closedir($dir); 
+		
+		return ['upload_path'=>$destinationDir,'file_name'=>$SourcesFile];
+        //closedir($dir); 
     }
 	
 	

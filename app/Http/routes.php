@@ -22,7 +22,7 @@
 |
 */
 
-	$this->post('/auth', 'API\AuthController@checkUser');
+	$this->post('/send_client_info', 'API\AuthController@checkUser');
 	$this->get('/importExcel', 'ImportExcelDataController@importExcel');
 	$this->get('/backgroundWork', 'ImportExcelDataController@backgroundWork');
 	$this->get('/flipbook', 'FlipbookDataController@flipbook');
