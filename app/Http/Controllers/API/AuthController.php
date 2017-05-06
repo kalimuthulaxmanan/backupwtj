@@ -14,10 +14,10 @@ use File;
 class AuthController extends Controller
 { 
 	
-	public function validationInput($data)
+	public function validationInput($data,$param)
 	{
 		$error=[];
-		$param=['client_name','api_token','file_name'];
+
 		
 		foreach($param as $key=>$value)
 		{
@@ -53,17 +53,13 @@ class AuthController extends Controller
 		
 		
 	}
- 
-
 	
-	public function checkUser(Request $request)
+	public function client_list(Request $request)
 	{
-		
+				$data=$request->all();
+		$param=['api_token'];
 
-		//$this->saveRegister($request->all());
-		$data=$request->all();
-		
-		$validationError=$this->validationInput($data);
+		$validationError=$this->validationInput($data,$param);
 		
 		if(!empty($validationError))
 		{
@@ -79,7 +75,39 @@ class AuthController extends Controller
 
 		}
 		
-		$staticPath="/home/kenhike/Downloads/test/".$data['file_name'];
+			$pdflist = DB::table('users')->select('email as client_name','files_directory.upload_file as file_name','files_directory.created_at')
+				->join('files_directory', 'files_directory.user_id', '=','users.id')->orderBy('files_directory.created_at', 'desc')->limit(5)->get(); 
+
+			return ['list'=>$pdflist];
+	}
+ 
+
+	
+	public function checkUser(Request $request)
+	{
+		
+
+		//$this->saveRegister($request->all());
+		$data=$request->all();
+		$param=['client_name','api_token','file_name'];
+
+		$validationError=$this->validationInput($data,$param);
+		
+		if(!empty($validationError))
+		{
+			return response()->json(['msg'=>$validationError['error']],$validationError['status']);
+
+		}
+		
+		
+		
+		if($data['api_token']!=env('API_TOKEN'))
+		{
+			return response()->json(['msg'=>'Invalid Auth token.'],401);
+
+		}
+		
+		$staticPath=env('TEMP_UPLOAD_PATH').$data['file_name'];
 		
 		
 		
@@ -88,7 +116,7 @@ class AuthController extends Controller
 		
 		if($user)
 		{
-			$data=['user_id'=>$user->id,'upload_path'=>$returnDirData['upload_path'],'file_name'=>$returnDirData['file_name'],'status'=>0,'created_at'=>date('Y-m-d H:i:s')];
+			$data=['user_id'=>$user->id,'upload_path'=>$returnDirData['upload_path'],'upload_file'=>$data['file_name'],'file_name'=>$returnDirData['file_name'],'status'=>0,'created_at'=>date('Y-m-d H:i:s')];
 			$status=DB::table('files_directory')->insert($data);
 			
 			 $this->callBackgroundUrl();
@@ -101,7 +129,7 @@ class AuthController extends Controller
 			
 			$dataImport=['email'=>$data['client_name'],'role_id'=>2];
 			$status=DB::table('users')->insertGetId($dataImport);
-			$filedata=['user_id'=>$status,'upload_path'=>$returnDirData['upload_path'],'file_name'=>$returnDirData['file_name'],'status'=>0,'created_at'=>date('Y-m-d H:i:s')];
+			$filedata=['user_id'=>$status,'upload_path'=>$returnDirData['upload_path'],'upload_file'=>$data['file_name'],'file_name'=>$returnDirData['file_name'],'status'=>0,'created_at'=>date('Y-m-d H:i:s')];
 
 			$status=DB::table('files_directory')->insert($filedata);
 			
@@ -143,7 +171,7 @@ if ($zip->open($src) === TRUE) {
 	//dd($returnDatas);
     $zip->close();
 } else {
-    echo "Fail to open";
+    //echo "Fail to open";
 }
 		$SourcesFile="";
         $dir = opendir($destinationDir); 
@@ -196,7 +224,7 @@ if ($zip->open($src) === TRUE) {
 			}
         } 
 		
-		return ['upload_path'=>$destinationDir,'file_name'=>$SourcesFile];
+		return ['upload_path'=>$destinationDir.'/','file_name'=>$SourcesFile];
         //closedir($dir); 
     }
 	

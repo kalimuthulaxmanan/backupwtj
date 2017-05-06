@@ -12,8 +12,9 @@ use PHPExcel_IOFactory;
 class FlipbookDataController extends BaseController
 {
 	
-	public function flipbook()
+	public function flipbook($id)
 	{
+		//echo "hai";
 		return view('flip.flipbook');
 	}
 	

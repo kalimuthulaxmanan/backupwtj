@@ -5,11 +5,11 @@
 <!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
 <head>
-<script type="text/javascript" src="extras/jquery.min.1.7.js"></script>
-<script type="text/javascript" src="extras/jquery-ui-1.8.20.custom.min.js"></script>
-<script type="text/javascript" src="extras/jquery.mousewheel.min.js"></script>
-<script type="text/javascript" src="extras/modernizr.2.5.3.min.js"></script>
-<script type="text/javascript" src="lib/hash.js"></script>
+<script type="text/javascript" src="{{ url('extras/jquery.min.1.7.js')}}"></script>
+<script type="text/javascript" src="{{ url('extras/jquery-ui-1.8.20.custom.min.js')}}"></script>
+<script type="text/javascript" src="{{ url('extras/jquery.mousewheel.min.js')}}"></script>
+<script type="text/javascript" src="{{ url('extras/modernizr.2.5.3.min.js')}}"></script>
+<script type="text/javascript" src="{{ url('lib/hash.js')}}"></script>
 </head>
 <body>
 
@@ -272,12 +272,14 @@ function loadApp() {
 $('#canvas').css({visibility: 'hidden'});
 
 // Load turn.js
+	
+	
 
 yepnope({
 	test : Modernizr.csstransforms,
-	yep: ['lib/turn.min.js'],
-	nope: ['lib/turn.html4.min.js', 'css/jquery.ui.html4.css', 'css/steve-jobs-html4.css'],
-	both: ['js/steve-jobs.js', 'css/jquery.ui.css', 'css/steve-jobs.css'],
+	yep: ['{{ url("lib/turn.min.js")}}'],
+	nope: ['{{ url("lib/turn.html4.min.js")}}', '{{ url("css/jquery.ui.html4.css")}}', '{{ url("css/steve-jobs-html4.css")}}'],
+	both: ['{{ url("js/steve-jobs.js")}}', '{{ url("css/jquery.ui.css")}}', '{{ url("css/steve-jobs.css")}}'],
 	complete: loadApp
 });
 

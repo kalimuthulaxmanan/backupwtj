@@ -23,9 +23,10 @@
 */
 
 	$this->post('/send_client_info', 'API\AuthController@checkUser');
+$this->post('/client_list', 'API\AuthController@client_list');
 	$this->get('/importExcel', 'ImportExcelDataController@importExcel');
 	$this->get('/backgroundWork', 'ImportExcelDataController@backgroundWork');
-	$this->get('/flipbook', 'FlipbookDataController@flipbook');
+	$this->get('/flipbook/{id}', 'FlipbookDataController@flipbook');
 
 
 
