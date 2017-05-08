@@ -27,15 +27,16 @@
 	$this->get('/importExcel', 'ImportExcelDataController@importExcel');
 	$this->get('/backgroundWork', 'ImportExcelDataController@backgroundWork');
 	$this->get('/flipbook/{id}', 'FlipbookDataController@flipbook');
-
+    $this->post('/flipbook/fetchFlipData', 'FlipbookDataController@fetchFlipData');
 
 
 	$this->post('/galleryupload/{id}', 'PdfController@galleryupload');
 	//$this->get('/auth', 'API\AuthController@checkUser');
 
-Route::group(['middleware' => ['web']], function () {
-	
-		$this->get('/generateHtmlPreview/{id}', 'HtmlPreviewPdfController@generateHtmlPreview');
+	Route::group(['middleware' => ['web']], function () {
+
+
+	$this->get('/generateHtmlPreview/{id}', 'HtmlPreviewPdfController@generateHtmlPreview');
 	$this->get('/generatePdfPreview/{id}', 'PdfPreviewPdfController@generatePdfPreview');
 
 	
