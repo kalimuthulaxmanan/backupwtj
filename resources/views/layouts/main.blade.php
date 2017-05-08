@@ -46,8 +46,8 @@
 
             <div class="sidebar-wrapper">
                 <ul class="nav collapsible">
-                    <li class="active">
-                        <a href="{{url('/dashboard')}}">
+                    <li >
+                        <a class="collapsible-header" href="{{url('/dashboard')}}">
                             <i class="material-icons">dashboard</i>
                             <p>Dashboard</p>
                         </a>
@@ -212,3 +212,22 @@
 
 
 </html>
+<script>
+    jQuery(function($) {
+     var path = window.location.href; // because the 'href' property of the DOM element is the absolute path
+     $('ul a').each(function() {
+      if (this.href === path) {
+       $(this).addClass('active');
+	  var $parent = $(this).parent();
+		  
+       if (!$parent.hasClass('active')) {
+           $parent.addClass('active');
+       }  
+      
+	  }
+     });
+    });
+	
+
+
+</script>
