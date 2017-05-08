@@ -14,7 +14,8 @@ function updateDepth(book, newPage) {
 
 function loadPage(page) {
 
-	$.ajax({url: 'pages/page' + page + '.html'}).
+	$.ajax({type: "POST",
+  data: {page : page,userId:$("#userId").val()},url:'fetchFlipData'}).
 		done(function(pageHtml) {
 			$('.sj-book .p' + page).html(pageHtml.replace('samples/steve-jobs/', ''));
 		});

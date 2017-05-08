@@ -12,6 +12,8 @@
 <script type="text/javascript" src="{{ url('lib/hash.js')}}"></script>
 </head>
 <body>
+	
+	<input type="hidden" name="userId" id="userId" value="{{ $id }}" />
 
 <div id="canvas">
 	<div id="book-zoom">
