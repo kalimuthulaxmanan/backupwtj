@@ -23,19 +23,20 @@
 */
 
 	$this->post('/send_client_info', 'API\AuthController@checkUser');
-$this->post('/client_list', 'API\AuthController@client_list');
+	$this->post('/client_list', 'API\AuthController@client_list');
 	$this->get('/importExcel', 'ImportExcelDataController@importExcel');
 	$this->get('/backgroundWork', 'ImportExcelDataController@backgroundWork');
 	$this->get('/flipbook/{id}', 'FlipbookDataController@flipbook');
 
 
 
-
+	$this->post('/galleryupload/{id}', 'PdfController@galleryupload');
 	//$this->get('/auth', 'API\AuthController@checkUser');
 
 Route::group(['middleware' => ['web']], function () {
 	
-		$this->get('/generateHtmlPreview', 'HtmlPreviewPdfController@generateHtmlPreview');
+		$this->get('/generateHtmlPreview/{id}', 'HtmlPreviewPdfController@generateHtmlPreview');
+	$this->get('/generatePdfPreview/{id}', 'PdfPreviewPdfController@generatePdfPreview');
 
 	
 	$this->get('/', 'Auth\AuthController@showLoginForm')->middleware('revalidate');
@@ -94,5 +95,6 @@ Route::group(['middleware' => ['web']], function () {
 	$this->get('/fileview', 'PdfController@fileview');
 	$this->get('/download', 'PdfController@download');
 	$this->get('/listdelete/{id}','PdfController@listdelete');
+	$this->get('/changeimage/{id}/{image}', 'PdfController@changeimage');
 	//Route::get('download', 'TestController@download');
 });

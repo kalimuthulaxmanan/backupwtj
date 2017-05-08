@@ -1,40 +1,30 @@
 <!-- Section Start -->
+<style type="text/css">
+	.itinerary-image img{
+		width: 100%;
+		height: 160px;
+	}
+</style>
 <section class="">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="col-md-8 col-sm-8 col-xs-12">
-			<h1 class="left-title">Your itinerary</h1> 
-			<p><b>April 08: &nbsp;  &nbsp;  &nbsp; Arrival in Champagne And Paris</b></p><br />
-			<p>April 08:  &nbsp;  &nbsp;  &nbsp; Luxury minivan with driver at disposal<br /><br />
-				 &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp; Full day excursion with a guide in Champagne<br /><br />
-				 &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp; Champagne Moet & Chandon</p> <br /> 
-			<p><b>April 08: &nbsp;  &nbsp;  &nbsp; Departure Day</b></p>    
+			<h1 class="left-title">{{$data->title}}</h1> 
+			@foreach($data->itineraryData as $itineraryValue)	
+			<p><b>{{$itineraryValue->event_date}}: &nbsp;  &nbsp;  &nbsp; {{$itineraryValue->description}}</b></p><br />
+			@endforeach	
+			
 			</div>
 			<div class="col-md-4 col-sm-4 col-xs-12 padd-0">
-				<div class="change-image" style="margin-right:-1px;">
-					<img src="images/fileimage/images/image7.jpg" alt="" title="" />
+				@foreach($data->itineraryImages as $itineraryImage)
+				<div class="itinerary-image change-image" style="margin-right:0px;">
+					<img  src="{{url('/')}}/{{$data->upload_path}}<?php echo trim($itineraryImage->image); ?>" id ="image{{$itineraryImage->id}}" alt="" title="" />
 					<div class="img-overlay">
-						<a href="">Change Image</a>
+						<a onclick="newFunction('image{{$itineraryImage->id}}',{{$itineraryImage->id}})" data-toggle="modal" data-target="#myModal" href="">Change Image</a>
 					</div>
 				</div>
-				<div class="change-image" style="margin-right:-1px;">
-					<img src="images/fileimage/images/image8.jpg" alt="" title="" />
-					<div class="img-overlay">
-						<a href="">Change Image</a>
-					</div>
-				</div>
-				<div class="change-image" style="margin-right:-1px;">
-					<img src="images/fileimage/images/image9.jpg" alt="" title="" />
-					<div class="img-overlay">
-						<a href="">Change Image</a>
-					</div>
-				</div>
-				<div class="change-image" style="margin-right:-1px;">
-					<img src="images/fileimage/images/image10.jpg" alt="" title="" />
-					<div class="img-overlay">
-						<a href="">Change Image</a>
-					</div>
-				</div>
+				@endforeach
+				
 			</div>
 		</div>               
 	</div>    
@@ -43,7 +33,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="col-md-3 col-sm-3 col-xs-12 footer-height">
-					<img class="footer-image" src="<?php echo $data->upload_path; ?><?php echo $data->logo; ?>" alt="" title="" />
+					<img class="footer-image" src="{{url('/')}}/<?php echo $data->upload_path; ?><?php echo trim($data->logo); ?>" alt="" title="" />
 				</div>
 				<!-- <div class="col-md-9 col-sm-9 col-xs-12 footer-height text-right">
 					<div class="footer-content">

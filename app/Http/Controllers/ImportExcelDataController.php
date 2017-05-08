@@ -78,9 +78,9 @@ class ImportExcelDataController extends BaseController
 					'file_id'=>$fileId->id,
 					'content_id'=>$contentId,
 				'name'=>$value,
-					'profile_image'=>$profileImage[$key],
+					'profile_image'=>trim($profileImage[$key]),
 					'place'=>$place[$key],
-					'logo'=>$logo[$key],'created_at'=>date('Y-m-d H:i:s')
+					'logo'=>trim($logo[$key]),'created_at'=>date('Y-m-d H:i:s')
 			];
 				$inserted=$this->insert('pdf_travel_agent',$array);
 			 }
@@ -229,7 +229,7 @@ class ImportExcelDataController extends BaseController
 			$imageData=explode("|||",$row[18]);
 			foreach($imageData as $key=>$value)
 			{
-				$imageData=["content_id"=>$content,"image"=>$value,'created_at'=>date('Y-m-d H:i:s')];
+				$imageData=["content_id"=>$content,"image"=>trim($value),'created_at'=>date('Y-m-d H:i:s')];
 				$this->insert('pdf_content_images',$imageData);
 			}
 
@@ -290,7 +290,7 @@ class ImportExcelDataController extends BaseController
 			}
 			else
 			{
-				$data[$array[$key]]=$row[$value];
+				$data[$array[$key]]=trim($row[$value]);
 			}
 								//'event_date'=>date('Y-m-d',strtotime($value)),
 

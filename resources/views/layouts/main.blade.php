@@ -20,7 +20,7 @@
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="{{ url('/assets/css/custom.css')}}" rel="stylesheet" />
 
-	<link rel="stylesheet" href="assets/css/custom-stylehtml.css" />
+	<link rel="stylesheet" href="{{ url('assets/css/custom-stylehtml.css')}}" />
 	<link href="https://fonts.googleapis.com/css?family=Quicksand:300" rel="stylesheet">  
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">

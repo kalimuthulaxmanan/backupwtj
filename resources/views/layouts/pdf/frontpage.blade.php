@@ -1,0 +1,19 @@
+<!-- Section Start -->
+    <div style="width: 100%;">
+		<img src="<?php echo $data->upload_path; ?><?php echo trim($data->front_page_image); ?>" alt="" title="" style="width: 100%;" />
+    </div>
+    <table style="height:120px;position:absolute;bottom:30px;">
+		<tr style="">
+            <td style="width:50%;vertical-align:bottom">
+                <img src="<?php echo $data->upload_path; ?><?php echo trim($data->logo); ?>" alt="" title="" style="width:200px;height:50px;" />
+            </td>
+            <td style="width:50%;text-align:right">
+                <h1 style="font-size: 70px;margin:0;"><?php echo $data->place; ?></h1>
+                <span><?php echo $data->start_date;?>/ <?php echo $data->end_date;?></span>
+            </td>
+		</tr>
+    </table>
+    <!-- Section End -->
+
+	
+<div style="page-break-after: always;"></div>

@@ -9,7 +9,7 @@
 				<div class="change-image">
 					<img src="images/fileimage/images/image15.jpg" alt="" title="" />
 					<div class="img-overlay">
-						<a href="">Change Image</a>
+						<a data-toggle="modal" data-target="#myModal" href="">Change Image</a>
 					</div>
 				</div>
 			</div>
@@ -41,7 +41,7 @@
 				<div class="change-image">
 					<img src="images/fileimage/images/image16.jpg" alt="" title="" />
 					<div class="img-overlay">
-						<a href="">Change Image</a>
+						<a data-toggle="modal" data-target="#myModal" href="">Change Image</a>
 					</div>
 				</div>
 			</div>

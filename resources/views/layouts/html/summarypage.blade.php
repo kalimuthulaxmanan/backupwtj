@@ -4,13 +4,13 @@
 		<div class="table-content pt-150">
 			<div class="table-header">
 				<p>  
-				Distinguished guests: Antonio Compton<br>
-				Agency: American Express - Boston (HQ)<br>
-				Agent: Cassandra Angus
+				Distinguished guests:{{$data->distinguished_guests}} <br>
+				Agency:{{$data->agency}}<br>
+				Agent: {{$data->agent}}
 				</p>
 				<h5>
-				Duration: 1 day / 0 nights<br>
-				Number of Persons: 2
+				Duration: {{$data->duration_day}} day / {{$data->duration_night}} nights<br>
+				Number of Persons:{{$data->no_of_persons}}
 				</h5>
 			</div>
 			<div class="table-body">
@@ -50,11 +50,11 @@
 			<div class="col-md-12">
 				<div class="col-md-6 col-sm-6 col-xs-12 footer-height">
 					<div class="footer-content left">
-						<p class="bold">Date of release: March 29,2017</p>
+						<p class="bold">Date of release: {{$data->date_of_release}}</p>
 					</div>                      
 				</div>
 				<div class="col-md-6 col-sm-6 col-xs-12 footer-height text-right">
-					<img class="footer-image right" src="<?php echo $data->upload_path; ?><?php echo $data->logo; ?>" alt="" title="" />
+					<img class="footer-image right" src="{{url('/')}}/<?php echo $data->upload_path; ?><?php echo trim($data->signature); ?>" alt="" title="" />
 				</div>
 			</div>               
 		</div>          		

@@ -1,32 +1,32 @@
 <!-- Section Start -->
-<section class="">
+<style>
+.pt-100{
+	padding-top: 100px;
+}
+img.travelagent{
+	width: 90px;
+	height:90px;
+}
+</style>
+<section class="pt-100">
+	
+	<?php foreach($data->travel_agent as $travelagent) { ?>
 	<div class="row">
-		<div class="col-md-12 mt-100">
+		<div class="col-md-12">
 			<div class="col-md-2 col-sm-2 col-xs-12">
-				<img src="images/fileimage/images/image19.jpg" alt="" title="" />
+				<img class="travelagent" src="{{ url('/') }}/<?php echo $data->upload_path;?>/<?php echo trim($travelagent->profile_image); ?>" alt="" title="" />
 			</div>
 			<div class="col-md-8 col-sm-8 col-xs-12">
-				<p><b>YOUR TRAVEL AGENT IN BOSTON</b><br />
-				Cassandra Angus<br />
-				American Express - Boston (HQ)<br />
-				<img src="images/fileimage/images/image2.jpg" style="height: 40px;width: 200px;" alt="" title="" />						
+				<p><b>YOUR TRAVEL AGENT IN <?php echo $travelagent->place; ?></b><br />
+				<?php echo $travelagent->name; ?><br />
+				
+				<img src="{{ url('/') }}/<?php echo $data->upload_path;?>/<?php echo trim($travelagent->logo); ?>" style="height: 40px;width: 200px;" alt="" title="" />						
 			</div>
 		</div>                
 	</div>
 	<br />
-	<div class="row">
-		<div class="col-md-12">
-			<div class="col-md-2 col-sm-2 col-xs-12">
-				<img src="images/fileimage/images/image20.jpg" alt="" title="" />
-			</div>
-			<div class="col-md-8 col-sm-8 col-xs-12">
-				<p><b>YOUR TRAVEL AGENT IN BOSTON</b><br />
-				Cassandra Angus<br />
-				American Express - Boston (HQ)<br />
-				<img src="images/fileimage/images/image21.jpg" style="height: 35px;width: 180px;padding-top:5px;" alt="" title="" />
-			</div>
-		</div>                
-	</div>    
+	<?php } ?>
+	
 	<!-- <footer class="pdf">    
 	  <div class="">
 		<div class="row">

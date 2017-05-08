@@ -13,9 +13,10 @@ use Redirect;
 use Validator;
 use DB;
 use View;
+use PDF;
 use StaticMap;
 
-class HtmlPreviewPdfController extends Controller
+class PdfPreviewPdfController extends Controller
 {
     /**
      * The task repository instance.
@@ -43,7 +44,7 @@ class HtmlPreviewPdfController extends Controller
 
     }
 	
-	public function generateHtmlPreview($id)
+	public function generatePdfPreview($id)
 	{
 		
 		$data = DB::table('files_directory')
@@ -51,9 +52,8 @@ class HtmlPreviewPdfController extends Controller
             ->join('pdf_common_fields', 'files_directory.id', '=', 'pdf_common_fields.file_id')
 			->join('pdf_templates', 'pdf_templates.id', '=', 'pdf_content.template_id')
             ->select('files_directory.*', 'pdf_common_fields.*', 'pdf_content.*', 'pdf_templates.name')
+			->where('files_directory.id',$id)
 			->orderby('pdf_content.content_order','asc')
-						->where('files_directory.id',$id)
-
             ->get();
 	
 		$appendData="";
@@ -65,20 +65,16 @@ class HtmlPreviewPdfController extends Controller
 				switch($value->name)
 				{
 					case "front_page":
-                        $frontImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get(); 
-                        $value->frontImages=  $frontImages;
-                     
+					
 						$appendData.=$this->loadTemplate('frontpage',$value);
-
 						$appendData.=$this->loadTemplate('emptypage',$value);	
 						$appendData.=$this->loadTemplate('summarypage',$value);	
-						
 					break;	
 
 					case "itinerary":
 						   $itineraryData=DB::table('pdf_itinenary')->where('content_id',$value->id)->select('event_date','description')->get();
 						   $value->itineraryData=$itineraryData;
-						   $itineraryImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get(); 
+						   $itineraryImages=DB::table('pdf_content_images')->where('content_id',$value->id)->select('image')->get(); 
 						   $value->itineraryImages= $itineraryImages;
 						   
 						   $appendData.=$this->loadTemplate('itinerary',$value);
@@ -87,7 +83,7 @@ class HtmlPreviewPdfController extends Controller
 					case "detail_itinerary":
 						    $detailitineraryDatas=DB::table('pdf_itinenary_details')->where('content_id',$value->id)->select('event_date','description')->get();
 						    $value->detailitineraryDatas=$detailitineraryDatas; 
-						    $detailitineraryImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get(); 
+						    $detailitineraryImages=DB::table('pdf_content_images')->where('content_id',$value->id)->select('image')->get(); 
 						    $value->detailitineraryImages=$detailitineraryImages;
 						
 						 	$appendData.=$this->loadTemplate('detailitinerary',$value);	
@@ -95,14 +91,14 @@ class HtmlPreviewPdfController extends Controller
 						    
 					break;	
 				    case "image_with_content":
-						   $contentImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get();
+						   $contentImages=DB::table('pdf_content_images')->where('content_id',$value->id)->select('image')->get();
 						   $value->contentImages= $contentImages;
 				
 						   $appendData.=$this->loadTemplate('titleleftimagecontentpage',$value);							
 					break;
 					case "map":
 						
-						   $Mapdetails=DB::table('pdf_map')->select('lat','lon')->get();	
+						 $Mapdetails=DB::table('pdf_map')->select('lat','lon')->get();	
                            $i=0;
                            foreach($Mapdetails as $detail)
 									{
@@ -112,7 +108,8 @@ class HtmlPreviewPdfController extends Controller
 									}
 		  			        $Mapimage= StaticMap::GoogleWithImg('31.520605,35.127777', ['markers' => $markers,'zoom'=>'8','with' =>'640', 'height' =>'640' ]); 
 			 	            $value->Mapimage=$Mapimage;
-							$appendData.=$this->loadTemplate('mapimage',$value);							
+	                   
+						$appendData.=$this->loadTemplate('mapimage',$value);							
 					break;	
 				    case "travel_agent":
 						    $travel_agent=DB::table('pdf_travel_agent')->where('content_id',$value->id)->select('name','profile_image','logo','place')->get();
@@ -121,7 +118,7 @@ class HtmlPreviewPdfController extends Controller
 						   
 					break;
 					case "full_image_page":
-						 $fullImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get();
+						 $fullImages=DB::table('pdf_content_images')->where('content_id',$value->id)->select('image')->get();
 						 $value->fullImages= $fullImages;
 				
 						$appendData.=$this->loadTemplate('fullimagepage',$value);							
@@ -148,20 +145,9 @@ class HtmlPreviewPdfController extends Controller
 			
 		}
 		
-		$galleries = DB::table('pdf_content_images')
-            ->join('pdf_content', 'pdf_content_images.content_id', '=', 'pdf_content.id')
-            ->join('files_directory', 'files_directory.id', '=', 'pdf_content.file_id')
-           // ->select('files_directory.*', 'pdf_common_fields.*', 'pdf_content.*', 'pdf_templates.name')
-			->groupBy('pdf_content_images.image')
-            ->get();
-		//dd($galleries);
-		
-	//	$galleries=DB::table('pdf_content_images')->groupBy('image')->get();
-
-        view()->share('galleries',$galleries);
-		
-		
-		return view('pdf.htmlview',['data'=>$appendData]);
+		return  PDF::loadView('pdf.pdfview',['data'=>$appendData])->stream();
+		//		return view ('pdf.pdfview',['data'=>$appendData]);
+		//return view('pdf.pdfview',['data'=>$appendData]);
 
 		
 		//dd($data);
@@ -173,7 +159,7 @@ class HtmlPreviewPdfController extends Controller
 	private function loadTemplate($template,$data)
 	{
 		
-		$returndata=view('layouts.html.'.$template,['data'=>$data])->render();
+		$returndata=view('layouts.pdf.'.$template,['data'=>$data])->render();
 		//dd($returndata);
 		return $returndata;
 		

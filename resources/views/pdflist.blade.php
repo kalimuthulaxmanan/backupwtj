@@ -38,11 +38,11 @@
 												<td>{{$file->firstName}}</td>
 												<td>{{$file->created_at}}</td>
 												
-												<td><a href="{{ url('/generateHtmlPreview') }}" ><i class="fa fa-cogs" aria-hidden="true" title="Generate"></i></a></td>	
-												<td><a href="{{ url('/download') }}"><i class="material-icons"  title="PDF" >picture_as_pdf</i> </a></td>	
+												<td><a href="{{ url('/generateHtmlPreview') }}/{{$file->id}}" ><i class="fa fa-cogs" aria-hidden="true" title="Generate"></i></a></td>	
+												<td><a href="{{ url('/generatePdfPreview') }}/{{$file->id}}"><i class="material-icons"  title="PDF" >picture_as_pdf</i> </a></td>	
 												<td><a href="" ><i class="fa fa-file-word-o " aria-hidden="true" title="Word"></i></a></td>
 												
-												<td><a href="{{ url('/flipbook') }}" ><i class="fa fa-book" aria-hidden="true" title="Flip Book" ></i></a></td>
+												<td><a href="{{ url('/flipbook') }}/{{$file->id}}" ><i class="fa fa-book" aria-hidden="true" title="Flip Book" ></i></a></td>
 												<td> <a href="{{ url('/listdelete') }}/<?php echo $file->id;?>"><i class="material-icons"  title="Delete" >delete</i></a></td>
                                              <!--   <td><a href="{{ url('/useredit') }}/<?php echo $file->id; ?>" alt="Edit" title="Edit"><i class="material-icons">mode_edit</i></a></td>
                                                 <td><a href="{{ url('/userdelete') }}/<?php echo $file->id; ?>" alt="Delete" title="Delete"><i class="material-icons">delete</i></a></td>-->

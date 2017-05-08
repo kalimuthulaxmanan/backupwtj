@@ -70,19 +70,22 @@ img{
 }
 .pdf-view .title{
 	padding: 0 15px;
-	margin-bottom: 50px;
+	margin-bottom: 30px;
 }
 .fullwidthimage img{
     width: 100%;
-    height: auto;
+    height: 720px;
 }
 .title-page{
-    background-color: #48464e !important;
+  /*  background-color: #48464e !important;*/
     height: 100vh !important;
 }
 .title-padd{
-	padding-top: 250px !important;
-	color: #fff;
+    height: 575px;
+    display: flex;
+    align-items: center;
+    margin: 0 !important;
+	color: #000;
 }
 .title-page-footer img{
 	right: 0;

@@ -729,7 +729,7 @@ h2.title {
 .navbar .navbar-nav > li > a.btn.btn-default.dropdown-toggle, .open >
 .navbar .navbar-nav > li > a.btn.btn-default.dropdown-toggle:focus, .open >
 .navbar .navbar-nav > li > a.btn.btn-default.dropdown-toggle:hover {
-  background-color: #999999;
+  background-color: #852196;
   color: #FFFFFF;
 }
 .btn:focus, .btn:active, .btn:hover, .btn.btn-default:focus, .btn.btn-default:active, .btn.btn-default:hover,
@@ -2794,24 +2794,26 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 .modal-content {
   box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
   border-radius: 6px;
-  border: none;
+  border: 1px solid transparent;
 }
 .modal-content .modal-header {
   border-bottom: none;
-  padding-top: 24px;
-  padding-right: 24px;
-  padding-bottom: 0;
-  padding-left: 24px;
+  background-color: #b28e3c;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 15px; 
+}
+.modal-content .modal-header h4{
+  font-weight: 500;
 }
 .modal-content .modal-body {
-  padding-top: 24px;
-  padding-right: 24px;
-  padding-bottom: 16px;
-  padding-left: 24px;
+      margin: 0 15px;
+    border: 1px solid #852196;
+    padding: 15px !important;
 }
 .modal-content .modal-footer {
   border-top: none;
-  padding: 7px;
+  padding: 15px !important;
 }
 .modal-content .modal-footer.text-center {
   text-align: center;
@@ -2843,7 +2845,9 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   margin-top: 100px;
 }
 .modal .modal-header .close {
-  color: #999999;
+  color: #ffffff;
+  font-size: 25px;
+  margin-top: 10px;
 }
 .modal .modal-header .close:hover, .modal .modal-header .close:focus {
   opacity: 1;
@@ -3539,6 +3543,7 @@ footer .btn {
   margin-top: 0;
   margin-bottom: 5px;
   padding: 0;
+  font-weight: 500;
 }
 .card .card-image {
   height: 60%;
@@ -3585,6 +3590,7 @@ footer .btn {
 .card .card-header .category {
   margin-bottom: 0;
   color: rgba(255, 255, 255, 0.62);
+  font-weight: 400;
 }
 .card .card-header.card-chart {
   padding: 0;
@@ -3803,13 +3809,13 @@ footer .btn {
 }
 
 .nav-tabs {
-  background: #9c27b0;
+  background: transparent;
   border: 0;
   border-radius: 3px;
   padding: 0 15px;
 }
 .nav-tabs > li > a {
-  color: #FFFFFF;
+  color: #852196;
   border: 0;
   margin: 0;
   border-radius: 3px;
@@ -3821,11 +3827,12 @@ footer .btn {
   background-color: transparent;
   border: 0;
 }
-.nav-tabs > li > a, .nav-tabs > li > a:hover, .nav-tabs > li > a:focus {
-  background-color: transparent;
-  border: 0 !important;
-  color: #FFFFFF !important;
-  font-weight: 500;
+.nav-tabs > li > a, .nav-tabs > li > a:hover, .nav-tabs > li > a:focus {    
+    background-color: transparent;
+    border: 1px solid #852196 !important;
+    color: #852196 !important;
+    font-weight: 500;
+    border-bottom: 0 !important;
 }
 .nav-tabs > li.disabled > a, .nav-tabs > li.disabled > a:hover {
   color: rgba(255, 255, 255, 0.5);
@@ -3834,10 +3841,10 @@ footer .btn {
   margin: -1px 5px 0 0;
 }
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-  background-color: rgba(255, 255, 255, 0.2);
+    background-color: #852196;
+    color: #ffffff !important;
   transition: background-color .1s .2s;
 }
-
 .ct-label {
   fill: rgba(0, 0, 0, 0.4);
   color: rgba(0, 0, 0, 0.4);

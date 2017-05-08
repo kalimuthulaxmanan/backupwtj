@@ -108,6 +108,42 @@ Converter::make('/var/www/html/map/resources/views/layout1.html')
     ->download('google.pdf');
 }
 	
+public function changeimage($id,$image)
+{
+
+	DB::table('pdf_content_images')
+                            ->where('id', $id)
+                            ->update(['image'=>$image]);
+
+
+ echo "sucessfully updated";
+
+}	
+
+public function galleryupload($id,Request $request)
+	{
+  	    $data=$request->all();
+        
+	    $FileTemp = $_FILES['image']['tmp_name'];
+	    $FileName = $_FILES['image']['name'];
+	    $FileType = $_FILES['image']['type'];
+	    $FilePath = base_path('public/uploads/').$FileName;
+	    $path='/'.config('app.name').'/public/uploads/'.$FileName;
+	    
+       
+	    DB::table('pdf_content_images')
+                            ->where('id', $id)
+                            ->update(['image'=>$FileName]);
+
+	move_uploaded_file($FileTemp, $FilePath);
+	
+
+  echo   "$('#'+x).attr('src','uploads/'.$FileName)";
+	
+
+
+	}
+	
 	
 	
 }
