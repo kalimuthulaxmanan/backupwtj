@@ -3,13 +3,13 @@
 		<?php foreach($data->travel_agent as $travelagent) { ?>
 		<tr style="">
             <td style="width:15%">
-                <img src="{{url('/')}}/<?php echo $data->upload_path;?>/<?php echo trim($travelagent->profile_image); ?>" alt="" title="" />
+                <img src="<?php echo url($data->upload_path);?>/<?php echo trim($travelagent->profile_image); ?>" alt="" title="" />
             </td>
             <td style="width:70%;">
 				<p><h1 style="margin:5px 0 !important;">YOUR TRAVEL AGENT IN <?php echo $travelagent->place; ?></h1>
 				<?php echo $travelagent->name; ?><br />
 				
-				<img src="{{url('/')}}/<?php echo $data->upload_path;?>/<?php echo trim($travelagent->logo); ?>" alt="" title="" />	<br /><br />			
+				<img src="<?php echo url($data->upload_path);?>/<?php echo trim($travelagent->logo); ?>" alt="" title="" />	<br /><br />			
             </td>
 		</tr>
 		<?php } ?>

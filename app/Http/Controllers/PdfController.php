@@ -102,10 +102,7 @@ return back();
 public function test()
 {
 
-
-Converter::make('/var/www/html/map/resources/views/layout1.html')
-    ->toPdf()
-    ->download('google.pdf');
+return view('test');
 }
 	
 public function changeimage($id,$image)
@@ -122,23 +119,28 @@ public function changeimage($id,$image)
 
 public function galleryupload($id,Request $request)
 	{
-  	    $data=$request->all();
-        
+		
+		
+
+  	   
+		$uploadpath=$request->input('uploadpath');
+		
 	    $FileTemp = $_FILES['image']['tmp_name'];
 	    $FileName = $_FILES['image']['name'];
 	    $FileType = $_FILES['image']['type'];
-	    $FilePath = base_path('public/uploads/').$FileName;
-	    $path='/'.config('app.name').'/public/uploads/'.$FileName;
-	    
+		
+		$FilePath = public_path($uploadpath).$FileName;
+	  
+	  
        
 	    DB::table('pdf_content_images')
                             ->where('id', $id)
                             ->update(['image'=>$FileName]);
 
-	move_uploaded_file($FileTemp, $FilePath);
+	    move_uploaded_file($FileTemp, $FilePath);
 	
 
-  echo   "$('#'+x).attr('src','uploads/'.$FileName)";
+
 	
 
 

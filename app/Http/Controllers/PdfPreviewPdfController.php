@@ -65,6 +65,8 @@ class PdfPreviewPdfController extends Controller
 				switch($value->name)
 				{
 					case "front_page":
+						$frontImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get(); 
+                        $value->frontImages=  $frontImages;
 					
 						$appendData.=$this->loadTemplate('frontpage',$value);
 						$appendData.=$this->loadTemplate('emptypage',$value);	

@@ -16,9 +16,9 @@
 									<!-- PDF view start -->
 
 									<a href=""> <button type="button"  class="btn btn-primary ">Word</button></a>
-									<a href="{{ url('/download') }}" target="_blank"> <button type="button" class="btn btn-primary ">PDF</button></a>	
-									<a href="" > <button type="button" class="btn btn-primary ">Flip Book</button></a>	
-
+									<a href="{{ url('/generatePdfPreview') }}/{{$fileid}}" target="_blank"> <button type="button" class="btn btn-primary ">PDF</button></a>	
+									<a href="{{ url('/flipbook') }}/{{$fileid}}" > <button type="button" class="btn btn-primary ">Flip Book</button></a>	
+                                    <input type="hidden" name="uploadpath" value="<?php echo $uploadpath; ?>"  id="uploadpath"/>
 									<div class="container">
 										
 										<?php echo $data; ?>
@@ -27,8 +27,8 @@
 									</div>
 
 									<a href="" > <button type="button" class="btn btn-primary ">Word</button></a>
-									<a href="{{ url('/download') }}" target="_blank"> <button type="button" class="btn btn-primary ">PDF</button></a>	
-									<a href="" > <button type="button" class="btn btn-primary ">Flip Book</button></a>		    
+									<a href="{{ url('/generatePdfPreview') }}/{{$fileid}}" target="_blank"> <button type="button" class="btn btn-primary ">PDF</button></a>	
+									<a href="{{ url('/flipbook') }}/{{$fileid}}" > <button type="button" class="btn btn-primary ">Flip Book</button></a>		    
 
 									<!-- PDF view end -->
 									
@@ -163,6 +163,7 @@
                     </div>
                     <div class="modal-footer">
                     <p id="meg"></p>
+						         <input type="hidden" name="uploadpath" value="<?php echo $uploadpath; ?>"  id="uploadpath"/>
                                 <input type="submit" name="submit" class="btn btn-default"  />
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
                     </div>
@@ -176,7 +177,7 @@
 
                         <input type="radio" id="{{$gallery->id}}" name="myRadio"/>
                         <label for="{{$gallery->id}}">
-                        <img id="imageid{{$gallery->id}}" src="{{$gallery->upload_path}}<?php echo trim($gallery->image); ?>" />
+						<img id="imageid{{$gallery->id}}" src="{{ url('/') }}/{{$gallery->upload_path}}<?php echo trim($gallery->image); ?>" />
                         </label>
                         @endforeach
                      <!--   <input type="radio" id="2" name="myRadio" />
@@ -202,7 +203,8 @@
                         <input type="hidden" name="radio" value="" id="fill"/><br>
                         <input type="hidden" name="radio" value="" id="fill2"/><br>
                         <input type="hidden" name="radio" value="" id="fill1"/>
-                    </div> 
+					  
+                       </div> 
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" onclick="changeimage()" data-dismiss="modal">Change</button>
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -235,7 +237,7 @@
     {   
         document.getElementById("fill").value=id;
         document.getElementById("fill2").value=imageid;
-
+      
     }
 
     function changeimage()
@@ -243,14 +245,16 @@
         var z=document.getElementById("fill2").value;
         var x=document.getElementById("fill").value;
         var y=document.getElementById("fill1").value;
+	   var baseurl="<?php echo url('/'); ?>";
+		
         $('#'+x).attr("src",y);  
-        var filename = y.split("/")[y.split("/").length-1];
+        var Imgname = y.split("/")[y.split("/").length-1];
         
          
         $.ajax({
                           type: 'get',
                           
-                          url : "changeimage/"+z+"/"+filename,
+                          url :baseurl+"/changeimage/"+z+"/"+Imgname,
                           
                         
    });
@@ -263,12 +267,17 @@
     var x=document.getElementById("fill").value;
     var z=document.getElementById("fill2").value;
     var f =document.getElementById("uploadfile").innerHTML;
-    var file_name="uploads/"+f;
-console.log(file_name);
+	var uploadpath=document.getElementById("uploadpath").value; 
+
+	var baseurl="<?php echo url('/'); ?>"; 
+	var file_name=baseurl+'/'+uploadpath+f;   
+	
+	   
+
  $.ajax({
                           type: 'post',
                           
-                          url : "galleryupload/"+z,
+                          url :baseurl+"/galleryupload/"+z,
 
                           data:form,
                           cache: false,

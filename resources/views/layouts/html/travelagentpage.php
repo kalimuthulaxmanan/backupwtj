@@ -14,13 +14,13 @@ img.travelagent{
 	<div class="row">
 		<div class="col-md-12">
 			<div class="col-md-2 col-sm-2 col-xs-12">
-				<img class="travelagent" src="{{ url('/') }}/<?php echo $data->upload_path;?>/<?php echo trim($travelagent->profile_image); ?>" alt="" title="" />
+				<img class="travelagent" src="<?php echo url($data->upload_path);?>/<?php echo trim($travelagent->profile_image); ?>" alt="" title="" />
 			</div>
 			<div class="col-md-8 col-sm-8 col-xs-12">
 				<p><b>YOUR TRAVEL AGENT IN <?php echo $travelagent->place; ?></b><br />
 				<?php echo $travelagent->name; ?><br />
 				
-				<img src="{{ url('/') }}/<?php echo $data->upload_path;?>/<?php echo trim($travelagent->logo); ?>" style="height: 40px;width: 200px;" alt="" title="" />						
+				<img src="<?php echo url ($data->upload_path);?>/<?php echo trim($travelagent->logo); ?>" style="height: 40px;width: 200px;" alt="" title="" />						
 			</div>
 		</div>                
 	</div>

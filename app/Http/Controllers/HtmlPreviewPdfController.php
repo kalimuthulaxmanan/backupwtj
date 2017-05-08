@@ -148,20 +148,35 @@ class HtmlPreviewPdfController extends Controller
 			
 		}
 		
-		$galleries = DB::table('pdf_content_images')
-            ->join('pdf_content', 'pdf_content_images.content_id', '=', 'pdf_content.id')
-            ->join('files_directory', 'files_directory.id', '=', 'pdf_content.file_id')
-           // ->select('files_directory.*', 'pdf_common_fields.*', 'pdf_content.*', 'pdf_templates.name')
-			->groupBy('pdf_content_images.image')
-            ->get();
+		
 		//dd($galleries);
 		
 	//	$galleries=DB::table('pdf_content_images')->groupBy('image')->get();
-
+      
+$galleries = DB::table('files_directory')
+            ->join('pdf_content', 'pdf_content.file_id', '=', 'files_directory.id')
+            ->join('pdf_content_images', 'pdf_content_images.content_id', '=', 'pdf_content.id')
+           // ->select('files_directory.*', 'pdf_common_fields.*', 'pdf_content.*', 'pdf_templates.name')
+			->groupBy('pdf_content_images.image')
+            ->get();
+		
+	
+		
+		foreach($galleries as $gallery)
+		{
+		$uploadpath=$gallery->upload_path;
+		}
+		foreach($galleries as $gallery)
+		{
+		$fileid=$gallery->file_id;
+		}
+		
+		
         view()->share('galleries',$galleries);
 		
 		
-		return view('pdf.htmlview',['data'=>$appendData]);
+		
+		return view('pdf.htmlview',['data'=>$appendData,'uploadpath'=>$uploadpath,'fileid'=>$fileid]);
 
 		
 		//dd($data);

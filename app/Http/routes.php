@@ -96,5 +96,6 @@ Route::group(['middleware' => ['web']], function () {
 	$this->get('/download', 'PdfController@download');
 	$this->get('/listdelete/{id}','PdfController@listdelete');
 	$this->get('/changeimage/{id}/{image}', 'PdfController@changeimage');
-	//Route::get('download', 'TestController@download');
+
+	//Route::post('/galleryupload/{id}', 'PdfController@galleryupload');
 });
