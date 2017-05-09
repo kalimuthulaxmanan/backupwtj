@@ -88,8 +88,21 @@ public function word()
 }
 public function listdelete($id)
 {
-	
+	$content=DB::table('pdf_content')->where('file_id',$id)->select('id')->get();
+	foreach($content as $contents) 
+	{
+	 $content_id=$contents->id;		
+	 DB::table('pdf_content_images')->where('content_id',$content_id)->delete();
+	}
+
 $list=DB::table('files_directory')->where('id',$id)->delete();
+      DB::table('pdf_common_fields')->where('file_id',$id)->delete();
+	  DB::table('pdf_content')->where('file_id',$id)->delete();
+	 DB::table('pdf_itinenary')->where('file_id',$id)->delete();
+	 DB::table('pdf_itinenary_details')->where('file_id',$id)->delete();
+	 DB::table('pdf_map')->where('file_id',$id)->delete();
+	 DB::table('pdf_travel_agent')->where('file_id',$id)->delete();
+
   
 session()->flash('deletesucessfull', 'filedelete');
 return back();
