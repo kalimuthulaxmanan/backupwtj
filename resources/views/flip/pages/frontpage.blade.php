@@ -1,15 +1,17 @@
 
 <div class="book-content index-page">
-	<img src="images/image1.jpg" width="100%" alt="" title="" />
+	@foreach($data->frontImages as $frontImage)
+	<img src="{{ url('/') }}/<?php echo $data->upload_path; ?><?php echo trim($frontImage->image); ?>" width="100%" alt="" title="" />
+	@endforeach
 </div>
 
 <div class="index-footer">
 	<div class="left">
-		<img src="images/image2.jpg" alt="" title="" />
+		<img src="{{ url('/') }}/<?php echo $data->upload_path; ?><?php echo trim($data->logo); ?>" alt="" title="" />
 	</div>
 	<div class="right">
-		<h1>France</h1>
-		<span>April 18, 2017</span>
+		<h1><?php echo $data->place; ?></h1>
+		<span><?php echo $data->start_date;?>/ <?php echo $data->end_date;?></span>
 	</div>
 </div>
-<span class="page-number">1</span>
+<span class="page-number">{{$data->page}}</span>

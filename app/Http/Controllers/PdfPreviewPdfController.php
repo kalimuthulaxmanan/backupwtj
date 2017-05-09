@@ -108,7 +108,7 @@ class PdfPreviewPdfController extends Controller
 									$markers[]=['center'=> "$detail->lat,$detail->lon",'label'=>"$i"];
 
 									}
-		  			        $Mapimage= StaticMap::GoogleWithImg('31.520605,35.127777', ['markers' => $markers,'zoom'=>'8','with' =>'640', 'height' =>'640' ]); 
+		  			        $Mapimage= StaticMap::GoogleWithImg("$detail->lat,$detail->lon", ['markers' => $markers,'zoom'=>'8','with' =>'640', 'height' =>'640' ]); 
 			 	            $value->Mapimage=$Mapimage;
 	                   
 						$appendData.=$this->loadTemplate('mapimage',$value);							

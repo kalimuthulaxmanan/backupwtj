@@ -7,6 +7,6 @@
 </div>
 
 <div class="footer">
-	<img src="images/image2.jpg" alt="" title="" />
+	<img src="{{ url('/') }}/<?php echo $data->upload_path; ?><?php echo trim($data->logo); ?>" alt="" title="" />
 </div>
-<span class="page-number">2</span>
+<span class="page-number">{{$data->page}}</span>

@@ -1,18 +1,65 @@
 <div class="table-contents">
-	<h1>Contents</h1>
-	<ul>
-		<li><a href="#page/7">The book <span>7</span></a></li>
-		<li><a href="#page/10">Youth<span>10</span></a></li>
-		<li><a href="#page/18">The Apple I <span>18</span></a></li>
-		<li><a href="#page/25">Apple's early days <span>25</span></a></li>
-		<li><a href="#page/30">Success and failures <span>30</span></a></li>
-		<li><a href="#page/38">Macintosh <span>38</span></a></li>
-		<li><a href="#page/40">Leaving Apple  <span>40</span></a></li>
-		<li><a href="#page/43">NeXT Inc <span>43</span></a></li>
-		<li><a href="#page/53">Wildreness years <span>53</span></a></li>
-		<li><a href="#page/73">A visionary <span>73</span></a></li>
-		<li><a href="#page/86">Apple is strong <span>86</span></a></li>
-		<li><a href="#page/97">2010: Steve is back<span>97</span></a></li>
-	</ul>
+	<section class="">  
+	<div class="row center">  
+		<div class="table-content pt-150">
+			<div class="table-header">
+				<p>  
+				Distinguished guests:{{$data->distinguished_guests}} <br>
+				Agency:{{$data->agency}}<br>
+				Agent: {{$data->agent}}
+				</p>
+				<h5>
+				Duration: {{$data->duration_day}} day / {{$data->duration_night}} nights<br>
+				Number of Persons:{{$data->no_of_persons}}
+				</h5>
+			</div>
+			<div class="table-body">
+				<h3>Summary</h3>
+				<table>
+					<tr>
+					<td>Welcome in France</td>
+					<td>page 04</td>
+					</tr>
+					<tr>
+					<td>Your itinerary</td>
+					<td>page 06</td>
+					</tr>
+					<tr>
+					<td>Champagne</td>
+					<td>page 10</td>
+					</tr>
+					<tr>
+					<td>Paris</td>
+					<td>page 12</td>
+					</tr>
+					<tr>
+					<td>Detailed itinerary</td>
+					<td>page 18</td>
+					</tr>
+					<tr>
+					<td>Sales and terms conditions</td>
+					<td>page 19</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>  
+	<footer class="pdf">    
+	  <div class="">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="col-md-6 col-sm-6 col-xs-12 footer-height">
+					<div class="footer-content left">
+						<p class="bold">Date of release: {{$data->date_of_release}}</p>
+					</div>                      
+				</div>
+				<div class="col-md-6 col-sm-6 col-xs-12 footer-height text-right">
+					<img class="footer-image right" src="{{url('/')}}/<?php echo $data->upload_path; ?><?php echo trim($data->signature); ?>" alt="" title="" />
+				</div>
+			</div>               
+		</div>          		
+	  </div>          		
+	</footer>      
+</section> 
 </div>
-<span class="page-number">3</span>
+<span class="page-number">{{$data->page}}</span>
