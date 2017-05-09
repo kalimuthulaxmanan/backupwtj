@@ -127,7 +127,7 @@ return view('dashboard',['pdflist'=>$pdflist]);
     {   
         DB::table('users')->delete($id);
         session()->flash('deleteuser', 'Deleted Successfully.');
-        return redirect('list');
+        return redirect('userlist');
 
     }
 
