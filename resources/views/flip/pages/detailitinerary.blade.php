@@ -1,27 +1,23 @@
 
 <div class="book-content">
-	<h2>Detailed itinerary</h2>
+	<h2>{{$data->title}}</h2>
 	<div class="left-content">
 		<p style="line-height:25px;">
-			&nbsp; &nbsp; &nbsp; - &nbsp; 08:00 am : Luxury minivan with driver at disposal from Paris Orly<br>
-			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; airport to Shangri-La Hotel<br>
-
-			&nbsp; &nbsp; &nbsp; - &nbsp; Full day excursion with a guide in Champagne<br>
-			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 11:00 am : pick up at Champagne Ployez-Jacquemart<br>
-			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 05:30 pm : drop off at End of tour<br>
-			
-			&nbsp; &nbsp; &nbsp; - &nbsp; Champagne Moet &amp; Chandon<br>						 
+			@foreach($data->detailitineraryDatas as $detail_itineraryData)
+			&nbsp; &nbsp; &nbsp; - &nbsp; {{$detail_itineraryData->event_date}}: {!!nl2br($detail_itineraryData->description)!!}<br>
+			@endforeach
+							 
 		</p>
 	</div>
 	<div class="right-image">
-		<img class="right-pic zoom-this" src="images/image7.jpg" alt="" title="">
-		<img class="right-pic zoom-this" src="images/image8.jpg" alt="" title="">
-		<img class="right-pic zoom-this" src="images/image9.jpg" alt="" title="">
-		<img class="right-pic zoom-this" src="images/image10.jpg" alt="" title="">
+			@foreach($data->detailitineraryImages as $detailitineraryImage)
+		<img class="right-pic zoom-this" src="{{url('/')}}/{{$data->upload_path}}<?php echo trim($detailitineraryImage->image); ?>" alt="" title="">
+		@endforeach
+		
 	</div>
 </div>
 
 <div class="footer">
-	<img src="images/image2.jpg" alt="" title="" />
+	<img src="{{ url('/') }}/<?php echo $data->upload_path; ?><?php echo trim($data->logo); ?>" alt="" title="" />
 </div>
-<span class="page-number">20</span>
+<span class="page-number">{{$data->page}}</span>

@@ -52,12 +52,15 @@
                             <p>Dashboard</p>
                         </a>
                     </li> 
-                    <li>
+											<?php $currentUrl= url()->current(); ?>
+
+                    <li <?php echo (strpos($currentUrl,'list')!=0)?'class="active"':''; ?>   >
+						
                         <a class="collapsible-header">
                             <i class="material-icons">person</i>
                             <p>User Profile</p>
                         </a>
-                        <div class="collapsible-body">
+                        <div class="collapsible-body" <?php echo (strpos($currentUrl,'list')!=0)?'style="display:block;"':''; ?>>
                             <a href="{{ url('/list')}}">
                                 <i class="fa fa-list" aria-hidden="true"></i>List User
                             </a>

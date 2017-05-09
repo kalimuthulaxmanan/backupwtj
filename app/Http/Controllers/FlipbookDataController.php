@@ -11,6 +11,7 @@ use Artisan;
 use PHPExcel_IOFactory;
 use Session;
 use Illuminate\Http\Request;
+use StaticMap;
 
 use App\Http\Requests;
 
@@ -46,25 +47,26 @@ class FlipbookDataController extends BaseController
 		//dd($data);
 		
 		if(!empty($dataSql))
-		{
+		{  
 			foreach($dataSql as $key=>$value)
 			{
 				switch($value->name)
 				{
 					case "front_page":
                         $frontImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get(); 
-                        $value->frontImages=  $frontImages;
+                        $value->frontImages= $frontImages;
 						
 						if($data['page']==1 )
-						{
+						{    $value->page= $data['page'];
+						
 							$appendData=$this->loadTemplate('frontpage',$value);
 						}
 						elseif($data['page']==2)
-						{
+						{   $value->page= $data['page'];
 							$appendData=$this->loadTemplate('emptypage',$value);
 						}
 						else
-						{
+						{   $value->page= $data['page']; 
 							$appendData=$this->loadTemplate('summarypage',$value);	
 							
 						}
@@ -81,7 +83,7 @@ class FlipbookDataController extends BaseController
 						   $value->itineraryData=$itineraryData;
 						   $itineraryImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get(); 
 						   $value->itineraryImages= $itineraryImages;
-						   
+						   $value->page= $data['page'];
 						   $appendData=$this->loadTemplate('itinerary',$value);
 						   
 					break;
@@ -90,7 +92,7 @@ class FlipbookDataController extends BaseController
 						    $value->detailitineraryDatas=$detailitineraryDatas; 
 						    $detailitineraryImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get(); 
 						    $value->detailitineraryImages=$detailitineraryImages;
-						
+						    $value->page= $data['page'];
 						 	$appendData=$this->loadTemplate('detailitinerary',$value);	
 					
 						    
@@ -98,11 +100,11 @@ class FlipbookDataController extends BaseController
 				    case "image_with_content":
 						   $contentImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get();
 						   $value->contentImages= $contentImages;
-				
+				           $value->page= $data['page'];
 						   $appendData=$this->loadTemplate('titleleftimagecontentpage',$value);							
 					break;
 					case "map":
-						
+						  
 						   $Mapdetails=DB::table('pdf_map')->select('lat','lon')->get();	
                            $i=0;
                            foreach($Mapdetails as $detail)
@@ -111,29 +113,37 @@ class FlipbookDataController extends BaseController
 									$markers[]=['center'=> "$detail->lat,$detail->lon",'label'=>"$i"];
 
 									}
-		  			        $Mapimage= StaticMap::GoogleWithImg('31.520605,35.127777', ['markers' => $markers,'zoom'=>'8','with' =>'640', 'height' =>'640' ]); 
-			 	            $value->Mapimage=$Mapimage;
+		  			        $Mapimage= StaticMap::GoogleWithImg("$detail->lat,$detail->lon", ['markers' => $markers,'zoom'=>'8','with' =>'640', 'height' =>'640' ]); 
+			 	           
+						    $value->Mapimage=$Mapimage;
+						 
+						    $value->page= $data['page'];
+						  
 							$appendData=$this->loadTemplate('mapimage',$value);							
 					break;	
 				    case "travel_agent":
 						    $travel_agent=DB::table('pdf_travel_agent')->where('content_id',$value->id)->select('name','profile_image','logo','place')->get();
 						    $value->travel_agent=$travel_agent; 
+						    $value->page= $data['page'];
 							$appendData=$this->loadTemplate('travelagentpage',$value);
 						   
 					break;
 					case "full_image_page":
 						 $fullImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get();
 						 $value->fullImages= $fullImages;
-				
+				         $value->page= $data['page'];
 						$appendData=$this->loadTemplate('fullimagepage',$value);							
 					break;
 					case "empty_page":
+						    $value->page= $data['page'];
 							$appendData=$this->loadTemplate('emptypage_background',$value);							
 					break;	
 					case "content_only":
+						    $value->page= $data['page'];
 							$appendData=$this->loadTemplate('content_only',$value);							
 					break;	
 						case "empty_page_with_title":
+						    $value->page= $data['page'];
 							$appendData=$this->loadTemplate('empty_page_with_title',$value);							
 					break;	
 
@@ -166,11 +176,13 @@ class FlipbookDataController extends BaseController
 	
 	public function flipbook($id)
 	{
+		$filepage = DB::table('pdf_content')->where('file_id',$id)->count();
+		$filepagesCount=$filepage+2;
 		
 		//dd($request->all());
 		//dd(Session::all());die;
 		//echo "hai";
-		return view('flip.flipbook',['id'=>$id]);
+		return view('flip.flipbook',['id'=>$id,'filepagesCount'=>$filepagesCount]);
 	}
 	
 	

@@ -14,7 +14,7 @@
 <body>
 	
 	<input type="hidden" name="userId" id="userId" value="{{ $id }}" />
-
+    <input type="hidden" name="pagescount" id="pagescount" value="{{$filepagesCount}}" >
 <div id="canvas">
 	<div id="book-zoom">
 		<div class="sj-book">
@@ -157,14 +157,14 @@ function loadApp() {
 	// Flipbook
 
 	flipbook.bind(($.isTouch) ? 'touchend' : 'click', zoomHandle);
-
+    var pagesCount=document.getElementById("pagescount").value;
 	flipbook.turn({
 		elevation: 50,
 		acceleration: !isChrome(),
 		autoCenter: true,
 		gradients: true,
 		duration: 1000,
-		pages: 26,
+		pages: pagesCount,
 		when: {
 			turning: function(e, page, view) {
 				

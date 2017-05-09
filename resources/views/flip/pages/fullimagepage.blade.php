@@ -1,5 +1,7 @@
 <div class="fullwidth-image">
-	<img src="images/image6.jpg" alt="" title="" />
-	<img src="images/image3.png" class="footer" alt="" title="" />
+	@foreach($data->fullImages as $fullimage)
+	<img src="{{url('/')}}/{{$data->upload_path}}<?php echo trim($fullimage->image); ?>" alt="" title="" />
+	@endforeach
+	<img src="{{url('/')}}/{{$data->upload_path}}/<?php echo trim($data->signature); ?>" class="footer" alt="" title="" />
 </div>
-<span class="page-number">5</span>
+<span class="page-number">{{$data->page}}</span>
