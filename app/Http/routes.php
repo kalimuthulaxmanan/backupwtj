@@ -65,11 +65,11 @@
 	route::get('loginsample','Auth\AuthController@check');
 
 	//Add User Routes
-	$this->get('/user', 'DashboardController@showUserForm')->middleware('revalidate');
+	$this->get('/adduser', 'DashboardController@showUserForm')->middleware('revalidate');
 	$this->post('/adduser', 'DashboardController@adduser')->middleware('revalidate');
 
 	//list user Routed
-	$this->get('/list', 'DashboardController@listUserForm')->middleware('revalidate');
+	$this->get('/userlist', 'DashboardController@listUserForm')->middleware('revalidate');
 	
 	//Edit the User Routes
 	$this->get('/useredit/{id}', 'DashboardController@showuseredit');

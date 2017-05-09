@@ -40,7 +40,7 @@
                                                 <!--<td class="image"><img src="{{$row->image}}"/></td>-->
                                                 <td>
 													<a href="{{ url('/useredit') }}/<?php echo $row->id; ?>" alt="Edit" title="Edit"><i class="material-icons">mode_edit</i></a>
-													<a href="{{ url('/userdelete') }}/<?php echo $row->id; ?>" alt="Delete" title="Delete"><i class="material-icons">delete</i></a></td>
+													<a onclick="return confirm('Are you sure you want to delete?');" href="{{ url('/userdelete') }}/<?php echo $row->id; ?>" alt="Delete" title="Delete"><i class="material-icons">delete</i></a></td>
                                             </tr>
                                             @endforeach 
                                         </tbody>

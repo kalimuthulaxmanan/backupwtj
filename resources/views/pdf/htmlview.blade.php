@@ -15,9 +15,9 @@
 									
 									<!-- PDF view start -->
 
-									<a href=""> <button type="button"  class="btn btn-primary ">Word</button></a>
+									<a href=""> <button type="button"  class="btn btn-primary " target="_blank">Word</button></a>
 									<a href="{{ url('/generatePdfPreview') }}/{{$fileid}}" target="_blank"> <button type="button" class="btn btn-primary ">PDF</button></a>	
-									<a href="{{ url('/flipbook') }}/{{$fileid}}" > <button type="button" class="btn btn-primary ">Flip Book</button></a>	
+									<a href="{{ url('/flipbook') }}/{{$fileid}}" target="_blank"> <button type="button" class="btn btn-primary ">Flip Book</button></a>	
                                     <input type="hidden" name="uploadpath" value="<?php echo $uploadpath; ?>"  id="uploadpath"/>
 									<div class="container">
 										
@@ -26,9 +26,9 @@
 									
 									</div>
 
-									<a href="" > <button type="button" class="btn btn-primary ">Word</button></a>
+									<a href="" > <button type="button" class="btn btn-primary " target="_blank">Word</button></a>
 									<a href="{{ url('/generatePdfPreview') }}/{{$fileid}}" target="_blank"> <button type="button" class="btn btn-primary ">PDF</button></a>	
-									<a href="{{ url('/flipbook') }}/{{$fileid}}" > <button type="button" class="btn btn-primary ">Flip Book</button></a>		    
+									<a href="{{ url('/flipbook') }}/{{$fileid}}" target="_blank" > <button type="button" class="btn btn-primary ">Flip Book</button></a>		    
 
 									<!-- PDF view end -->
 									

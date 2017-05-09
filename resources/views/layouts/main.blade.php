@@ -54,22 +54,22 @@
                     </li> 
 											<?php $currentUrl= url()->current(); ?>
 
-                    <li <?php echo (strpos($currentUrl,'list')!=0)?'class="active"':''; ?>   >
+                    <li>
 						
-                        <a class="collapsible-header">
-                            <i class="material-icons">person</i>
-                            <p>User Profile</p>
+                        <a class="collapsible-header active collapsible-header <?php echo (strpos($currentUrl,'userlist')!=0)?'Activesub':''; ?> <?php echo (strpos($currentUrl,'adduser')!=0)?'Activesub':''; ?> ">
+                            <i <?php echo (strpos($currentUrl,'adduser')!=0 || strpos($currentUrl,'userlist')!=0)?'style="color:white"':''; ?> class="material-icons">person</i>
+                            <p <?php echo (strpos($currentUrl,'adduser')!=0 || strpos($currentUrl,'userlist')!=0)?'style="color:white"':''; ?> >User Profile</p>
                         </a>
-                        <div class="collapsible-body" <?php echo (strpos($currentUrl,'list')!=0)?'style="display:block;"':''; ?>>
-                            <a href="{{ url('/list')}}">
+                        <div class="collapsible-body <?php echo (strpos($currentUrl,'adduser')!=0)?'activeDisplay':''; ?> <?php echo (strpos($currentUrl,'userlist')!=0)?'activeDisplay':''; ?>"  >
+                            <a href="{{ url('/userlist')}}">
                                 <i class="fa fa-list" aria-hidden="true"></i>List User
                             </a>
-                            <a href="{{ url('/user')}}">
+                            <a href="{{ url('/adduser')}}">
                                 <i class="fa fa-user-plus" aria-hidden="true"></i> Add User
                             </a> 
                         </div>
                     </li>
-                    <li>
+                    <li <?php echo (strpos($currentUrl,'pdflist')!=0)?'class="Active"':''; ?> <?php echo (strpos($currentUrl,'generateHtmlPreview')!=0)?'class="Active"':''; ?>>
                         <a  class="collapsible-header"  href="{{ url('/pdflist')}}">
                             <i class="material-icons">picture_as_pdf</i>
                             <p  >PDF List</p>
@@ -244,6 +244,20 @@ jQuery(document).ready(function($) {
      });
     });
 	
+	
+	setTimeout(function() { 
+    jQuery(".activeDisplay").css('display','block'); 
+}, 600);
+
 
 
 </script>
+<style>
+	.Activesub, .Activesub a
+	{
+		color:white;
+		background-color:#9c27b0;
+		box-shadow:0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2);
+	}
+	
+</style>
