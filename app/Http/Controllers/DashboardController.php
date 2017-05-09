@@ -47,7 +47,14 @@ class DashboardController extends Controller
      */
     public function index()
     {
-		return view('dashboard');
+		/*list the all files */
+
+	$pdflist = DB::table('users')
+            ->join('files_directory', 'files_directory.user_id', '=','users.id')->limit(10)->get(); 
+
+return view('dashboard',['pdflist'=>$pdflist]);
+		
+		//return view('dashboard');
     }
 
 	public function logout()

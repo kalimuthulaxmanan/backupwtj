@@ -9,8 +9,7 @@
                             <div class="card">
                             <div class="card-header" data-background-color="purple">
                                     <h4 class="title">User Table</h4>
-                                    <p class="category">Details about the u
-                                    ser</p>
+                                    <p class="category">Details about the users</p>
                                 </div>
                                 @if(Session::has('deleteuser'))
                                       <body onload="demo.showNotification('top','center',2,'Deleted Successfully')"/>

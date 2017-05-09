@@ -8,8 +8,8 @@
 	                    <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header" data-background-color="purple">
-                                    <h4 class="title">File Table</h4>
-                                    <p class="category">Details about the Files</p>
+                                    <h4 class="title">PDF List</h4>
+                                    <p class="category">Details about the PDF </p>
                                 </div>
 								  @if(Session::has('deletesucessfull'))
                               <body class="login-close" onload="demo.showNotification('top','center',2,'File deleted sucessfully')"/>
