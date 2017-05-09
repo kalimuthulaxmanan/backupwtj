@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('content1')
+
 <div class="content">
 	            <div class="container-fluid">
 	                <div class="row">
@@ -18,7 +19,7 @@
                                       <body onload="demo.showNotification('top','center',2,'Updated Successfully')"/>
                                 @endif
                                 <div class="card-content table-responsive">
-                                    <table class="table">
+                                    <table id="example" class="table">
                                         <thead class="text-primary">
                                             <tr>
                                             	<th>S.No.</th>
@@ -26,8 +27,8 @@
                                                 <th>First Name</th>
                                                 <th>Email</th>
                                                 <!--<th>Image</th>-->
-                                                <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                                <th>&nbsp;</th>
+                                                
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -37,8 +38,9 @@
                                                 <td>{{$row->firstName}}</td>
                                                 <td>{{$row->email}}</td>
                                                 <!--<td class="image"><img src="{{$row->image}}"/></td>-->
-                                                <td><a href="{{ url('/useredit') }}/<?php echo $row->id; ?>" alt="Edit" title="Edit"><i class="material-icons">mode_edit</i></a></td>
-                                                <td><a href="{{ url('/userdelete') }}/<?php echo $row->id; ?>" alt="Delete" title="Delete"><i class="material-icons">delete</i></a></td>
+                                                <td>
+													<a href="{{ url('/useredit') }}/<?php echo $row->id; ?>" alt="Edit" title="Edit"><i class="material-icons">mode_edit</i></a>
+													<a href="{{ url('/userdelete') }}/<?php echo $row->id; ?>" alt="Delete" title="Delete"><i class="material-icons">delete</i></a></td>
                                             </tr>
                                             @endforeach 
                                         </tbody>

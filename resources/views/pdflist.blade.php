@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('content1')
+
 <div class="content">
 	            <div class="container-fluid">
 	                <div class="row">
@@ -15,7 +16,7 @@
                                    {{session::forget('deletesucessfull')}} 
 								@endif
                                 <div class="card-content table-responsive">
-                                    <table class="table">
+                                    <table  id="example" class="mdl-data-table table" cellspacing="0" width="100%">
                                         <thead class="text-primary">
                                             <tr>
                                             	<th>S.No</th>
@@ -24,11 +25,8 @@
 												<th>Created Date</th>
 												
                                                 
-                                                <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                                <th>&nbsp;&nbsp;&nbsp;</th>
-												 <th>&nbsp;&nbsp;&nbsp;</th>
-												<th>&nbsp;&nbsp;&nbsp;</th>
-												
+                                                <th>Action</th>
+                                               
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -38,14 +36,12 @@
 												<td>{{$file->firstName}}</td>
 												<td>{{$file->created_at}}</td>
 												
-												<td><a href="{{ url('/generateHtmlPreview') }}/{{$file->id}}" ><i class="fa fa-cogs" aria-hidden="true" title="Generate"></i></a></td>	
-												<td><a href="{{ url('/generatePdfPreview') }}/{{$file->id}}"><i class="material-icons"  title="PDF" >picture_as_pdf</i> </a></td>	
-												<td><a href="" ><i class="fa fa-file-word-o " aria-hidden="true" title="Word"></i></a></td>
-												
-												<td><a href="{{ url('/flipbook') }}/{{$file->id}}" ><i class="fa fa-book" aria-hidden="true" title="Flip Book" ></i></a></td>
-												<td> <a href="{{ url('/listdelete') }}/<?php echo $file->id;?>"><i class="material-icons"  title="Delete" >delete</i></a></td>
-                                             <!--   <td><a href="{{ url('/useredit') }}/<?php echo $file->id; ?>" alt="Edit" title="Edit"><i class="material-icons">mode_edit</i></a></td>
-                                                <td><a href="{{ url('/userdelete') }}/<?php echo $file->id; ?>" alt="Delete" title="Delete"><i class="material-icons">delete</i></a></td>-->
+												<td>
+												<a style="padding-right:20px;" href="{{ url('/generateHtmlPreview') }}/{{$file->id}}" ><i class="fa fa-cogs" aria-hidden="true" title="Generate"></i></a>
+												<a style="padding-right:20px;" href="{{ url('/generatePdfPreview') }}/{{$file->id}}"><i class="material-icons"  title="PDF" >picture_as_pdf</i> </a>													<a style="padding-right:20px;" href="" ><i class="fa fa-file-word-o " aria-hidden="true" title="Word"></i></a>
+												<a style="padding-right:20px;" href="{{ url('/flipbook') }}/{{$file->id}}" ><i class="fa fa-book" aria-hidden="true" title="Flip Book" ></i></a>
+												<a style="padding-right:20px;" href="{{ url('/listdelete') }}/<?php echo $file->id;?>"><i class="material-icons"  title="Delete" >delete</i></a></td>
+
                                             </tr>
                                             @endforeach 
                                         </tbody>

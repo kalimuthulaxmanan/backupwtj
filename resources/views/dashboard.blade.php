@@ -4,7 +4,7 @@
 
 <div class="content">
                 <div class="container-fluid">
-                    <div class="row">
+                  <!--  <div class="row">
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="card card-stats">
                                 <div class="card-header" data-background-color="orange">
@@ -70,9 +70,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
 
-                    <div class="row">
+                 <!--   <div class="row">
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-header card-chart" data-background-color="green">
@@ -124,10 +124,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
 
                     <div class="row">
-                        <div class="col-lg-6 col-md-12">
+                   <!--     <div class="col-lg-6 col-md-12">
                             <div class="card card-nav-tabs">
                                 <div class="card-header" data-background-color="purple">
                                     <div class="nav-tabs-navigation">
@@ -345,9 +345,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
 
-                        <div class="col-lg-6 col-md-12">
+                        <div class="col-lg-12 col-md-12">
                             <div class="card">
                                 <div class="card-header" data-background-color="orange">
                                     <h4 class="title">Employees Stats</h4>

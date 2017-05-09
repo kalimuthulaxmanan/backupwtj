@@ -209,6 +209,19 @@
     <script src="{{ url('/assets/js/demo.js')}}"></script>
 
     <script src="{{ url('/assets/js/according.js')}}"></script>
+		<link rel="stylesheet" type="text/css" href="{{ url('/css/dataTables.material.css')}}">
+
+
+	<script type="text/javascript" language="javascript" src="{{ url('/js/jquery.dataTables.js')}}">
+	</script>
+
+	<script type="text/javascript" language="javascript" class="init">
+	
+jQuery(document).ready(function($) {
+	$('#example').DataTable();
+} );
+
+	</script>
 
 
 </html>
