@@ -30,7 +30,7 @@ function addPage(page, book) {
 
 		var element = $('<div />',
 			{'class': 'own-size',
-				css: {width: 460, height: 582}
+				css: {width: 550, height: 600}
 			}).
 			html('<div class="loader"></div>');
 

@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use DB;
 use ZipArchive;
 use File;
+use Storage;
 class AuthController extends Controller
 { 
 	
@@ -107,12 +108,22 @@ class AuthController extends Controller
 
 		}
 		
-		$staticPath=env('TEMP_UPLOAD_PATH').$data['file_name'];
+		//$staticPath=env('TEMP_UPLOAD_PATH').$data['file_name'];
 		
+		
+		
+			$exists = Storage::disk('s3')->exists($data['file_name']);
+		if(!$exists)
+		{
+		 
+			return response()->json(['Error'=>'File not available in S3 bucket.'],422);
+
+			
+		}
 		
 		
 		 $user = DB::table('users')->where('email', $data['client_name'])->first();
-		$returnDirData=$this->recurse_copy($staticPath,'uploads/');
+		$returnDirData=$this->recurse_copy('uploads/',$data['file_name']);
 		
 		if($user)
 		{
@@ -156,22 +167,53 @@ class AuthController extends Controller
 		
 	}
 	
-	function recurse_copy($src,$dst) { 
+	private function downloadZipFiles($directoryName,$dst,$fileName)
+	{
+		$exists = Storage::disk('s3')->exists($fileName);
+		if($exists)
+		{
+		  $contents = Storage::disk('s3')->get($fileName);
+		
+		file_put_contents($dst.$directoryName.'/'.$directoryName.".zip",$contents);	
+		}
+
+		
+		//return true;
+		//dd($contents);
+		
+		//header("Content-type: application/zip");
+		//header("Content-Disposition: attachment; filename=".$directoryName.".zip");
+		//echo $contents;
+		
+	/*	$headers = [
+    'Content-Type' => 'application/zip', 
+    'Content-Description' => 'File Transfer',
+    'Content-Disposition' => "attachment; filename=".$directoryName.".zip",
+    'filename'=> $directoryName.".zip"
+];
+
+ response($contents, 200, $headers);*/
+
+
+	}
+	
+	function recurse_copy($dst,$fileName) { 
 		
 		$directoryName=strtotime(date('Y-m-d H:i:s'));
-		
 		$result = File::makeDirectory($dst.$directoryName, 0777, true);
+
+		
+		$this->downloadZipFiles($directoryName,$dst,$fileName);
+		
 		
 		$destinationDir=$dst.$directoryName;
 
-		
+		$src=$dst.$directoryName.'/'.$directoryName.".zip"; //die;
 		$zip = new ZipArchive;
 if ($zip->open($src) === TRUE) {
     $returnDatas=$zip->extractTo($destinationDir);
 	//dd($returnDatas);
     $zip->close();
-} else {
-    //echo "Fail to open";
 }
 		$SourcesFile="";
         $dir = opendir($destinationDir); 

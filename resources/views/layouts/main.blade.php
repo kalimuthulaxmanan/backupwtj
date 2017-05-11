@@ -247,7 +247,7 @@ jQuery(document).ready(function($) {
 	
 	setTimeout(function() { 
     jQuery(".activeDisplay").css('display','block'); 
-}, 600);
+}, 100);
 
 
 

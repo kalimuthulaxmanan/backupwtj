@@ -21,7 +21,7 @@
                                             <tr>
                                             	<th>S.No</th>
                                                 <th>File Name</th>
-                                                <th>User Name</th>
+                                                <th>Client Name</th>
 												<th>Created Date</th>
 												
                                                 
@@ -33,8 +33,14 @@
                                         	@foreach($pdflist as $file)
                                             <tr>
                                             	<td>{{$file->file_name}}</td>
+												@if($file->firstName!=null)
 												<td>{{$file->firstName}}</td>
-												<td>{{$file->created_at}}</td>
+												@else
+												<td>{{$file->email}}</td>
+												@endif
+												
+												<td><?php $dates="$file->created_at"; $date=date_create_from_format("Y-m-d H:i:s","$dates");
+echo date_format($date,"M-d-Y"); ?></td>
 												
 												<td>
 												<a style="padding-right:20px;" href="{{ url('/generateHtmlPreview') }}/{{$file->id}}" ><i class="fa fa-cogs" aria-hidden="true" title="Generate"></i></a>
@@ -53,3 +59,8 @@
 	            </div>
 	        </div>
 @endsection
+<script>
+
+	
+
+</script>	

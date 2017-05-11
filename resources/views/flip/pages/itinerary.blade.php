@@ -1,13 +1,16 @@
 
-<div class="book-content">
+<div class="book-content right-content-page">
 	<h2>{{$data->title}}</h2>
-	<div class="left-content">
-		<p style="line-height:25px;">	
+	<div class="left-content">	
+		<table style="font-size:10px;">
 			@foreach($data->itineraryData as $itineraryValue)
-			{{$itineraryValue->event_date}}: <strong>{{$itineraryValue->description}}</strong><br />
+			<tr>
+				<td style="width:60px;vertical-align:top;padding-bottom:10px;"><?php $dates="$itineraryValue->event_date";$date=date_create_from_format("Y-m-d","$dates");
+echo date_format($date,"M d"); ?>:</td>
+				<td style="vertical-align:top;padding-bottom:10px;">{{$itineraryValue->description}}</td>
+			</tr>
 			@endforeach
-			
-		</p>
+		</table>
 	</div>
 	<div class="right-image">
 		@foreach($data->itineraryImages as $itineraryImage)

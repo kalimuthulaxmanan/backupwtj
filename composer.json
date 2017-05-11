@@ -14,7 +14,8 @@
     "laravelcollective/html": "~5.0",
         "maatwebsite/excel": "~2.1.0",
  "nicat/static-map": "^1.0",
- "cornford/googlmapper": "2.*"
+ "cornford/googlmapper": "2.*",
+		"league/flysystem-aws-s3-v3":"~1.0"
 
 
     },

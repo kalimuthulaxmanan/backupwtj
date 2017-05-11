@@ -12,6 +12,7 @@ use Session;
 use Redirect;
 use Validator;
 use DB;
+//use Storage;
 
 class DashboardController extends Controller
 {
@@ -47,6 +48,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
+		
+	
+
 		/*list the all files */
 
 	$pdflist = DB::table('users')
@@ -177,7 +181,7 @@ return view('dashboard',['pdflist'=>$pdflist]);
         
                           //echo "Updated";
                     $request->session()->flash('updatesuccess', 'Updated Successfully.');
-                    return redirect('list');
+                    return redirect('userlist');
 
 
               //}

@@ -2,18 +2,25 @@
 <style type="text/css">
 	.itinerary-image img{
 		width: 100%;
-		height: 160px;
+		height: 144px;
 	}
 </style>
 <section class="">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="col-md-8 col-sm-8 col-xs-12">
-			<h1 class="left-title">{{$data->title}}</h1> 
-			@foreach($data->itineraryData as $itineraryValue)	
-			<p><b>{{$itineraryValue->event_date}}: &nbsp;  &nbsp;  &nbsp; {{$itineraryValue->description}}</b></p><br />
-			@endforeach	
-			
+				<h1 class="left-title">{{$data->title}}</h1>
+				<table>					
+					@foreach($data->itineraryData as $itineraryValue)
+					<tbody class="itinerary">
+					  <tr>
+						<td style="width:75px;vertical-align:top;line-height:20px;"><b><?php $dates="$itineraryValue->event_date";$date=date_create_from_format("Y-m-d","$dates");
+								echo date_format($date,"M d"); ?>: </b></td>
+					 	<td style="padding-bottom:15px;font-size:14px;vertical-align:top;line-height:20px;">{{$itineraryValue->description}}</td>
+					  </tr>
+					<tbody>	
+					@endforeach
+				</table>			
 			</div>
 			<div class="col-md-4 col-sm-4 col-xs-12 padd-0">
 				@foreach($data->itineraryImages as $itineraryImage)

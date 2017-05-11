@@ -19,6 +19,7 @@
 									<a href="{{ url('/generatePdfPreview') }}/{{$fileid}}" target="_blank"> <button type="button" class="btn btn-primary ">PDF</button></a>	
 									<a href="{{ url('/flipbook') }}/{{$fileid}}" target="_blank"> <button type="button" class="btn btn-primary ">Flip Book</button></a>	
                                     <input type="hidden" name="uploadpath" value="<?php echo $uploadpath; ?>"  id="uploadpath"/>
+									<a href="{{ url('/pdflist') }}"> <button type="button" class="btn btn-primary ">Back</button></a>
 									<div class="container">
 										
 										<?php echo $data; ?>

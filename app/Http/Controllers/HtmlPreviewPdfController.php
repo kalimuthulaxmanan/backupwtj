@@ -76,21 +76,65 @@ class HtmlPreviewPdfController extends Controller
 					break;	
 
 					case "itinerary":
-						   $itineraryData=DB::table('pdf_itinenary')->where('content_id',$value->id)->select('event_date','description')->get();
-						   $value->itineraryData=$itineraryData;
-						   $itineraryImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get(); 
-						   $value->itineraryImages= $itineraryImages;
 						   
+						   $itineraryImagescount=DB::table('pdf_content_images')->where('content_id',$value->id)->count();
+						   $imagecount=$itineraryImagescount/5;
+						   $itineraryDatacount=DB::table('pdf_itinenary')->where('content_id',$value->id)->count();
+						   $Datacount=round($itineraryDatacount/$imagecount);
+						   $j=0;
+						   for($i=0;$i<=$itineraryImagescount;$i++)
+						   {
+						      
+						   if($i%5==0 && $i<$itineraryImagescount )
+							{ 
+						   $itineraryData=DB::table('pdf_itinenary')->where('content_id',$value->id)->select('event_date','description')->skip($j)->take($Datacount)->get();	                 $j+=$Datacount;
+						   $value->itineraryData=$itineraryData;	
+						   $itineraryImages=DB::table('pdf_content_images')->where('content_id',$value->id)->skip($i)->take(5)->get();
+						    
+						   $value->itineraryImages= $itineraryImages;	
 						   $appendData.=$this->loadTemplate('itinerary',$value);
+								
+							}
+					
+						   }
+						
+						
+						  //$itineraryImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get();
+						   //$value->itineraryImages= $itineraryImages;
+						   
+						   //$appendData.=$this->loadTemplate('itinerary',$value);
 						   
 					break;
 					case "detail_itinerary":
-						    $detailitineraryDatas=DB::table('pdf_itinenary_details')->where('content_id',$value->id)->select('event_date','description')->get();
-						    $value->detailitineraryDatas=$detailitineraryDatas; 
-						    $detailitineraryImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get(); 
-						    $value->detailitineraryImages=$detailitineraryImages;
+						    
+						    $detailitineraryImagescount=DB::table('pdf_content_images')->where('content_id',$value->id)->count();
+						    $detailitineraryDatascount=DB::table('pdf_itinenary_details')->where('content_id',$value->id)->count();
+						    $imagecount=$detailitineraryImagescount/5;
+						    $Datacount=round($detailitineraryDatascount/$imagecount);
+						    $j=0;
+						    
+						    for($i=0;$i<=$detailitineraryImagescount;$i++)
+						        {
+						      if($i%5==0 && $i<$detailitineraryImagescount)
+							      {
+							 $detailitineraryDatas=DB::table('pdf_itinenary_details')->where('content_id',$value->id)->select('event_date','description')->skip($j)->take($Datacount)->get(); $j+=$Datacount;
+						    $value->detailitineraryDatas=$detailitineraryDatas;		  
+						    $detailitineraryImages=DB::table('pdf_content_images')->where('content_id',$value->id)->skip($i)->take(5)->get();
+						    $value->detailitineraryImages=$detailitineraryImages;	
+						    $appendData.=$this->loadTemplate('detailitinerary',$value);
+								 }
+			                   }
 						
-						 	$appendData.=$this->loadTemplate('detailitinerary',$value);	
+						
+						
+						   // $detailitineraryImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get(); 
+						
+						    
+						
+						
+						    //$value->detailitineraryImages=$detailitineraryImages;
+						
+						 	//$appendData.=$this->loadTemplate('detailitinerary',$value);	
 					
 						    
 					break;	
@@ -130,7 +174,18 @@ class HtmlPreviewPdfController extends Controller
 							$appendData.=$this->loadTemplate('emptypage_background',$value);							
 					break;	
 					case "content_only":
-							$appendData.=$this->loadTemplate('content_only',$value);							
+					        $title="$value->title";
+						    		  
+						    if(strpos($title,"and terms")==null)
+							{
+							
+							$appendData.=$this->loadTemplate('toptitlecontent_only',$value); 
+							
+							}
+						    else
+							{
+							$appendData.=$this->loadTemplate('content_only',$value);
+							}
 					break;	
 						case "empty_page_with_title":
 							$appendData.=$this->loadTemplate('empty_page_with_title',$value);							
