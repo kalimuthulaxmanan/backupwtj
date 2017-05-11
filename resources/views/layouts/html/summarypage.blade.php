@@ -50,7 +50,7 @@
 			<div class="col-md-12">
 				<div class="col-md-6 col-sm-6 col-xs-12 footer-height">
 					<div class="footer-content left">
-						<p class="bold">Date of release: {{$data->date_of_release}}</p>
+						<p class="bold">Date of release:<?php $dates="$data->date_of_release";$date=date_create_from_format("Y-m-d","$dates");echo date_format($date,"M d, Y"); ?></p>
 					</div>                      
 				</div>
 				<div class="col-md-6 col-sm-6 col-xs-12 footer-height text-right">

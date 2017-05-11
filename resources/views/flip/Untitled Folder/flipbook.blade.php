@@ -5,7 +5,6 @@
 <!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
 <head>
-<link href="https://fonts.googleapis.com/css?family=Quicksand:300" rel="stylesheet">
 <script type="text/javascript" src="{{ url('extras/jquery.min.1.7.js')}}"></script>
 <script type="text/javascript" src="{{ url('extras/jquery-ui-1.8.20.custom.min.js')}}"></script>
 <script type="text/javascript" src="{{ url('extras/jquery.mousewheel.min.js')}}"></script>

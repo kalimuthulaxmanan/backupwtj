@@ -3,17 +3,25 @@
 		<tr style="">
             <td style="width:60%;vertical-align: top;">
 				<h1 style="font-size: 50px;">{{$data->title}}</h1> <br />
-				@foreach($data->detailitineraryDatas as $detail_itineraryData)
-				<span><b>{{$detail_itineraryData->event_date}}</b></span><br /><br />
-				<span>
-					&nbsp; &nbsp; &nbsp; - &nbsp; {!!nl2br($detail_itineraryData->description)!!}<br />
-					
-					</span> 
-			@endforeach	
+				<table>
+					@foreach($data->detailitineraryDatas as $detail_itineraryData)
+					<tr>
+						<td>
+						<b><?php $dates=$detail_itineraryData->event_date; $date=date_create_from_format("Y-m-d","$dates");
+						echo date_format($date,"M d");?></b>
+						</td><br /><br />
+					</tr>
+					<tr>	
+						<td style="padding-left:20px;padding-top:10px;line-height:20px">
+							{!!nl2br($detail_itineraryData->description)!!}<br />
+						</td>
+					</tr>
+					@endforeach	
+				</table>
             </td>
             <td style="width:40%;text-align:right">
 				@foreach($data->detailitineraryImages as $detailitineraryImage)
-                <img src="{{url('/')}}/{{$data->upload_path}}/<?php echo trim($detailitineraryImage->image); ?>" alt="" title="" style="width:300px;" /><br />
+                <img src="{{url('/')}}/{{$data->upload_path}}/<?php echo trim($detailitineraryImage->image); ?>" alt="" title="" style="width:250px;height:169px;" /><br />
 				@endforeach
                 
             </td>

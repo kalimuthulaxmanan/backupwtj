@@ -2,7 +2,11 @@
 <style type="text/css">
 	.detailitinerary-image img{
 		width: 100%;
-		height: 160px;
+		height: 144px;
+	}
+	.detailitinerary-content{
+		padding-left:20px;
+		width: 330px;		
 	}
 </style>
 <section class="">
@@ -11,10 +15,10 @@
 			<div class="col-md-8 col-sm-8 col-xs-12">
 				<h1 class="left-title">{{$data->title}}</h1> 
 				@foreach($data->detailitineraryDatas as $detail_itineraryData)
-				<p><b>{{$detail_itineraryData->event_date}}</b></p>
-				<p class="lh-20">
-					&nbsp; &nbsp; &nbsp; - &nbsp; {!!nl2br($detail_itineraryData->description)!!}<br />
-										 
+				<p><b><?php $dates=$detail_itineraryData->event_date; $date=date_create_from_format("Y-m-d","$dates");
+echo date_format($date,"M d");?></b></p>
+				<p class="lh-20 detailitinerary-content">
+					{!!nl2br($detail_itineraryData->description)!!}<br />										 
 				</p> 
 				@endforeach
 			</div>

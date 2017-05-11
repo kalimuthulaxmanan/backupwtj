@@ -9,7 +9,7 @@
 				<p><h1 style="margin:5px 0 !important;">YOUR TRAVEL AGENT IN <?php echo $travelagent->place; ?></h1>
 				<?php echo $travelagent->name; ?><br />
 				
-				<img src="<?php echo url($data->upload_path);?>/<?php echo trim($travelagent->logo); ?>" alt="" title="" />	<br /><br />			
+				<img src="<?php echo url($data->upload_path);?>/<?php echo trim($travelagent->logo); ?>" alt="" title="" style="height: 35px;width: 180px;padding-top:5px;" />	<br /><br />			
             </td>
 		</tr>
 		<?php } ?>

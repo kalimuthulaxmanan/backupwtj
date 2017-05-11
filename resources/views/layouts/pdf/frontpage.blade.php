@@ -11,7 +11,8 @@
             </td>
             <td style="width:50%;text-align:right">
                 <h1 style="font-size: 70px;margin:0;"><?php echo $data->place; ?></h1>
-                <span><?php echo $data->start_date;?>/ <?php echo $data->end_date;?></span>
+                <span><?php  $dates="$data->start_date"; $date=date_create_from_format("Y-m-d","$dates");
+echo date_format($date,"M d");?> - <?php $datesend="$data->end_date"; $date=date_create_from_format("Y-m-d","$datesend");echo date_format($date,"M d Y");?></span>
             </td>
 		</tr>
     </table>

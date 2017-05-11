@@ -1,10 +1,15 @@
-/* Steve jobs' book */
+/* Steve jobs' book 
 
 @font-face {
   font-family: 'Stempel-Garamond-W01-Roman';
   font-style: normal;
   font-weight: normal;
   src: url('../fonts/Stempel-Garamond-W01-Roman.woff') format('woff');
+} */
+
+.page-wrapper{
+	top:0 !important;
+	right:0 !important;
 }
 
 body, ul, table, form{
@@ -22,7 +27,7 @@ body, ul, table, form{
 }
 
 #canvas{
-	width: 960px;
+	width: 1100px;
 	height: 600px;
 	margin: 25px auto;
 }
@@ -36,7 +41,7 @@ body, ul, table, form{
 }
 
 .sj-book{
-	width:960px;
+	width:1100px;
 	height:600px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #6d6e71;
@@ -44,21 +49,24 @@ body, ul, table, form{
 
 .sj-book h1{
 	/* font-family: "Stempel-Garamond-W01-Roman"; */
-	font-size: 38px;
+	font-size: 30px;
 	font-weight: lighter;
-	margin: 20px 0;
+	margin: 0 0 20px;
 	color: #333;
+    font-family: 'Quicksand';
+    font-weight: normal;
 	/* -webkit-text-fill-color: #333; 
 	 -webkit-text-stroke-color: white; 
 	 -webkit-text-stroke-width: 0.005em; */
 }
 
 .sj-book h2{
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Quicksand';
     color:#444;
-    font-size:28px;
-	letter-spacing:2px;
-	font-weight: 400;
+    font-size:40px;
+	letter-spacing:0px;
+	font-weight: 300;
+    margin: 10px 0 20px;
 }
 
 .sj-book .book-content{
@@ -107,7 +115,7 @@ body, ul, table, form{
 .sj-book .book-content p{
 	font-size: 10px;
 	margin: 0;
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 	line-height: 12px;
 	text-align: justify;
 }
@@ -231,21 +239,28 @@ body, ul, table, form{
 }
 
 .sj-book .even{
-	background:-webkit-gradient(linear, left top, right top, color-stop(0.95, #fff), color-stop(1, #dadada));
-	background-image:-webkit-linear-gradient(left, #fff 95%, #dadada 100%);
-	background-image:-moz-linear-gradient(left, #fff 95%, #dadada 100%);
-	background-image:-ms-linear-gradient(left, #fff 95%, #dadada 100%);
-	background-image:-o-linear-gradient(left, #fff 95%, #dadada 100%);
-	background-image:linear-gradient(left, #fff 95%, #dadada 100%);
+	background:-webkit-gradient(linear, left top, right top, color-stop(0.95, #fff), color-stop(1, #f5f5f5));
+	background-image:-webkit-linear-gradient(left, #fff 95%, #f5f5f5 100%);
+	background-image:-moz-linear-gradient(left, #fff 95%, #f5f5f5 100%);
+	background-image:-ms-linear-gradient(left, #fff 95%, #f5f5f5 100%);
+	background-image:-o-linear-gradient(left, #fff 95%, #f5f5f5 100%);
+	background-image:linear-gradient(left, #fff 95%, #f5f5f5 100%);
 }
 
 .sj-book .odd{
-	background:-webkit-gradient(linear, right top, left top, color-stop(0.95, #fff), color-stop(1, #cacaca));
-	background-image:-webkit-linear-gradient(right, #fff 95%, #cacaca 100%);
-	background-image:-moz-linear-gradient(right, #fff 95%, #cacaca 100%);
-	background-image:-ms-linear-gradient(right, #fff 95%, #cacaca 100%);
-	background-image:-o-linear-gradient(right, #fff 95%, #cacaca 100%);
-	background-image:linear-gradient(right, #fff 95%, #cacaca 100%);
+	background:-webkit-gradient(linear, right top, left top, color-stop(0.95, #fff), color-stop(1, #f1f1f1));
+	background-image:-webkit-linear-gradient(right, #fff 95%, #f1f1f1 100%);
+	background-image:-moz-linear-gradient(right, #fff 95%, #f1f1f1 100%);
+	background-image:-ms-linear-gradient(right, #fff 95%, #f1f1f1 100%);
+	background-image:-o-linear-gradient(right, #fff 95%, #f1f1f1 100%);
+	background-image:linear-gradient(right, #fff 95%, #f1f1f1 100%);
+}
+
+.sj-book .even .right-content-page{
+	padding-left: 20px;
+}
+.sj-book .odd .right-content-page{
+	padding-left: 20px;
 }
 
 .sj-book .loader{
@@ -349,6 +364,8 @@ body, ul, table, form{
 	height: 100%;
 	width: 100%;
 	position: absolute;
+	display: flex;
+	align-items: center;
 }
 .sj-book .title-empty-page {
     background: -webkit-gradient(linear, left top, right top, color-stop(0.95, #9c9c9c), color-stop(1, #8f8f8f));
@@ -364,13 +381,17 @@ body, ul, table, form{
 .sj-book .title-page h1 {
 	margin: 0;
 	color: #fff;
-	padding: 200px 10px 0 0;
+    width: 100%;
+    padding-right: 10px;
+    font-size: 50px;
+    font-family: 'Quicksand';
+    font-weight: bold;
 }
 .sj-book .title-page img {
-	width: 200px;
-	height: 50px;
+    width: 150px;
+    height: 30px;
 	position: absolute;
-	bottom: 70px;
+	bottom: 10px;
 	right: 10px;
 }
 /*** Background Color -- Title Page End ***/
@@ -380,40 +401,43 @@ body, ul, table, form{
 	position: absolute;
 	height: 100%;
 	width: 100%;
+	left: 0;
 }
 .sj-book .fullwidth-image img.footer{
-	width: 200px;
-	height: 50px;
+    width: 150px;
+    height: 30px;
 	position: absolute;
-	bottom: 30px;
+	bottom: 10px;
 	right: 10px;
+    left: inherit;
 }
 .sj-book .footer img{
-	width: 200px;
-	height: 50px;
+    width: 150px;
+    height: 30px;
 	position: absolute;
-	bottom: 30px;
+	bottom: 10px;
 	left: 10px;
 }
 
 
 .sj-book .left-image{
-	width: 30%;
+	width: 40%;
 	display: inline-block;
 }
 .sj-book .left-image img{
 	width: 100%;
 	float: none;
 	margin: 0;
+    margin-bottom: 15px;
 }
 .sj-book .right-content{
-	width: 60%;
+	width: 53%;
 	display: inline-block;
     vertical-align: top;
 	padding-left: 5px;
 }
 .sj-book .left-content{
-	width: 60%;
+	width: 63%;
 	display: inline-block;
     vertical-align: top;
 	padding-left: 5px;
@@ -422,14 +446,21 @@ body, ul, table, form{
 	width: 30%;
 	display: inline-block;
     vertical-align: top;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 .sj-book .right-image img{
 	width: 100%;
+	height: 120px;
 	float: none;
 	margin: 0;
 	display: block;
 }
-.terms-conditions h5{}
+.terms-conditions h5{
+    font-family: 'Quicksand';
+    font-weight: bold;
+}
 .terms-conditions h6{}
 .right-page{
     margin-left: 7% !important;
@@ -457,7 +488,11 @@ body, ul, table, form{
 	padding-left: 10px;
 }
 .index-page{
-	margin-left: 5% !important;
+	margin-left: 0 !important;
+}
+.index-page img{
+	width: 100%;
+	height: 400px;
 }
 .index-footer{
 	position:absolute;
@@ -470,9 +505,9 @@ body, ul, table, form{
 }
 .index-footer img{
 	float: left;
-	width: 200px;
-	height: 50px;	
-	padding-left: 30px !important;
+	width: 150px;
+	height: 30px;	
+	padding-left: 0px !important;
 }
 .index-footer .right{
 	width: 50%;
@@ -481,4 +516,10 @@ body, ul, table, form{
 }
 .index-footer .right h1{
 	margin: 0;
+}
+.ml-30{
+	margin-left: 30px !important;
+}
+.pt-10{
+	padding-top: 10px;
 }

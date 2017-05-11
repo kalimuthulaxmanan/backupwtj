@@ -1,6 +1,6 @@
 
-<div class="book-content right-content-page">
-	<p class="pt-10"><b>{{$data->itinerary_date_with_title}}</b></p>
+<div class="book-content">
+	<p class="mt-25"><b>{{$data->itinerary_date_with_title}}</b></p>
 	<h2>{{$data->title}}</h2>
 	
 	<div class="left-image"> 

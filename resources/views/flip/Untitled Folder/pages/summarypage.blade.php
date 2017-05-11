@@ -1,13 +1,7 @@
-<style>
-.text-center{
-	text-align:center;
-}
-.text-left{
-	text-align:left;
-}
-</style>
-
-<div class="table-contents text-center">  
+<div class="table-contents">
+	<section class="">  
+	<div class="row center">  
+		<div class="table-content pt-150">
 			<div class="table-header">
 				<p>  
 				Distinguished guests:{{$data->distinguished_guests}} <br>
@@ -21,7 +15,7 @@
 			</div>
 			<div class="table-body">
 				<h3>Summary</h3>
-				<table class="text-left">
+				<table>
 					<tr>
 					<td>Welcome in France</td>
 					<td>page 04</td>
@@ -48,6 +42,8 @@
 					</tr>
 				</table>
 			</div>
+		</div>
+	</div>  
 	<footer class="pdf">    
 	  <div class="">
 		<div class="row">
@@ -64,5 +60,6 @@
 		</div>          		
 	  </div>          		
 	</footer>      
+</section> 
 </div>
 <span class="page-number">{{$data->page}}</span>

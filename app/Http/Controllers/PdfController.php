@@ -42,6 +42,7 @@ public function pdflist()
 
 	$pdflist = DB::table('users')
             ->join('files_directory', 'files_directory.user_id', '=','users.id')->get(); 
+	
 
 return view('pdflist',['pdflist'=>$pdflist]);
 }
