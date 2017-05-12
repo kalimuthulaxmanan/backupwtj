@@ -221,17 +221,21 @@ $galleries = DB::table('files_directory')
 		{
 		$uploadpath=$gallery->upload_path;
 		}
-		foreach($galleries as $gallery)
+		/*foreach($galleries as $gallery)
 		{
 		$fileid=$gallery->file_id;
-		}
+		}*/
 		
+	//	dd($galleries);
+		
+		
+	//	echo $fileid; die;
 		
         view()->share('galleries',$galleries);
 		
 		
 		
-		return view('pdf.htmlview',['data'=>$appendData,'uploadpath'=>$uploadpath,'fileid'=>$fileid]);
+		return view('pdf.htmlview',['data'=>$appendData,'uploadpath'=>$uploadpath,'fileid'=>$id]);
 
 		
 		//dd($data);
