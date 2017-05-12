@@ -15,7 +15,8 @@
         "maatwebsite/excel": "~2.1.0",
  "nicat/static-map": "^1.0",
  "cornford/googlmapper": "2.*",
-		"league/flysystem-aws-s3-v3":"~1.0"
+		"league/flysystem-aws-s3-v3":"~1.0",
+        "phpoffice/phpword": "^0.13.0"
 
 
     },

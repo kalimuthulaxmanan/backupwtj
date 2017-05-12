@@ -35,6 +35,9 @@
 
 
 	Route::group(['middleware' => ['web']], function () {
+		
+		
+   	$this->get('/generateDoc/{id}', 'DocController@generateDoc');
 
 
 	$this->get('/generateHtmlPreview/{id}', 'HtmlPreviewPdfController@generateHtmlPreview');
