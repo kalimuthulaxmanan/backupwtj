@@ -32,7 +32,7 @@
                                         <tbody>
                                         	@foreach($pdflist as $file)
                                             <tr>
-                                            	<td>{{$file->file_name}}</td>
+                                            	<td>{{$file->upload_file}}</td>
 												@if($file->firstName!=null)
 												<td>{{$file->firstName}}</td>
 												@else
