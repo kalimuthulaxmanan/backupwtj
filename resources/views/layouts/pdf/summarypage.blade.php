@@ -41,7 +41,7 @@
     <table style="height:120px;position:absolute;bottom:0px;">
 		<tr style="">
             <td style="width:50%;vertical-align:middle;">
-                <span>Date of release:{{$data->date_of_release}}</span>
+                <span>Date of release:<?php $dates="$data->date_of_release";$date=date_create_from_format("Y-m-d","$dates");echo date_format($date,"M d, Y"); ?></span>
             </td>
             <td style="width:50%;text-align:right">
                 <img src="{{url('/')}}/<?php echo $data->upload_path; ?><?php echo trim($data->signature); ?>" alt="" title="" style="width:200px;height:50px;" />

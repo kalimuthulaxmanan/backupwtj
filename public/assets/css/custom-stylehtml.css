@@ -67,6 +67,7 @@ img{
 .big-title{
 	font-size: 70px;
 	margin: 0;
+    width: 100%;
 }
 .pdf-view .title{
 	padding: 0 15px;

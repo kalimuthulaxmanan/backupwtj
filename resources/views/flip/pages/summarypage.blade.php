@@ -1,7 +1,13 @@
-<div class="table-contents">
-	<section class="">  
-	<div class="row center">  
-		<div class="table-content pt-150">
+<style>
+.text-center{
+	text-align:center;
+}
+.text-left{
+	text-align:left;
+}
+</style>
+
+<div class="table-contents text-center">  
 			<div class="table-header">
 				<p>  
 				Distinguished guests:{{$data->distinguished_guests}} <br>
@@ -15,7 +21,7 @@
 			</div>
 			<div class="table-body">
 				<h3>Summary</h3>
-				<table>
+				<table class="text-left">
 					<tr>
 					<td>Welcome in France</td>
 					<td>page 04</td>
@@ -42,15 +48,13 @@
 					</tr>
 				</table>
 			</div>
-		</div>
-	</div>  
 	<footer class="pdf">    
 	  <div class="">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="col-md-6 col-sm-6 col-xs-12 footer-height">
 					<div class="footer-content left">
-						<p class="bold">Date of release: {{$data->date_of_release}}</p>
+						<p class="bold">Date of release: <?php $dates="$data->date_of_release";$date=date_create_from_format("Y-m-d","$dates");echo date_format($date,"M d, Y"); ?></p>
 					</div>                      
 				</div>
 				<div class="col-md-6 col-sm-6 col-xs-12 footer-height text-right">
@@ -60,6 +64,5 @@
 		</div>          		
 	  </div>          		
 	</footer>      
-</section> 
 </div>
 <span class="page-number">{{$data->page}}</span>
