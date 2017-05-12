@@ -80,7 +80,7 @@ return view('dashboard',['pdflist'=>$pdflist]);
             'email' => 'required|email|max:255|unique:users',
             'firstname' => 'required|max:255',
             'lastname' => 'required|max:255',
-            'phone' => 'required|numeric',
+            'phone' => 'required|numeric|unique:users',
             'address' => 'required|max:255',
             'city' => 'required|max:255',
             'country' => 'required|max:255',
@@ -122,24 +122,30 @@ return view('dashboard',['pdflist'=>$pdflist]);
 
     public function listUserForm()
     { 
-        $x=Session::get('email'); 
-        $viewme=DB::table('users')->where('email','!=',$x)->get();
+        $x=Session::get('userId');
+        //$x=Session::all();
+        $viewme=DB::table('users')->where('id','!=',$x)->get();
         return view('users.list',['viewme'=>$viewme]);
     }
 
     public function userdelete($id)
     {   
+        $results = DB::table('users')->where('id','=',$id)->get();
+        if($results!="")
+        {
         DB::table('users')->delete($id);
-        session()->flash('deleteuser', 'Deleted Successfully.');
+        session()->flash('deleteuser', 'User Deleted Successfully.');
         return redirect('userlist');
-
+        }   
+        else{
+            session()->flash('deleteuser', 'Invalid User please select valid user');
+        }
     }
 
     public function showuseredit($id)
     {
 
-        $results = DB::select("select * from users where id = $id");
-
+        $results = DB::table('users')->where('id','=',$id)->get();
         return view('users.edit',['id'=>$id,'results'=>$results]);
 
     }
@@ -148,10 +154,10 @@ return view('dashboard',['pdflist'=>$pdflist]);
     {   
 
         $v=Validator::make($request->all(), [
-            'email' => 'required|email|max:255',
+            'email' => 'required|unique:users,email,'.$id.',id',
             'firstname' => 'required|max:255',
             'lastname' => 'required|max:255',
-            'phone' => 'required|numeric',
+            'phone' => 'required|unique:users,phone,'.$id.',id',
             'address' => 'required|max:255',
             'city' => 'required|max:255',
             'country' => 'required|max:255',
@@ -162,6 +168,10 @@ return view('dashboard',['pdflist'=>$pdflist]);
 
             return redirect()->back()->withErrors($v->errors());
         }
+
+        //$email=$request->email;
+        //$viewme=DB::table('users')->where('id','!=',$id )->get();
+        //dd($viewme);
         //if($_FILES['picture']['tmp_name']==NULL)
             //{
 
@@ -269,7 +279,7 @@ return view('dashboard',['pdflist'=>$pdflist]);
     public function showProfileedit($id)
     {
 
-        $results = DB::select("select * from users where id = $id");
+        $results = DB::table('users')->where('id','=',$id)->get();
 
         return view('users.profileedit',['id'=>$id,'results'=>$results]);
 
@@ -279,10 +289,10 @@ return view('dashboard',['pdflist'=>$pdflist]);
     {   
 
         $v=Validator::make($request->all(), [
-            'email' => 'required|email|max:255',
+            'email' => 'required|unique:users,email,'.$id.',id',
             'firstname' => 'required|max:255',
             'lastname' => 'required|max:255',
-            'phone' => 'required|numeric',
+            'phone' => 'required|unique:users,phone,'.$id.',id',
             'address' => 'required|max:255',
             'city' => 'required|max:255',
             'country' => 'required|max:255',
@@ -344,5 +354,91 @@ return view('dashboard',['pdflist'=>$pdflist]);
                    }*/
 
         }
+public function checkemail($email)
+    {
+        $v=DB::table('users')->where('email', $email)->get();
+    if($v == NULL) //Returns TRUE
+         {
+            echo "failed";
+            exit();
+         }
+     else 
+         {
+            echo "success";
+            exit();
+         }
+
+    }
+
+public function checkphone($phone)
+    {
+        $u=DB::table('users')->where('phone', $phone)->get();
+    if($u == NULL) //Returns TRUE
+         {
+            echo "failed";
+            exit();
+         }
+     else 
+         {
+            echo "success";
+            exit();
+         }
+
+    }
+
+public function updatecheckemail($id,Request $request)
+{      $v=Validator::make($request->all(), [
+            'email' => 'required|unique:users,email,'.$id.',id',
+            
+   
+        ]);
+
+     if ($v->fails())
+        {       
+          echo "success";
+            exit(); 
+            
+        }
+       else
+       {
+       echo "failed";
+            exit();
+       } 
+
+    /*$email=$request->email;
+     $v=DB::table('users')->where([['id', '!=', $id],['email','=',$email]])->get();
+     dd($v);
+    if($v == NULL) //Returns TRUE
+         {
+            echo "failed";
+            exit();
+         }
+     else 
+         {
+            echo "success";
+            exit();
+         } */
+
+
+}
+public function updatephonecheck($id,Request $request)
+{      $v=Validator::make($request->all(), [
+            'phone' => 'required|unique:users,phone,'.$id.',id',
+            
+        ]);
+
+     if ($v->fails())
+        {       
+          echo "success";
+            exit(); 
+            
+        }
+       else
+       {
+       echo "failed";
+            exit();
+       } 
+}
+
 
 }

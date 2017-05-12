@@ -349,7 +349,7 @@
 
                         <div class="col-lg-12 col-md-12">
                             <div class="card">
-                                <div class="card-header" data-background-color="orange">
+                                <div class="card-header" data-background-color="purple">
                                     <h4 class="title">Recent data</h4>
                                     <p class="category">Latest on <?php echo date('Y-m-d'); ?></p>
                                 </div>

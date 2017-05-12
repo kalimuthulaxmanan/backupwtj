@@ -33,6 +33,7 @@
 	$this->post('/galleryupload/{id}', 'PdfController@galleryupload');
 	//$this->get('/auth', 'API\AuthController@checkUser');
 
+
 	Route::group(['middleware' => ['web']], function () {
 
 
@@ -99,4 +100,9 @@
 	$this->get('/changeimage/{id}/{image}', 'PdfController@changeimage');
 
 	//Route::post('/galleryupload/{id}', 'PdfController@galleryupload');
+	$this->get('/emailcheck/{email}', 'DashboardController@checkemail');
+	$this->get('/phonecheck/{phone}', 'DashboardController@checkphone');
+
+	$this->post('/updateemailcheck/{id}', 'DashboardController@updatecheckemail');
+	$this->post('/updatephonecheck/{id}', 'DashboardController@updatephonecheck');
 });

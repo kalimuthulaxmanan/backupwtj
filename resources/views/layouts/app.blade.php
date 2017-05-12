@@ -34,8 +34,6 @@
 
 <div class="color-line"></div>-->
 
-
-
 <div class="login-container">
      <div class="row">
 
