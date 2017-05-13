@@ -1,5 +1,5 @@
 
-<div class="book-content">
+<div class="book-content right-content-page">
 	<h2>{{$data->title}}</h2>
 	<div class="left-content">
 		<p style="line-height:25px;">

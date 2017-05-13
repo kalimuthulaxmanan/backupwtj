@@ -98,4 +98,7 @@
   'montserrat' => array(
     'normal' => $fontDir . '/dd59cfb4c42e111df161241f94b00205',
   ),
+  'helvetica25' => array(
+    'normal' => $fontDir . '/f7fa032ed59acc9d02065ebcfa98e46e',
+  ),
 ) ?>

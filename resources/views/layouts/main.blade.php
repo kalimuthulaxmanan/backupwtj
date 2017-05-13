@@ -193,8 +193,6 @@
             </footer>
         </div>
     </div>
-</body>
-
 
     <!--   Core JS Files   -->
     <script src="{{ url('/assets/js/jquery-3.1.0.min.js')}}" type="text/javascript"></script>
@@ -226,8 +224,6 @@ jQuery(document).ready(function($) {
 
 	</script>
 
-
-</html>
 <script>
     jQuery(function($) {
      var path = window.location.href; // because the 'href' property of the DOM element is the absolute path
@@ -247,7 +243,7 @@ jQuery(document).ready(function($) {
 	
 	setTimeout(function() { 
     jQuery(".activeDisplay").css('display','block'); 
-}, 100);
+}, 600);
 
 
 
@@ -260,3 +256,6 @@ jQuery(document).ready(function($) {
 	}
 	
 </style>
+
+</body>
+</html>

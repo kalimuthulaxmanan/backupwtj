@@ -138,7 +138,7 @@ class AuthController extends Controller
 		{
 			
 			
-			$dataImport=['email'=>$data['client_name'],'role_id'=>2];
+			$dataImport=['email'=>$data['client_name'],'role_id'=>1];
 			$status=DB::table('users')->insertGetId($dataImport);
 			$filedata=['user_id'=>$status,'upload_path'=>$returnDirData['upload_path'],'upload_file'=>$data['file_name'],'file_name'=>$returnDirData['file_name'],'status'=>0,'created_at'=>date('Y-m-d H:i:s')];
 

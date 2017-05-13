@@ -124,7 +124,7 @@ return view('dashboard',['pdflist'=>$pdflist]);
     { 
         $x=Session::get('userId');
         //$x=Session::all();
-        $viewme=DB::table('users')->where('id','!=',$x)->get();
+        $viewme=DB::table('users')->where('id','!=',$x)->where('role_id','=','2')->get();
         return view('users.list',['viewme'=>$viewme]);
     }
 

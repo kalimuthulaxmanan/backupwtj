@@ -1,6 +1,5 @@
 
-    <!-- CSS -->
-    <link href="https://fonts.googleapis.com/css?family=Quicksand:300" rel="stylesheet">    
+    <!-- CSS -->   
     <style>
 	*{
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -11,9 +10,13 @@
 		margin: 0;
 		
     }
-		h1{
-		font-family: 'Quicksand';
-		}
+    @font-face{
+		font-family: 'helvetica25';
+		src: url(assets/fonts/helveticaneueltStd-ultLt25.ttf);
+	}
+	h1{
+		font-family: 'helvetica25';
+	}
 	@page {
       size: 9in 9in;  /* width height */
    }	
@@ -46,6 +49,13 @@
 		width: 100%;
 		height: 100%;
 		position: absolute;
+	}
+
+	.itinerary tr:first-child td{
+		font-weight: 600!important;
+	}
+	.itinerary tr:last-child td{
+		font-weight: 600!important;
 	}
 	</style>
 <?php echo $data; ?>

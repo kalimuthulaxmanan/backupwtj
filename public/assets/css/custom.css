@@ -197,7 +197,38 @@ td.image img{
 .alert.alert-with-icon span {
         font-weight: bold;
     }
+	
+/*** Table Styles Start ***/
+.dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate{
+	display:inline-block;
+	margin: 10px 0;
+}
+.dataTables_filter, .dataTables_paginate{
+	float:right;
+}
+.dataTables_length label, .dataTables_filter label, .dataTables_info, .dataTables_paginate a{
+    color: rgba(0,0,0, 0.87);
+    font-weight: 300;
+}
+.dataTables_length select{
+	padding: 5px 10px;
+    margin: 0 5px;
+    border: 1px solid rgba(193, 193, 193, 0.50);
+    box-shadow: 0 1px 5px 1px rgba(193, 193, 193, 0.50);
+}
+.dataTables_filter input{
+    border: 1px solid rgba(193, 193, 193, 0.50);
+    padding: 5px;
+    box-shadow: 0 1px 5px 1px rgba(193, 193, 193, 0.50);
+}
+.dataTables_paginate span{
+    padding: 0 10px;
+}
 
+.tbodypad td{
+    padding: 0px 20px !important;    
+}
+/*** Table Styles End ***/
 
 
 
