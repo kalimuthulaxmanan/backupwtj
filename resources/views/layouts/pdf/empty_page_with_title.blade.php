@@ -2,7 +2,7 @@
     <table style="width:100%;height:100%;position:absolute;background-color:<?php echo $data->empty_page_color; ?>;">
 		<tr style="">
             <td style="text-align:right">
-				<h1 style="font-size: 50px;color:eeee">{{$data->title}}</h1>  
+				<h1 style="font-size: 100px;color:#fff">{{$data->title}}</h1>  
             </td>
 		</tr>
     </table>

@@ -1,23 +1,10 @@
-/* Steve jobs' book 
-
-@font-face {
-  font-family: 'Stempel-Garamond-W01-Roman';
-  font-style: normal;
-  font-weight: normal;
-  src: url('../fonts/Stempel-Garamond-W01-Roman.woff') format('woff');
-} */
-
-.page-wrapper{
-	top:0 !important;
-	right:0 !important;
-}
+/* Steve jobs' book */
 
 body, ul, table, form{
 	margin:0;
 	padding:0;
 	overflow:hidden;
 }
-
 .animated{
 	-webkit-transition:margin-left 0.2s ease-in-out;
 	-moz-transition:margin-left 0.2s ease-in-out;
@@ -29,7 +16,7 @@ body, ul, table, form{
 #canvas{
 	width: 1100px;
 	height: 600px;
-	margin: 25px auto;
+	margin: 100px auto;
 }
 
 #book-zoom{
@@ -48,20 +35,16 @@ body, ul, table, form{
 }
 
 .sj-book h1{
-	/* font-family: "Stempel-Garamond-W01-Roman"; */
 	font-size: 30px;
 	font-weight: lighter;
 	margin: 0 0 20px;
 	color: #333;
-    font-family: 'Quicksand';
+    font-family: 'helvetica25';
     font-weight: normal;
-	/* -webkit-text-fill-color: #333; 
-	 -webkit-text-stroke-color: white; 
-	 -webkit-text-stroke-width: 0.005em; */
 }
 
 .sj-book h2{
-    font-family: 'Quicksand';
+    font-family: 'helvetica25';
     color:#444;
     font-size:40px;
 	letter-spacing:0px;
@@ -70,7 +53,6 @@ body, ul, table, form{
 }
 
 .sj-book .book-content{
-	/* font-family: "Stempel-Garamond-W01-Roman"; */
 	font-size:16px;
 	margin:0px;
 }
@@ -175,6 +157,39 @@ body, ul, table, form{
 }
 
 
+.sj-book .p1{
+	background-position:0 0;
+}
+
+.sj-book .p1 .side{
+	width:5px;
+	height:600px;
+	position:absolute;
+	top:0;
+	left:475px;
+
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0, #bbb), color-stop(0.5,  #ddd), color-stop(1,  #bbb));
+	background-image:-webkit-linear-gradient(left, #bbb, #ddd, #bbb);
+	background-image:-moz-linear-gradient(left, #bbb, #ddd, #bbb);
+	background-image:-ms-linear-gradient(left, #bbb, #ddd, #bbb);
+	background-image:-o-linear-gradient(left, #bbb, #ddd, #bbb);
+	background-image:linear-gradient(left, #bbb, #ddd, #bbb);
+	
+	-webkit-transform:rotateY(-90deg);
+	-moz-transform:rotateY(-90deg);
+	-o-transform:rotateY(-90deg);
+	-ms-transform:rotateY(-90deg);
+	transform:rotateY(-90deg);
+
+	-webkit-transform-origin:top right;
+	-moz-transform-origin:top right;
+	-o-transform-origin:top right;
+	-ms-transform-origin:top right;
+	transform-origin:top right;
+	z-index:100000;
+
+}
+
 .sj-book-transform div[page="1"] > div, .sj-book-transform div[page="2"] > div{
 	overflow:visible !important;
 }
@@ -215,7 +230,7 @@ body, ul, table, form{
 }
 
 .sj-book .hard{
-	width:480px;
+	width:550px;
 	height:600px;
 	background-color:white;
 	-webkit-box-shadow:none;
@@ -232,39 +247,32 @@ body, ul, table, form{
 }
 
 .sj-book .own-size{
-	width:460px;
+	width:530px;
 	height:582px;
 	background-color:white;
 	overflow:hidden;
 }
 
 .sj-book .even{
-	background:-webkit-gradient(linear, left top, right top, color-stop(0.95, #fff), color-stop(1, #f5f5f5));
-	background-image:-webkit-linear-gradient(left, #fff 95%, #f5f5f5 100%);
-	background-image:-moz-linear-gradient(left, #fff 95%, #f5f5f5 100%);
-	background-image:-ms-linear-gradient(left, #fff 95%, #f5f5f5 100%);
-	background-image:-o-linear-gradient(left, #fff 95%, #f5f5f5 100%);
-	background-image:linear-gradient(left, #fff 95%, #f5f5f5 100%);
+	background:-webkit-gradient(linear, left top, right top, color-stop(0.95, #fff), color-stop(1, #dadada));
+	background-image:-webkit-linear-gradient(left, #fff 95%, #dadada 100%);
+	background-image:-moz-linear-gradient(left, #fff 95%, #dadada 100%);
+	background-image:-ms-linear-gradient(left, #fff 95%, #dadada 100%);
+	background-image:-o-linear-gradient(left, #fff 95%, #dadada 100%);
+	background-image:linear-gradient(left, #fff 95%, #dadada 100%);
 }
 
 .sj-book .odd{
-	background:-webkit-gradient(linear, right top, left top, color-stop(0.95, #fff), color-stop(1, #f1f1f1));
-	background-image:-webkit-linear-gradient(right, #fff 95%, #f1f1f1 100%);
-	background-image:-moz-linear-gradient(right, #fff 95%, #f1f1f1 100%);
-	background-image:-ms-linear-gradient(right, #fff 95%, #f1f1f1 100%);
-	background-image:-o-linear-gradient(right, #fff 95%, #f1f1f1 100%);
-	background-image:linear-gradient(right, #fff 95%, #f1f1f1 100%);
-}
-
-.sj-book .even .right-content-page{
-	padding-left: 20px;
-}
-.sj-book .odd .right-content-page{
-	padding-left: 20px;
+	background:-webkit-gradient(linear, right top, left top, color-stop(0.95, #fff), color-stop(1, #cacaca));
+	background-image:-webkit-linear-gradient(right, #fff 95%, #cacaca 100%);
+	background-image:-moz-linear-gradient(right, #fff 95%, #cacaca 100%);
+	background-image:-ms-linear-gradient(right, #fff 95%, #cacaca 100%);
+	background-image:-o-linear-gradient(right, #fff 95%, #cacaca 100%);
+	background-image:linear-gradient(right, #fff 95%, #cacaca 100%);
 }
 
 .sj-book .loader{
-	/* background-image:url(../pics/loader.gif); */
+	background-image:url(../pics/loader.gif);
 	width:22px;
 	height:22px;
 	position:absolute;
@@ -273,9 +281,9 @@ body, ul, table, form{
 }
 
 .sj-book .page-number{
-	color:#000;
+	color:#999;
 	width:100%;
-	bottom:0px;
+	bottom:25px;
 	position:absolute;
 	display:block;
 	text-align: center;
@@ -352,6 +360,69 @@ body, ul, table, form{
 }
 
 
+
+
+
+
+
+
+
+.sj-book .even .right-content-page{
+	padding-left: 20px;
+}
+.sj-book .odd .right-content-page{
+	padding-left: 20px;
+}
+.sj-book .page-number{
+	color:#000;
+	width:100%;
+	bottom:0px;
+	position:absolute;
+	display:block;
+	text-align: center;
+	line-height:30px;
+	font-size:11px;
+}
+
+.sj-book .table-contents{
+	font-size:16px;
+	width:300px;
+	margin:80px auto;
+	color:#ccc;
+}
+
+.sj-book .table-contents li{
+	list-style:none;
+	line-height:25px;
+}
+
+.sj-book .table-contents span{
+	float:right;
+}
+
+.sj-book .table-contents a{
+	float:left;
+	width:100%;
+	clear:both;
+	text-decoration:none;
+	color:#333;
+	margin:2px 0;
+	padding:0 10px;
+}
+
+.sj-book .table-contents a:hover{
+	background:#CAD1EE;
+	float:left;
+	width:100%;
+	clear:both;
+	text-decoration:none;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	-o-border-radius:10px;
+	-ms-border-radius:10px;
+	border-radius:10px;
+}
+
 /*** Background Color -- Title Page Start ***/
 .sj-book .title-page {
     background: -webkit-gradient(linear, right top, left top, color-stop(0.95, #9c9c9c), color-stop(1, #838383));
@@ -384,7 +455,7 @@ body, ul, table, form{
     width: 100%;
     padding-right: 10px;
     font-size: 50px;
-    font-family: 'Quicksand';
+    font-family: 'helvetica25';
     font-weight: bold;
 }
 .sj-book .title-page img {
@@ -458,7 +529,7 @@ body, ul, table, form{
 	display: block;
 }
 .terms-conditions h5{
-    font-family: 'Quicksand';
+    font-family: 'helvetica25';
     font-weight: bold;
 }
 .terms-conditions h6{}
@@ -496,7 +567,7 @@ body, ul, table, form{
 }
 .index-footer{
 	position:absolute;
-	bottom: 30px;
+	bottom: 10px;
     width: 100%;
 }
 .index-footer .left{
@@ -516,6 +587,8 @@ body, ul, table, form{
 }
 .index-footer .right h1{
 	margin: 0;
+    font-size: 70px;
+    text-transform: capitalize;
 }
 .ml-30{
 	margin-left: 30px !important;

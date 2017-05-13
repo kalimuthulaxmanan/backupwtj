@@ -1,7 +1,7 @@
 /** Custom Style **/
 @font-face{
-	font-family: 'Gotham-Book';
-	src: url(../fonts/Gotham-Book.otf);
+  font-family: 'helvetica25';
+  src: url(../fonts/helveticaneueltStd-ultLt25.ttf);
 }
 body{
 	margin: 0 auto;
@@ -10,11 +10,15 @@ body{
 	padding-top: 20px;*/
 }
 h1{
-	font-family: 'Quicksand';
+	font-family: 'helvetica25';
 	font-weight: 300;
+    color: #000;
+    line-height: 1.2;
+    font-size: 55px;
 }
 p.bold{
 	font-weight: normal;
+  text-align: justify;
 }
 img{
 	width: 100%;
@@ -31,9 +35,11 @@ img{
 .padd-left-30{
 	padding-left: 15px !important;
 }
-.font-26{
-	font-size: 26px;
-    font-weight: 600;
+.font-28{
+  font-size: 28px;
+}
+.font-36{
+  font-size: 36px;
 }
 .mt-25{
 	margin-top: 25px !important;
@@ -68,6 +74,7 @@ img{
 	font-size: 70px;
 	margin: 0;
     width: 100%;
+    color:#fff;
 }
 .pdf-view .title{
 	padding: 0 15px;
@@ -96,26 +103,31 @@ img{
 	font-weight: 600;
 	margin: 20px 0;
 }
+.sales-content p{
+	text-align: justify;
+}
 /*** Table start ***/
 .table-content {
     margin: auto;
     width: 300px;
     text-align: center;
     padding: 40px 0;
-    font-weight: 600;
 }
 .table-content .table-header p{
 	padding-bottom: 10px;
+    font-size: 12px;
 }
 .table-content .table-header h5{
-    font-weight: 900;
+    font-weight: 500;
 }
 .table-content .table-body{
 	padding-top: 10px;
 }
 .table-content .table-body h3{
-	padding-bottom: 10px;
-	font-weight: 900;
+    font-weight: 600;
+    font-family: helvetica25;
+    font-size: 25px;
+    letter-spacing: 1px;
 }
 .table-content table{
     width: 100%;
@@ -142,21 +154,24 @@ footer.pdf{
     bottom: 0;
 }
 .footer-image.right{
-	right: 40px;
+	right: 10px;
 }
 .footer-height{
 	height: 100px;
 }
 .footer-content h1{
-	font-size: 70px;
-	margin: 0;
-	line-height: normal;
+    font-size: 100px;
+    margin: 0;
+    line-height: 85px;
+    text-transform: capitalize;
     position: relative;
-    margin-top: -15px;
+    margin-top: -25px;
+    color: #8a8a8a;
 }
 .footer-content h3{
-	font-size: 18px;
-	margin: 0;
+  font-size: 28px;
+    color: #8a8a8a;
+  margin: 0;
 }
 .footer-content.left{
 }

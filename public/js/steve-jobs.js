@@ -7,9 +7,7 @@ function updateDepth(book, newPage) {
 		depthWidth = 16*Math.min(1, page*2/pages);
 
 		newPage = newPage || page;
-	
-
-
+		
 }
 
 function loadPage(page) {
@@ -30,7 +28,7 @@ function addPage(page, book) {
 
 		var element = $('<div />',
 			{'class': 'own-size',
-				css: {width: 550, height: 600}
+				css: {width: 530, height: 582}
 			}).
 			html('<div class="loader"></div>');
 

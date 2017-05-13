@@ -2,12 +2,12 @@
     <table class="padd-left">
 		<tr style="">
             <td style="width:60%;vertical-align: top;">
-				<h1 style="font-size: 50px;">{{$data->title}}</h1> <br />
+				<h1 style="font-size: 50px;color:#000;">{{$data->title}}</h1> <br />
 				<table>
 					@foreach($data->detailitineraryDatas as $detail_itineraryData)
 					<tr>
 						<td>
-						<b><?php $dates=$detail_itineraryData->event_date; $date=date_create_from_format("Y-m-d","$dates");
+						<b style="font-weight:600;color:#444;"><?php $dates="$detail_itineraryData->event_date"; $date=date_create_from_format("Y-m-d","$dates");
 						echo date_format($date,"M d");?></b>
 						</td><br /><br />
 					</tr>

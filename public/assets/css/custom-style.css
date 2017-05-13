@@ -1,11 +1,6 @@
 /** Custom Style **/
-@font-face{
-	font-family: 'Gotham-Book';
-	src: url(../fonts/Gotham-Book.otf);
-}
 body{
 	margin: 0 auto;
-	font-family: 'Gotham-Book';
 	font-size: 11px;
 	line-height:17px;
 	color: #6d6e71;
@@ -13,7 +8,6 @@ body{
 	padding-top: 20px;
 }
 h1{
-	font-family: 'Quicksand';
 	font-weight: 300;
 }
 p.bold{
@@ -88,6 +82,9 @@ section{
 .sales-content h6{
 	font-weight: 600;
 	margin: 20px 0;
+}
+.sales-content p{
+	text-align: justify;
 }
 /*** Table start ***/
 .table-content {

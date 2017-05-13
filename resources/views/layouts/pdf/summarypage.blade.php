@@ -1,5 +1,5 @@
  <!-- Section Start -->
-    <table style="margin-top:100px;">
+    <table style="margin-top:150px;">
 		<tr style="">
             <td colspan="2" style="text-align:center">                
 				Distinguished guests:{{$data->distinguished_guests}}<br>
@@ -11,7 +11,7 @@
                 </h5><br />
             </td>
 		</tr>
-        <tr><td colspan="2" style="text-align:center"><h1 style="font-size: 24px;">Summary<br /><br /></h1></td></tr>
+        <tr><td colspan="2" style="text-align:center"><h1 style="font-size: 25px;font-weight: 600;letter-spacing: 1px;color: #000">Summary<br /><br /></h1></td></tr>
 		<tr class="summary-left">
 			<td>Welcome in France</td>
 			<td>page 04</td>
