@@ -26,10 +26,7 @@
 		<div class="sj-book">
 			<div depth="5" class="hard"> <div class="side"></div> </div>
 			<div depth="5" class="hard front-side"> <div class="depth"></div> </div>
-			<div class="own-size"></div>
-			<div class="own-size even"></div>
-			<div class="hard fixed back-side p111"> <div class="depth"></div> </div>
-			<div class="hard p112"></div>
+	
 		</div>
 	</div>
 	<div id="slider-bar" class="turnjs-slider">
@@ -69,6 +66,7 @@ function loadApp() {
 
 		var actualView = Math.round(data.scrollX/step),
 			page = Math.min(flipbook.turn('pages'), Math.max(1, actualView*2 - 2));
+//		alert(page);
 
 		if ($.inArray(data.scrollPage, flipbook.turn('view', page))==-1) {
 			data.scrollPage = page;
@@ -178,6 +176,8 @@ function loadApp() {
 		when: {
 			turning: function(e, page, view) {
 				
+			//	alert('hai');
+				
 				var book = $(this),
 					currentPage = book.turn('page'),
 					pages = book.turn('pages');
@@ -260,6 +260,9 @@ function loadApp() {
 			},
 
 			missing: function (e, pages) {
+				
+				//	alert(pages);
+
 
 				for (var i = 0; i < pages.length; i++) {
 					addPage(pages[i], $(this));
