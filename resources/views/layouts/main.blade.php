@@ -56,9 +56,9 @@
 
                     <li>
 						
-                        <a class="collapsible-header active collapsible-header <?php echo (strpos($currentUrl,'userlist')!=0)?'Activesub':''; ?> <?php echo (strpos($currentUrl,'adduser')!=0)?'Activesub':''; ?> ">
-                            <i <?php echo (strpos($currentUrl,'adduser')!=0 || strpos($currentUrl,'userlist')!=0)?'style="color:white"':''; ?> class="material-icons">person</i>
-                            <p <?php echo (strpos($currentUrl,'adduser')!=0 || strpos($currentUrl,'userlist')!=0)?'style="color:white"':''; ?> >User Profile</p>
+                        <a class="collapsible-header active collapsible-header <?php echo (strpos($currentUrl,'userlist')!=0)?'Activesub':''; ?> <?php echo (strpos($currentUrl,'adduser')!=0)?'Activesub':''; ?> <?php echo (strpos($currentUrl,'useredit')!=0)?'Activesub':''; ?> ">
+                            <i <?php echo (strpos($currentUrl,'adduser')!=0 || strpos($currentUrl,'userlist')!=0 || strpos($currentUrl,'useredit')!=0)?'style="color:white"':''; ?> class="material-icons">person</i>
+                            <p <?php echo (strpos($currentUrl,'adduser')!=0 || strpos($currentUrl,'userlist')!=0 || strpos($currentUrl,'useredit')!=0)?'style="color:white"':''; ?> >User Profile</p>
                         </a>
                         <div class="collapsible-body <?php echo (strpos($currentUrl,'adduser')!=0)?'activeDisplay':''; ?> <?php echo (strpos($currentUrl,'userlist')!=0)?'activeDisplay':''; ?>"  >
                             <a href="{{ url('/userlist')}}">

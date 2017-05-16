@@ -18,7 +18,7 @@
 		font-family: 'helvetica25';
 	}
 	@page {
-      size: 9in 9in;  /* width height */
+      size: 7.5in 7.5in;  /* width height */
    }	
 	span{
 		text-align:justify;
