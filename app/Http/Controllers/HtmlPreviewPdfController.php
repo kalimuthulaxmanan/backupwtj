@@ -78,8 +78,10 @@ class HtmlPreviewPdfController extends Controller
 					case "itinerary":
 						   
 						   $itineraryImagescount=DB::table('pdf_content_images')->where('content_id',$value->id)->count();
+
 						   $imagecount=$itineraryImagescount/5;
 						   $itineraryDatacount=DB::table('pdf_itinenary')->where('content_id',$value->id)->count();
+						   //dd($itineraryDatacount);
 						   $Datacount=round($itineraryDatacount/$imagecount);
 						   $j=0;
 						   for($i=0;$i<=$itineraryImagescount;$i++)
@@ -108,7 +110,9 @@ class HtmlPreviewPdfController extends Controller
 					case "detail_itinerary":
 						    
 						    $detailitineraryImagescount=DB::table('pdf_content_images')->where('content_id',$value->id)->count();
+
 						    $detailitineraryDatascount=DB::table('pdf_itinenary_details')->where('content_id',$value->id)->count();
+						    //dd($detailitineraryDatascount);
 						    $imagecount=$detailitineraryImagescount/5;
 						    $Datacount=round($detailitineraryDatascount/$imagecount);
 						    $j=0;
@@ -139,14 +143,15 @@ class HtmlPreviewPdfController extends Controller
 						    
 					break;	
 				    case "image_with_content":
+
 						   $contentImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get();
 						   $value->contentImages= $contentImages;
 				
 						   $appendData.=$this->loadTemplate('titleleftimagecontentpage',$value);							
 					break;
 					case "map":
-						
-						   $Mapdetails=DB::table('pdf_map')->select('lat','lon')->get();	
+						   
+						   $Mapdetails=DB::table('pdf_map')->where('file_id',$value->file_id)->select('lat','lon')->get();	
                            $i=0;
                            foreach($Mapdetails as $detail)
 									{
@@ -156,6 +161,7 @@ class HtmlPreviewPdfController extends Controller
 									}
 		  			        $Mapimage= StaticMap::GoogleWithImg("$detail->lat,$detail->lon", ['markers' => $markers,'zoom'=>'8','with' =>'640', 'height' =>'640' ]); 
 			 	            $value->Mapimage=$Mapimage;
+			 	           
 							$appendData.=$this->loadTemplate('mapimage',$value);							
 					break;	
 				    case "travel_agent":
