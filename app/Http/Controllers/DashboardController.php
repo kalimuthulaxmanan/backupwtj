@@ -30,6 +30,8 @@ class DashboardController extends Controller
      */
     public function __construct()
     {
+		
+		
 	
 		   if(session('is_login')==false)
 			{

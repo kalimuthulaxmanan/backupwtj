@@ -113,7 +113,7 @@ class ImportExcelDataController extends BaseController
 		$data['created_at']=date('Y-m-d H:i:s');
 		//dd($fileId);
 		$content_id=$this->insert('pdf_content',$data);
-		$this->insert_image_with_content($row,$content_id);
+		$this->insert_image_with_content($row,$content_id,$fileId->upload_path);
 		
 		return $content_id;
 	}
@@ -219,7 +219,7 @@ class ImportExcelDataController extends BaseController
 		
 	}
 	
-	private function insert_image_with_content($row,$content)
+	private function insert_image_with_content($row,$content,$upload_path)
 	{
 				
 		
@@ -229,7 +229,7 @@ class ImportExcelDataController extends BaseController
 			$imageData=explode("|||",$row[18]);
 			foreach($imageData as $key=>$value)
 			{
-				$imageData=["content_id"=>$content,"image"=>trim($value),'created_at'=>date('Y-m-d H:i:s')];
+				$imageData=["content_id"=>$content,"image"=>$upload_path.'/'.trim($value),'created_at'=>date('Y-m-d H:i:s')];
 				$this->insert('pdf_content_images',$imageData);
 			}
 
