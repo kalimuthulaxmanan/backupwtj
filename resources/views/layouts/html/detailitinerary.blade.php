@@ -25,7 +25,7 @@ echo date_format($date,"M d");?></b></p>
 			<div class="col-md-4 col-sm-4 col-xs-12 padd-0">
 				@foreach($data->detailitineraryImages as $detailitineraryImage)
 				<div class="detailitinerary-image change-image" style="margin-right:0px;">
-					<img src="{{url('/')}}/{{$data->upload_path}}<?php echo trim($detailitineraryImage->image); ?>" alt="" title="" id="image{{$detailitineraryImage->id}}" />
+					<img src="<?php echo trim($detailitineraryImage->image); ?>" alt="" title="" id="image{{$detailitineraryImage->id}}" />
 					<div class="img-overlay">
 						<a  onclick="newFunction('image{{$detailitineraryImage->id}}',{{$detailitineraryImage->id}})" data-toggle="modal" data-target="#myModal" href="">Change Image</a>
 					</div>

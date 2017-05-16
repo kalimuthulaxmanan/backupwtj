@@ -1,7 +1,13 @@
 <!-- Section Start -->
-    <div style="width: 100%;">
+<style type="text/css">
+	.index-image img{
+		width: 100%;
+		height: 500px;
+	}
+</style>
+    <div style="width: 100%;" class="index-image">
 		@foreach($data->frontImages as $frontImage)
-		<img src="{{ url('/') }}/<?php echo $data->upload_path; ?><?php echo trim($frontImage->image); ?>" alt="" title="" style="width: 100%;" />
+		<img src="<?php echo trim($frontImage->image); ?>" alt="" title="" style="width: 100%;" />
 	@endforeach	
     </div>
     <table style="height:120px;position:absolute;bottom:30px;">

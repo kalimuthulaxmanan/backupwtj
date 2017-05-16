@@ -41,8 +41,17 @@ class DocController extends Controller
 	public function generateDoc($id)
 	{
 		
-		$phpWord = new \PhpOffice\PhpWord\PhpWord();
+/*		$phpWord = new \PhpOffice\PhpWord\PhpWord();
 
+<<<<<<< HEAD
+/* Note: any element you append to a document must reside inside of a Section. */
+
+ // Adding an empty Section to the document...
+/*$section = $phpWord->addSection();
+
+		
+		$section->addImage('http://localhost/dev_wtj/public/uploads/1494940055/test/front_page_image.jpg',
+=======
 $filler = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
         . 'Nulla fermentum, tortor id adipiscing adipiscing, tortor turpis commodo. '
         . 'Donec vulputate iaculis metus, vel luctus dolor hendrerit ac. '
@@ -52,6 +61,7 @@ $section = $phpWord->addSection();
 $section->addText("Normal paragraph. {$filler}");
 // Two columns
 $section = $phpWord->addSection(
+>>>>>>> fb9169d1875fd400b73fc9f73f70dd121914cffc
     array(
         'colsNum'   => 2,
         'colsSpace' => 1440,
@@ -80,11 +90,27 @@ $section->addText("Normal paragraph again. {$filler}");
 		
 		
 		
+<<<<<<< HEAD
+		$section->addImage('http://localhost/dev_wtj/public/uploads/1494940055/test/front_page_image.jpg',
+    array(
+        'width' => '100',
+        'height' => '100',
+        ));
+$section->addText('Text break with no style:');
+$section->addText('Text break with no style:');
+
+=======
+>>>>>>> fb9169d1875fd400b73fc9f73f70dd121914cffc
 
 		
 // Saving the document as HTML file...
 $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'HTML');
-$objWriter->save('helloWorld.doc');die;
+$objWriter->save('helloWorld.doc');die; */
+		
+$source='/var/www/html/dev_wtj/public/titleleftimagecontentpage.html';		
+$phpWord = \PhpOffice\PhpWord\IOFactory::load($source, 'HTML');	
+$phpWord->save('helloWorld.doc');
+echo "document created";		
 		
 		
 	}

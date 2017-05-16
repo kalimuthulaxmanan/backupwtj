@@ -215,7 +215,16 @@ class FlipbookDataController extends BaseController
 	public function flipbook($id)
 	{
 		$filepage = DB::table('pdf_content')->where('file_id',$id)->count();
+		
 		$filepagesCount=$filepage+2;
+		if($filepagesCount%2==0)
+		{
+		$filepagesCount=$filepage+2;	
+		}
+		else
+		{
+	    $filepagesCount=$filepage+3;
+		}
 		
 		//dd($request->all());
 		//dd(Session::all());die;

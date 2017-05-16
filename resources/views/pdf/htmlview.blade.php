@@ -174,11 +174,12 @@
                   </div>
                   <div id="menu1" class="tab-pane fade in active">
                    <div class="modal-body edit-image">
+					   
                         @foreach($galleries as $gallery)
 
                         <input type="radio" id="{{$gallery->id}}" name="myRadio"/>
                         <label for="{{$gallery->id}}">
-						<img id="imageid{{$gallery->id}}" src="{{ url('/') }}/{{$gallery->upload_path}}<?php echo trim($gallery->image); ?>" />
+						<img id="imageid{{$gallery->id}}" src="<?php echo trim($gallery->image);?>" />
                         </label>
                         @endforeach
                      <!--   <input type="radio" id="2" name="myRadio" />
@@ -246,21 +247,34 @@
         var z=document.getElementById("fill2").value;
         var x=document.getElementById("fill").value;
         var y=document.getElementById("fill1").value;
-	   var baseurl="<?php echo url('/'); ?>";
-		
+	    var baseurl="<?php echo url('/'); ?>";
+   	   
+	
         $('#'+x).attr("src",y);  
         var Imgname = y.split("/")[y.split("/").length-1];
+		
         
          
-        $.ajax({
+      /*  $.ajax({
                           type: 'get',
                           
                           url :baseurl+"/changeimage/"+z+"/"+Imgname,
                           
                         
-   });
-            
-    }
+   }); */
+          
+ $.ajax({
+                          type: 'post',
+                          
+                          url :baseurl+"/changeimage/"+z,
+
+                          data:{
+						    "_token": "{{ csrf_token() }}",
+                            
+                             file_path:y,
+                              },
+            });         
+	}
 
    function setimage()
    {
@@ -272,7 +286,7 @@
 
 	var baseurl="<?php echo url('/'); ?>"; 
 	var file_name=baseurl+'/'+uploadpath+f;   
-	
+	console.log(file_name)
 	   
 
  $.ajax({

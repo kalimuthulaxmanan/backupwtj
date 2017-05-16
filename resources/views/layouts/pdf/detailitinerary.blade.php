@@ -21,7 +21,10 @@
             </td>
             <td style="width:40%;text-align:right">
 				@foreach($data->detailitineraryImages as $detailitineraryImage)
-                <img src="{{url('/')}}/{{$data->upload_path}}/<?php echo trim($detailitineraryImage->image); ?>" alt="" title="" style="width:225px;height:140px;" /><br />
+
+    
+                <img src="<?php echo trim($detailitineraryImage->image); ?>" alt="" title="" style="width:250px;height:169px;" /><br />
+
 				@endforeach
                 
             </td>

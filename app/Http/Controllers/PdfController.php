@@ -35,7 +35,7 @@ public function __construct()
 			}
 		
 
-    }
+    } 
 public function pdflist()
 {
 /*list the all files */
@@ -119,9 +119,10 @@ public function test()
 return view('test');
 }
 	
-public function changeimage($id,$image)
+public function changeimage($id,Request $request)
 {
-
+   $image=$request->input('file_path');
+	
 	DB::table('pdf_content_images')
                             ->where('id', $id)
                             ->update(['image'=>$image]);
@@ -134,22 +135,21 @@ public function changeimage($id,$image)
 public function galleryupload($id,Request $request)
 	{
 		
-		
-
   	   
 		$uploadpath=$request->input('uploadpath');
 		
 	    $FileTemp = $_FILES['image']['tmp_name'];
 	    $FileName = $_FILES['image']['name'];
 	    $FileType = $_FILES['image']['type'];
-		
+	
 		$FilePath = public_path($uploadpath).$FileName;
-	  
-	  
+		$Fileget =  url("/$uploadpath").'/'.$FileName;
+	
+	 
        
 	    DB::table('pdf_content_images')
                             ->where('id', $id)
-                            ->update(['image'=>$FileName]);
+                            ->update(['image'=>$Fileget]);
 
 	    move_uploaded_file($FileTemp, $FilePath);
 	
