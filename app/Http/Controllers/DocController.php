@@ -43,36 +43,43 @@ class DocController extends Controller
 		
 		$phpWord = new \PhpOffice\PhpWord\PhpWord();
 
-/* Note: any element you append to a document must reside inside of a Section. */
-
- // Adding an empty Section to the document...
+$filler = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+        . 'Nulla fermentum, tortor id adipiscing adipiscing, tortor turpis commodo. '
+        . 'Donec vulputate iaculis metus, vel luctus dolor hendrerit ac. '
+        . 'Suspendisse congue congue leo sed pellentesque.';
+// Normal
 $section = $phpWord->addSection();
-
-		
-		$section->addImage('http://localhost/wtj/public/uploads/1494592660/test/front_page_image.jpg',
+$section->addText("Normal paragraph. {$filler}");
+// Two columns
+$section = $phpWord->addSection(
     array(
-        'width' => '650',
-        'height' => '650',
-        ));
-		
-		//$section->addTextBreak(['10'], '', '');
-
-		$section->addTextBreak(5, null, null);
-
-		
-
-		
-		//$section->addPageBreak();
-		
-		
-		$section->addImage('http://localhost/wtj/public/uploads/1494592660/test/front_page_image.jpg',
+        'colsNum'   => 2,
+        'colsSpace' => 1440,
+        'breakType' => 'continuous',
+    )
+);
+$section->addText("Two columns, one inch (1440 twips) spacing. {$filler}");
+// Normal
+$section = $phpWord->addSection(array('breakType' => 'continuous'));
+$section->addText("Normal paragraph again. {$filler}");
+// Three columns
+$section = $phpWord->addSection(
     array(
-        'width' => '100',
-        'height' => '100',
-        ));
-$section->addText('Text break with no style:');
-$section->addText('Text break with no style:');
-
+        'colsNum'   => 3,
+        'colsSpace' => 720,
+        'breakType' => 'continuous',
+    )
+);
+$section->addText("Three columns, half inch (720 twips) spacing. {$filler}");
+// Normal
+$section = $phpWord->addSection(array('breakType' => 'continuous'));
+$section->addText("Normal paragraph again. {$filler}");
+		
+		
+		
+		
+		
+		
 
 		
 // Saving the document as HTML file...
