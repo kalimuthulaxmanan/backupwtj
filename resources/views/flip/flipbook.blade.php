@@ -24,8 +24,7 @@
 <div id="canvas">
 	<div id="book-zoom">
 		<div class="sj-book">
-			<div depth="5" class="hard"> <div class="side"></div> </div>
-			<div depth="5" class="hard front-side"> <div class="depth"></div> </div>
+			
 	
 		</div>
 	</div>
