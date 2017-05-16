@@ -30,7 +30,7 @@
     $this->post('/flipbook/fetchFlipData', 'FlipbookDataController@fetchFlipData');
 
 
-	$this->post('/galleryupload/{id}', 'PdfController@galleryupload');
+	
 	//$this->get('/auth', 'API\AuthController@checkUser');
 
 
@@ -100,7 +100,8 @@
 	$this->get('/fileview', 'PdfController@fileview');
 	$this->get('/download', 'PdfController@download');
 	$this->get('/listdelete/{id}','PdfController@listdelete');
-	$this->get('/changeimage/{id}/{image}', 'PdfController@changeimage');
+	$this->post('/changeimage/{id}', 'PdfController@changeimage');
+	$this->post('/galleryupload/{id}', 'PdfController@galleryupload');	
 
 	//Route::post('/galleryupload/{id}', 'PdfController@galleryupload');
 	$this->get('/emailcheck/{email}', 'DashboardController@checkemail');

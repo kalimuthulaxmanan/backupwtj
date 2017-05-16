@@ -1,7 +1,7 @@
 
 <div class="book-content index-page">
 	@foreach($data->frontImages as $frontImage)
-	<img src="{{ url('/') }}/<?php echo $data->upload_path; ?><?php echo trim($frontImage->image); ?>" width="100%" alt="" title="" />
+	<img src="<?php echo trim($frontImage->image); ?>" width="100%" alt="" title="" />
 	@endforeach
 </div>
 

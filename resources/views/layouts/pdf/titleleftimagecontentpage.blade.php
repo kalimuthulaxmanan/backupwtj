@@ -11,7 +11,7 @@
 		<tr style="">
             <td style="width:30%;vertical-align:top;padding-top:8px;">  
 				@foreach($data->contentImages as $contentImage )
-                <img src="{{url('/')}}/{{$data->upload_path}}/<?php echo trim($contentImage->image); ?>" alt="" title="" width="300" style="" /><br /><br />
+                <img src="<?php echo trim($contentImage->image); ?>" alt="" title=""  style="width:250px;height:200px" /><br /><br />
                 @endforeach
             </td>
             <td style="width:70%;vertical-align:top">                

@@ -17,7 +17,7 @@
 					<div class="footer-content left"></div>                      
 				</div>
 				<div class="col-md-6 col-sm-6 col-xs-12 footer-height text-right">
-					<img class="footer-image right" src="{{ url('/') }}/{{$data->upload_path}}/<?php echo trim($data->logo); ?>" alt="" title="" />
+					<img class="footer-image right" src="{{ url('/') }}/{{$data->upload_path}}/<?php echo trim($data->signature); ?>" alt="" title="" />
 				</div>
 			</div>               
 		</div>          		

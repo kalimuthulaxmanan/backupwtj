@@ -215,12 +215,35 @@ $galleries = DB::table('files_directory')
 			->groupBy('pdf_content_images.image')
             ->get();
 		
+//$gelleryphoto[]=array('image'=>"",'path'=>"");
+		
+    /* $image=array();
+	   foreach($galleries as $gallery)
+	   {
+	    if(array_key_exists("$gallery->image",$image))
+		{
+		}
+	   else
+	   {
+		
+   $image[]=array('image'=>$gallery->image,'path'=>$gallery->upload_path);
+		  
+   $galimage =new \stdClass();
+	  
+   $galimage->image=$image;   
+		
+	   }
+	   }
+	/*foreach($galimage->image as $galimagesss)
+		{
+		dd($galimagesss['path']);
+		}
+	   dd($galimage->image ); 
+	   dd($galleryimages);	*/
 	
 		
-		foreach($galleries as $gallery)
-		{
-		$uploadpath=$gallery->upload_path;
-		}
+		$uploadpath=$value->upload_path;
+	
 		/*foreach($galleries as $gallery)
 		{
 		$fileid=$gallery->file_id;
@@ -232,6 +255,7 @@ $galleries = DB::table('files_directory')
 	//	echo $fileid; die;
 		
         view()->share('galleries',$galleries);
+		//view()->share('galimage',$galimage);
 		
 		
 		

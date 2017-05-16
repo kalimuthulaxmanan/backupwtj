@@ -5,7 +5,7 @@
 	
 	<div class="left-image"> 
 	@foreach($data->contentImages as $contentImage )	
-		<img class="left-pic zoom-this" src="{{url('/')}}/{{$data->upload_path}}<?php echo trim($contentImage->image); ?>">
+		<img class="left-pic zoom-this" src="<?php echo trim($contentImage->image); ?>">
 	@endforeach
 	</div>
 	
