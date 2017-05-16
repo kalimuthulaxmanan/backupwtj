@@ -45,15 +45,15 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody class="tbodypad">
                                         	@foreach($viewme as $row)
                                             <tr>
                                                 <td>{{$row->firstName}}</td>
                                                 <td>{{$row->email}}</td>
                                                 <!--<td class="image"><img src="{{$row->image}}"/></td>-->
                                                 <td>
-													<a style="padding-right:20px;" href="{{ url('/useredit') }}/<?php echo $row->id; ?>" alt="Edit" title="Edit"><i class="material-icons">mode_edit</i></a>
-													<a style="padding-right:20px;" onclick="return confirm('Are you sure you want to delete?');" href="{{ url('/userdelete') }}/<?php echo $row->id; ?>" alt="Delete" title="Delete"><i class="material-icons">delete</i></a></td>
+													<a style="padding:10px 15px;" class="btn btn-primary btn-simple" rel="tooltip" data-original-title="Edit" href="{{ url('/useredit') }}/<?php echo $row->id; ?>" alt="Edit"><i class="material-icons">mode_edit</i></a>
+													<a style="padding:10px 15px;" class="btn btn-primary btn-simple" rel="tooltip" data-original-title="Delete" onclick="return confirm('Are you sure you want to delete?');" href="{{ url('/userdelete') }}/<?php echo $row->id; ?>" alt="Delete"><i class="material-icons">delete</i></a></td>
                                             </tr>
                                             @endforeach 
                                         </tbody>

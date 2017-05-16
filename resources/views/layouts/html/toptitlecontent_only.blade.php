@@ -3,10 +3,9 @@
 												<div class="row">
 													<div class="col-md-12">
 														<div class="col-md-4 col-sm-4 col-xs-12">
-															<h1 class="font-26"></h1>     
 														</div>
 														<div class="col-md-8 col-sm-8 col-xs-12 mt-25 sales-content">
-															<h1 class="font-42">{{$data->title}}</h1>
+															<h1 class="font-36">{{$data->title}}</h1>
 															<p>{!!nl2br($data->content)!!}</p>
 														</div> 
 													</div>               

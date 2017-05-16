@@ -4,6 +4,12 @@
 		width: 100%;
 		height: 144px;
 	}
+	.itinerary tr:first-child td{
+		font-weight: 600;
+	}
+	.itinerary tr:last-child td{
+		font-weight: 600;
+	}
 </style>
 <section class="">
 	<div class="row">
@@ -11,15 +17,15 @@
 			<div class="col-md-8 col-sm-8 col-xs-12">
 				<h1 class="left-title">{{$data->title}}</h1>
 				<table>					
-					@foreach($data->itineraryData as $itineraryValue)
 					<tbody class="itinerary">
+					@foreach($data->itineraryData as $itineraryValue)
 					  <tr>
-						<td style="width:75px;vertical-align:top;line-height:20px;"><b><?php $dates="$itineraryValue->event_date";$date=date_create_from_format("Y-m-d","$dates");
-								echo date_format($date,"M d"); ?>: </b></td>
+						<td style="width:75px;vertical-align:top;line-height:20px;"><?php $dates="$itineraryValue->event_date";$date=date_create_from_format("Y-m-d","$dates");
+								echo date_format($date,"M d"); ?>: </td>
 					 	<td style="padding-bottom:15px;font-size:14px;vertical-align:top;line-height:20px;">{{$itineraryValue->description}}</td>
 					  </tr>
-					<tbody>	
 					@endforeach
+					<tbody>	
 				</table>			
 			</div>
 			<div class="col-md-4 col-sm-4 col-xs-12 padd-0">

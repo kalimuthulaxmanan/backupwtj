@@ -297,7 +297,7 @@ function addressvalidate()
             status=false;
             document.getElementById("address").focus();
             }
-        else if (x.length>15) 
+        else if (x.length>100) 
         {
             document.getElementById("address_error").innerHTML = "Length of address should not exceeds more than 100 characters";
             status=false;
@@ -321,7 +321,7 @@ function cityvalidate()
             status=false;
             document.getElementById("city").focus();
             }
-        else if (x.length>15) 
+        else if (x.length>20) 
         {
             document.getElementById("city_error").innerHTML = "Length of city should not exceeds more than 20 characters";
             status=false;
@@ -345,7 +345,7 @@ function countryvalidate()
             status=false;
             document.getElementById("country").focus();
             }
-        else if (x.length>15) 
+        else if (x.length>20) 
         {
             document.getElementById("country_error").innerHTML = "Length of country should not exceeds more than 20 characters";
             status=false;

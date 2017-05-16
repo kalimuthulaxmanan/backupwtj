@@ -358,16 +358,14 @@
                                         <thead class="text-primary">
                                             <tr>
                                             	<th>S.No</th>
-                                                <th>File Name</th>
-                                                <th>User Name</th>
-												<th>Created Date</th>
-												
-                                                
-                                                <th>Action</th>
+                                                <th style="width: 15%">File Name</th>
+                                                <th style="width: 20%">Client Name</th>
+                                                <th style="width: 20%">Created Date</th>
+                                                <th style="text-align:center">Action</th>
                                                
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody class="tbodypad">
                                         	@foreach($pdflist as $file)
                                             <tr>
                                             	<td>{{$file->file_name}}</td>
@@ -375,10 +373,11 @@
 												<td>{{$file->created_at}}</td>
 												
 												<td>
-												<a style="padding-right:20px;" href="{{ url('/generateHtmlPreview') }}/{{$file->id}}" ><i class="fa fa-cogs" aria-hidden="true" title="Generate"></i></a>
-												<a style="padding-right:20px;" href="{{ url('/generatePdfPreview') }}/{{$file->id}}" target="_blank"><i class="material-icons"  title="PDF" >picture_as_pdf</i> </a>	<a style="padding-right:20px;" href="#" ><i class="fa fa-file-word-o " aria-hidden="true" title="Word"></i></a>
-												<a style="padding-right:20px;" href="{{ url('/flipbook') }}/{{$file->id}}" target="_blank"><i class="fa fa-book" aria-hidden="true" title="Flip Book" ></i></a>
-												<a style="padding-right:20px;" onclick="return confirm('Are you sure you want to delete this item?');" href="{{ url('/listdelete') }}/<?php echo $file->id;?>"><i class="material-icons"  title="Delete" >delete</i></a></td>
+												<a style="padding:10px 15px;" class="btn btn-primary btn-simple" rel="tooltip" data-original-title="Generate" href="{{ url('/generateHtmlPreview') }}/{{$file->id}}" ><i class="fa fa-cogs" aria-hidden="true"></i></a>
+												<a style="padding:10px 15px;" class="btn btn-primary btn-simple" rel="tooltip" data-original-title="PDF" href="{{ url('/generatePdfPreview') }}/{{$file->id}}" target="_blank"><i class="material-icons">picture_as_pdf</i> </a>	
+                                                <a style="padding:10px 15px;" class="btn btn-primary btn-simple" rel="tooltip" data-original-title="Word" href="#" ><i class="fa fa-file-word-o " aria-hidden="true"></i></a>
+												<a style="padding:10px 15px;" class="btn btn-primary btn-simple" rel="tooltip" data-original-title="Flip Book" href="{{ url('/flipbook') }}/{{$file->id}}" target="_blank"><i class="fa fa-book" aria-hidden="true"></i></a>
+												<a style="padding:10px 15px;" class="btn btn-primary btn-simple" rel="tooltip" data-original-title="Delete" onclick="return confirm('Are you sure you want to delete this item?');" href="{{ url('/listdelete') }}/<?php echo $file->id;?>"><i class="material-icons">delete</i></a></td>
 
                                             </tr>
                                             @endforeach 

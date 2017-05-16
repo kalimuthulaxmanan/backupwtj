@@ -3,7 +3,7 @@
 		<tr style="">
             <td style="width:60%;vertical-align: top;">
 				<h1 style="font-size: 50px;">{{$data->title}}</h1> <br />
-				<table>
+				<table class="itinerary">
 					@foreach($data->itineraryData as $itineraryValue)	
 					<tr>
 						<td style="width:40;padding-bottom:10px;vertical-align:top;line-height:20px;">
