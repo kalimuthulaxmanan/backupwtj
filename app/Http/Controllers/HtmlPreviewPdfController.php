@@ -254,7 +254,7 @@ $galleries = DB::table('files_directory')
 	
 		
 		$uploadpath=$value->upload_path;
-	
+	    
 		/*foreach($galleries as $gallery)
 		{
 		$fileid=$gallery->file_id;

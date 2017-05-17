@@ -121,11 +121,20 @@ return view('test');
 	
 public function changeimage($id,Request $request)
 {
-   $image=$request->input('file_path');
+   $imageid=$request->input('file_path');
+   $changeimg=DB::table('pdf_content_images')
+                            ->where('id', $imageid)
+	                        ->select('image')
+                            ->get();
+	foreach($changeimg as $changeimgs )
+	{
+	$img= $changeimgs->image;
+	}
+  	
 	
 	DB::table('pdf_content_images')
                             ->where('id', $id)
-                            ->update(['image'=>$image]);
+                            ->update(['image'=>$img]);
 
 
  echo "sucessfully updated";
@@ -137,19 +146,20 @@ public function galleryupload($id,Request $request)
 		
   	   
 		$uploadpath=$request->input('uploadpath');
+	
 		
 	    $FileTemp = $_FILES['image']['tmp_name'];
 	    $FileName = $_FILES['image']['name'];
 	    $FileType = $_FILES['image']['type'];
 	
 		$FilePath = public_path($uploadpath).$FileName;
-		$Fileget =  url("/$uploadpath").'/'.$FileName;
+		$image=$uploadpath.$FileName;
 	
 	 
        
 	    DB::table('pdf_content_images')
                             ->where('id', $id)
-                            ->update(['image'=>$Fileget]);
+                            ->update(['image'=>$image]);
 
 	    move_uploaded_file($FileTemp, $FilePath);
 	

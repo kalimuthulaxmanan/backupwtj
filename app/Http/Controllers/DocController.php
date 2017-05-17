@@ -43,7 +43,6 @@ class DocController extends Controller
 		
 /*		$phpWord = new \PhpOffice\PhpWord\PhpWord();
 
-<<<<<<< HEAD
 /* Note: any element you append to a document must reside inside of a Section. */
 
  // Adding an empty Section to the document...
@@ -51,46 +50,21 @@ class DocController extends Controller
 
 		
 		$section->addImage('http://localhost/dev_wtj/public/uploads/1494940055/test/front_page_image.jpg',
-=======
-$filler = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-        . 'Nulla fermentum, tortor id adipiscing adipiscing, tortor turpis commodo. '
-        . 'Donec vulputate iaculis metus, vel luctus dolor hendrerit ac. '
-        . 'Suspendisse congue congue leo sed pellentesque.';
-// Normal
-$section = $phpWord->addSection();
-$section->addText("Normal paragraph. {$filler}");
-// Two columns
-$section = $phpWord->addSection(
->>>>>>> fb9169d1875fd400b73fc9f73f70dd121914cffc
     array(
-        'colsNum'   => 2,
-        'colsSpace' => 1440,
-        'breakType' => 'continuous',
-    )
-);
-$section->addText("Two columns, one inch (1440 twips) spacing. {$filler}");
-// Normal
-$section = $phpWord->addSection(array('breakType' => 'continuous'));
-$section->addText("Normal paragraph again. {$filler}");
-// Three columns
-$section = $phpWord->addSection(
-    array(
-        'colsNum'   => 3,
-        'colsSpace' => 720,
-        'breakType' => 'continuous',
-    )
-);
-$section->addText("Three columns, half inch (720 twips) spacing. {$filler}");
-// Normal
-$section = $phpWord->addSection(array('breakType' => 'continuous'));
-$section->addText("Normal paragraph again. {$filler}");
+        'width' => '650',
+        'height' => '650',
+        ));
+		
+		//$section->addTextBreak(['10'], '', '');
+
+		$section->addTextBreak(5, null, null);
+
+		
+
+		
+		//$section->addPageBreak();
 		
 		
-		
-		
-		
-		
-<<<<<<< HEAD
 		$section->addImage('http://localhost/dev_wtj/public/uploads/1494940055/test/front_page_image.jpg',
     array(
         'width' => '100',
@@ -99,8 +73,6 @@ $section->addText("Normal paragraph again. {$filler}");
 $section->addText('Text break with no style:');
 $section->addText('Text break with no style:');
 
-=======
->>>>>>> fb9169d1875fd400b73fc9f73f70dd121914cffc
 
 		
 // Saving the document as HTML file...

@@ -204,7 +204,8 @@
                         </label>-->
                         <input type="hidden" name="radio" value="" id="fill"/><br>
                         <input type="hidden" name="radio" value="" id="fill2"/><br>
-                        <input type="hidden" name="radio" value="" id="fill1"/>
+                        <input type="hidden" name="radio" value="" id="fill1"/><br>
+					   <input type="hidden" name="radio" value="" id="popimgid"/>
 					  
                        </div> 
                     <div class="modal-footer">
@@ -228,7 +229,7 @@
         $("input[type='radio']").click(function(){
             var radioValue = $("input[name='myRadio']:checked").attr('id');
           var src=($("#imageid"+radioValue).attr('src')); 
-          
+           var poimgid=document.getElementById("popimgid").value=radioValue;
           var x=document.getElementById("fill1").value=src;
         });
         
@@ -248,7 +249,7 @@
         var x=document.getElementById("fill").value;
         var y=document.getElementById("fill1").value;
 	    var baseurl="<?php echo url('/'); ?>";
-   	   
+   	   var popimgid=document.getElementById("popimgid").value;
 	
         $('#'+x).attr("src",y);  
         var Imgname = y.split("/")[y.split("/").length-1];
@@ -271,7 +272,7 @@
                           data:{
 						    "_token": "{{ csrf_token() }}",
                             
-                             file_path:y,
+                             file_path:popimgid,
                               },
             });         
 	}
