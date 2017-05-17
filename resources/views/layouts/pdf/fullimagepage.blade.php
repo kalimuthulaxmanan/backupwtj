@@ -6,9 +6,8 @@
 	</div>
     <table style="height:120px;position:absolute;bottom:0px;">
 		<tr style="">
-            <td style="width:50%;text-align:right">
-				
-                <img src="{{url('/')}}/{{$data->upload_path}}/<?php echo trim($data->signature); ?>" alt="" title="" style="width:200px;height:50px;" />
+            <td style="width:50%;text-align:right; padding-right: 15px;">	
+                <img src="{{url('/')}}/{{$data->upload_path}}/<?php echo trim($data->signature); ?>" alt="" title="" style="width:150px;height:50px;" />
             </td>
 		</tr>
     </table>

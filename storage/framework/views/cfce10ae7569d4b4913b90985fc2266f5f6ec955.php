@@ -17,7 +17,7 @@
 	h1{
 		font-family: 'helvetica25';
 	}
-	@page {
+	@page  {
       size: 7.5in 7.5in;  /* width height */
    }	
 	span{

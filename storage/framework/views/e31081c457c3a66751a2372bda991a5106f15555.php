@@ -2,12 +2,12 @@
     <table style="margin-top:150px;">
 		<tr style="">
             <td colspan="2" style="text-align:center; font-size: 13px !important;">                
-				Distinguished guests:{{$data->distinguished_guests}}<br>
-				Agency: {{$data->agency}}<br>
-				Agent: {{$data->agent}}<br /><br />
+				Distinguished guests:<?php echo e($data->distinguished_guests); ?><br>
+				Agency: <?php echo e($data->agency); ?><br>
+				Agent: <?php echo e($data->agent); ?><br /><br />
                 <h5 style="font-size: 15px !important;font-weight: 600 !important;">
-                    <b>Duration: {{$data->duration_day}} day / {{$data->duration_night}} nights<br>
-				Number of Persons:{{$data->no_of_persons}}</b>
+                    <b>Duration: <?php echo e($data->duration_day); ?> day / <?php echo e($data->duration_night); ?> nights<br>
+				Number of Persons:<?php echo e($data->no_of_persons); ?></b>
                 </h5><br />
             </td>
 		</tr>
@@ -44,7 +44,7 @@
                 <span>Date of release:<?php $dates="$data->date_of_release";$date=date_create_from_format("Y-m-d","$dates");echo date_format($date,"M d, Y"); ?></span>
             </td>
             <td style="width:50%;text-align:right; padding-right: 15px;">
-                <img src="{{url('/')}}/<?php echo $data->upload_path; ?><?php echo trim($data->signature); ?>" alt="" title="" style="width:150px;height:50px;" />
+                <img src="<?php echo e(url('/')); ?>/<?php echo $data->upload_path; ?><?php echo trim($data->signature); ?>" alt="" title="" style="width:150px;height:50px;" />
             </td>
 		</tr>
     </table>

@@ -17,8 +17,8 @@ img.travelagent{
 				<img class="travelagent" src="<?php echo url($data->upload_path);?>/<?php echo trim($travelagent->profile_image); ?>" alt="" title="" />
 			</div>
 			<div class="col-md-8 col-sm-8 col-xs-12">
-				<p><b>YOUR TRAVEL AGENT IN <?php echo $travelagent->place; ?></b><br />
-				<?php echo nl2br($travelagent->name);?><br />
+				<p><b>YOUR TRAVEL AGENT IN <?php echo $travelagent->place; ?></b><br>
+				<?php echo nl2br($travelagent->name);?><br>
 				
 				<img src="<?php echo url ($data->upload_path);?>/<?php echo trim($travelagent->logo); ?>" style="height: 40px;width: 200px;" alt="" title="" />						
 			</div>
