@@ -1,7 +1,7 @@
 <!-- Section Start -->
 	<div style="width:100%;position:relative;" >
 		@foreach($data->fullImages as $fullimage)
-		<img src="<?php echo trim($fullimage->image); ?>" alt="" title="" style="width:100%;position:absolute;height:900px;"/>
+		<img src="{{ url('/') }}/<?php echo trim($fullimage->image); ?>" alt="" title="" style="width:100%;position:absolute;height:900px;"/>
 		@endforeach
 	</div>
     <table style="height:120px;position:absolute;bottom:0px;">

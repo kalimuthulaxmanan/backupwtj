@@ -7,7 +7,7 @@
 </style>
     <div style="width: 100%;" class="index-image">
 		@foreach($data->frontImages as $frontImage)
-		<img src="<?php echo trim($frontImage->image); ?>" alt="" title="" style="width: 100%;" />
+		<img src="{{ url('/') }}/<?php echo trim($frontImage->image); ?>" alt="" title="" style="width: 100%;" />
 	@endforeach	
     </div>
     <table style="height:120px;position:absolute;bottom:30px;">

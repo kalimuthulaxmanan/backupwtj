@@ -12,7 +12,7 @@ echo date_format($date,"M d");?>: {!!nl2br($detail_itineraryData->description)!!
 	</div>
 	<div class="right-image">
 			@foreach($data->detailitineraryImages as $detailitineraryImage)
-		<img class="right-pic zoom-this" src="<?php echo trim($detailitineraryImage->image); ?>" alt="" title="">
+		<img class="right-pic zoom-this" src="{{ url('/') }}/<?php echo trim($detailitineraryImage->image); ?>" alt="" title="">
 		@endforeach
 		
 	</div>

@@ -23,7 +23,7 @@
 				@foreach($data->detailitineraryImages as $detailitineraryImage)
 
     
-                <img src="<?php echo trim($detailitineraryImage->image); ?>" alt="" title="" style="width:250px;height:169px;" /><br />
+                <img src="{{ url('/') }}/<?php echo trim($detailitineraryImage->image); ?>" alt="" title="" style="width:250px;height:169px;" /><br />
 
 				@endforeach
                 

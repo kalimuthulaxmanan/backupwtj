@@ -31,7 +31,7 @@
 			<div class="col-md-4 col-sm-4 col-xs-12 padd-0">
 				@foreach($data->itineraryImages as $itineraryImage)
 				<div class="itinerary-image change-image" style="margin-right:0px;">
-					<img  src="<?php echo trim($itineraryImage->image); ?>" id ="image{{$itineraryImage->id}}" alt="" title="" />
+					<img  src="{{ url('/') }}/<?php echo trim($itineraryImage->image); ?>" id ="image{{$itineraryImage->id}}" alt="" title="" />
 					<div class="img-overlay">
 						<a onclick="newFunction('image{{$itineraryImage->id}}',{{$itineraryImage->id}})" data-toggle="modal" data-target="#myModal" href="">Change Image</a>
 					</div>

@@ -179,7 +179,7 @@
 
                         <input type="radio" id="{{$gallery->id}}" name="myRadio"/>
                         <label for="{{$gallery->id}}">
-						<img id="imageid{{$gallery->id}}" src="<?php echo trim($gallery->image);?>" />
+						<img id="imageid{{$gallery->id}}" src="{{ url('/') }}/<?php echo trim($gallery->image);?>" />
                         </label>
                         @endforeach
                      <!--   <input type="radio" id="2" name="myRadio" />
