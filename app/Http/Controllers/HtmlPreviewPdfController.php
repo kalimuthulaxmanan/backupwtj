@@ -146,8 +146,13 @@ class HtmlPreviewPdfController extends Controller
 
 						   $contentImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get();
 						   $value->contentImages= $contentImages;
-				
-						   $appendData.=$this->loadTemplate('titleleftimagecontentpage',$value);							
+				           if($value->itinerary_date_with_title=="" || $value->itinerary_date_with_title==null)
+				           {
+				           	$appendData.=$this->loadTemplate('leftimagecontentpage',$value);
+				           }
+				           else{      
+						   $appendData.=$this->loadTemplate('titleleftimagecontentpage',$value);						
+						   }	
 					break;
 					case "map":
 						   

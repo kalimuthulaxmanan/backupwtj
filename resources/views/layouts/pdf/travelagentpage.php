@@ -1,15 +1,15 @@
 <!-- Section Start -->
-    <table style="width:100%;padding-top: 200px;">
+    <table style="width:100%;padding-top: 175px;">
 		<?php foreach($data->travel_agent as $travelagent) { ?>
 		<tr style="">
-            <td style="width:15%">
+            <td style="width:15%;padding-left: 15px;">
                 <img src="<?php echo url($data->upload_path);?>/<?php echo trim($travelagent->profile_image); ?>" alt="" title="" />
             </td>
-            <td style="width:70%;">
-				<p style="margin:5px 0 !important;font-weight: 1000 !important;">YOUR TRAVEL AGENT IN <?php echo $travelagent->place; ?></p>
+            <td style="width:70%; padding-top: 15px;">
+				<p style="font-size:12px; margin:5px 0 !important;font-weight: 800 !important;">YOUR TRAVEL AGENT IN <?php echo $travelagent->place; ?></p>
 				<?php echo nl2br($travelagent->name); ?><br />
 				
-				<img src="<?php echo url($data->upload_path);?>/<?php echo trim($travelagent->logo); ?>" alt="" title="" style="height: 35px;width: 180px;padding-top:5px;" />	<br /><br />			
+				<img src="<?php echo url($data->upload_path);?>/<?php echo trim($travelagent->logo); ?>" alt="" title="" style="height: 28px;width: 115px;padding-top:10px;" />	<br /><br />			
             </td>
 		</tr>
 		<?php } ?>

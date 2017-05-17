@@ -9,22 +9,23 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="title">     
-				<h1 class="left-title">{{$data->title}}</h1>
+				<h1 class="left-title"><?php echo e($data->title); ?></h1>
 			</div>
 			<div class="col-md-4 col-sm-4 col-xs-12">  
-				@foreach($data->contentImages as $contentImage )
+				<?php foreach($data->contentImages as $contentImage ): ?>
 				<div class="leftcontent-image change-image">
-					<img src="{{ url('/') }}/<?php echo trim($contentImage->image); ?>" id ="image{{$contentImage->id}}" alt="" title="" />
+					<img src="<?php echo e(url('/')); ?>/<?php echo trim($contentImage->image); ?>" id ="image<?php echo e($contentImage->id); ?>" alt="" title="" />
 					<div class="img-overlay">
-						<a onclick="newFunction('image{{$contentImage->id}}',{{$contentImage->id}})" data-toggle="modal" data-target="#myModal" href="">Change Image</a>
+						<a onclick="newFunction('image<?php echo e($contentImage->id); ?>',<?php echo e($contentImage->id); ?>)" data-toggle="modal" data-target="#myModal" href="">Change Image</a>
 					</div>
 				</div><br />
-				@endforeach
+				<?php endforeach; ?>
 				
 			</div>
 			<div class="col-md-8 col-sm-8 col-xs-12">
 				<p class="bold">
-				{!!nl2br($data->content)!!}
+				<?php echo nl2br($data->content); ?>
+
 				</p>                
 			</div>
 		</div>                
@@ -34,7 +35,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="col-md-3 col-sm-3 col-xs-12 footer-height">
-					<img class="footer-image" src="{{url('/')}}/<?php echo $data->upload_path; ?><?php echo trim($data->logo); ?>" alt="" title="" />
+					<img class="footer-image" src="<?php echo e(url('/')); ?>/<?php echo $data->upload_path; ?><?php echo trim($data->logo); ?>" alt="" title="" />
 				</div>
 				<!-- <div class="col-md-9 col-sm-9 col-xs-12 footer-height text-right">
 					<div class="footer-content">

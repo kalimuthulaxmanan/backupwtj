@@ -3,10 +3,10 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="col-md-4 col-sm-4 col-xs-12">
+				<h1 class="font-28"><?php echo e($data->title); ?></h1>     
 			</div>
 			<div class="col-md-8 col-sm-8 col-xs-12 mt-25 sales-content">
-				<h1 class="font-36">{{$data->title}}</h1>
-				<p>{!!nl2br($data->content)!!}</p>
+				<p><?php echo nl2br($data->content); ?></p>				
 			</div> 
 		</div>               
 	</div>    
@@ -15,7 +15,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="col-md-3 col-sm-3 col-xs-12 footer-height">
-					<img class="footer-image" src="../images/fileimage/images/image2.jpg" alt="" title="" />
+					<img class="footer-image" src="<?php echo e(url('/')); ?>/<?php echo $data->upload_path; ?><?php echo trim($data->logo); ?>" alt="" title="" />
 				</div>
 				<!-- <div class="col-md-9 col-sm-9 col-xs-12 footer-height text-right">
 					<div class="footer-content">
