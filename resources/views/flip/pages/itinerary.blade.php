@@ -14,7 +14,7 @@ echo date_format($date,"M d"); ?>:</td>
 	</div>
 	<div class="right-image">
 		@foreach($data->itineraryImages as $itineraryImage)
-		<img class="right-pic zoom-this" src="<?php echo trim($itineraryImage->image); ?>" alt="" title="">
+		<img class="right-pic zoom-this" src="{{ url('/') }}/<?php echo trim($itineraryImage->image); ?>" alt="" title="">
 		@endforeach
 		
 	</div>

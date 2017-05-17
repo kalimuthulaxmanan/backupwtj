@@ -8,7 +8,7 @@
 <section class="">        
 	<div class="index-image change-image">
 	@foreach($data->frontImages as $frontImage)
-		<img src="<?php echo trim($frontImage->image); ?>" id="image{{$frontImage->id}}" alt="" title="" />
+		<img src="{{ url('/') }}/<?php echo trim($frontImage->image); ?>" id="image{{$frontImage->id}}" alt="" title="" />
 		
 		<div class="img-overlay">
 			<a onclick="newFunction('image{{$frontImage->id}}',{{$frontImage->id}})" data-toggle="modal" data-target="#myModal" href="">Change Image</a>

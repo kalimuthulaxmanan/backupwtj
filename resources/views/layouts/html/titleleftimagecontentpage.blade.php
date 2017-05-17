@@ -15,7 +15,7 @@
 			<div class="col-md-4 col-sm-4 col-xs-12">  
 				@foreach($data->contentImages as $contentImage )
 				<div class="leftcontent-image change-image">
-					<img src="<?php echo trim($contentImage->image); ?>" id ="image{{$contentImage->id}}" alt="" title="" />
+					<img src="{{ url('/') }}/<?php echo trim($contentImage->image); ?>" id ="image{{$contentImage->id}}" alt="" title="" />
 					<div class="img-overlay">
 						<a onclick="newFunction('image{{$contentImage->id}}',{{$contentImage->id}})" data-toggle="modal" data-target="#myModal" href="">Change Image</a>
 					</div>

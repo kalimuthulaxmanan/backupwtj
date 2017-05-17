@@ -161,7 +161,7 @@ class HtmlPreviewPdfController extends Controller
 									}
 		  			        $Mapimage= StaticMap::GoogleWithImg("$detail->lat,$detail->lon", ['markers' => $markers,'zoom'=>'8','with' =>'640', 'height' =>'640' ]); 
 			 	            $value->Mapimage=$Mapimage;
-			 	           
+			 	      
 							$appendData.=$this->loadTemplate('mapimage',$value);							
 					break;	
 				    case "travel_agent":

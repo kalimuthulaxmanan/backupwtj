@@ -126,7 +126,7 @@ class PdfPreviewPdfController extends Controller
 					break;
 					case "map":
 						
-						 $Mapdetails=DB::table('pdf_map')->select('lat','lon')->get();	
+						 $Mapdetails=DB::table('pdf_map')->where('file_id',$value->file_id)->select('lat','lon')->get();	
                            $i=0;
                            foreach($Mapdetails as $detail)
 									{
