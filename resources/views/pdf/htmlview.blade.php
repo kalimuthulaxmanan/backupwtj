@@ -164,7 +164,7 @@
                     </div>
                     <div class="modal-footer">
                     <p id="meg"></p>
-						         <input type="text" name="uploadpath" value="<?php echo $uploadpath; ?>"  id="uploadpath"/>
+						         <input type="hidden" name="uploadpath" value="<?php echo $uploadpath; ?>"  id="uploadpath"/>
                                 <input type="submit" name="submit" class="btn btn-default"  />
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
                     </div>
@@ -202,10 +202,10 @@
                         <label for="6">
                           <img id="imageid6" src="images/fileimage/images/image8.jpg" />
                         </label>-->
-                        <input type="text" name="radio" value="" id="fill"/><br>
-                        <input type="text" name="radio" value="" id="fill2"/><br>
-                        <input type="text" name="radio" value="" id="fill1"/><br>
-					   <input type="text" name="radio" value="" id="popimgid"/>
+                        <input type="hidden" name="radio" value="" id="fill"/><br>
+                        <input type="hidden" name="radio" value="" id="fill2"/><br>
+                        <input type="hidden" name="radio" value="" id="fill1"/><br>
+					   <input type="hidden" name="radio" value="" id="popimgid"/>
 					  
                        </div> 
                     <div class="modal-footer">
