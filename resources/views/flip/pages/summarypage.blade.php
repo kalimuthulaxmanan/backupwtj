@@ -22,30 +22,16 @@
 			<div class="table-body">
 				<h3>Summary</h3>
 				<table class="text-left">
-					<tr>
-					<td>Welcome in France</td>
-					<td>page 04</td>
-					</tr>
-					<tr>
-					<td>Your itinerary</td>
-					<td>page 06</td>
-					</tr>
-					<tr>
-					<td>Champagne</td>
-					<td>page 10</td>
-					</tr>
-					<tr>
-					<td>Paris</td>
-					<td>page 12</td>
-					</tr>
-					<tr>
-					<td>Detailed itinerary</td>
-					<td>page 18</td>
-					</tr>
-					<tr>
-					<td>Sales and terms conditions</td>
-					<td>page 19</td>
-					</tr>
+						@foreach($data1 as $pages)
+					
+						@if ($pages->show_summery === 1)
+					
+						<tr>
+						<td>{{ $pages->title }}</td>
+						<td>Page {{ $pages->content_order+2 }}</td>
+						</tr>
+					@endif
+					@endforeach
 				</table>
 			</div>
 	<footer class="pdf">    

@@ -70,7 +70,7 @@ class PdfPreviewPdfController extends Controller
 					
 						$appendData.=$this->loadTemplate('frontpage',$value);
 						$appendData.=$this->loadTemplate('emptypage',$value);	
-						$appendData.=$this->loadTemplate('summarypage',$value);	
+						$appendData.=$this->loadTemplate('summarypage',$value,$data);	
 					break;	
 
 					case "itinerary":
@@ -202,10 +202,10 @@ class PdfPreviewPdfController extends Controller
 		
 	}
 	
-	private function loadTemplate($template,$data)
+	private function loadTemplate($template,$data,$data1=null)
 	{
 		
-		$returndata=view('layouts.pdf.'.$template,['data'=>$data])->render();
+		$returndata=view('layouts.pdf.'.$template,['data'=>$data,'data1'=>$data1])->render();
 		//dd($returndata);
 		return $returndata;
 		

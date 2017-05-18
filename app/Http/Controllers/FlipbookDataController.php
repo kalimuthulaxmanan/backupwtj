@@ -66,8 +66,20 @@ class FlipbookDataController extends BaseController
 							$appendData=$this->loadTemplate('emptypage',$value);
 						}
 						else
-						{   $value->page= $data['page']; 
-							$appendData=$this->loadTemplate('summarypage',$value);	
+						{  
+							
+									$dataSql1 = DB::table('files_directory')
+            ->join('pdf_content', 'files_directory.id', '=', 'pdf_content.file_id')
+            ->join('pdf_common_fields', 'files_directory.id', '=', 'pdf_common_fields.file_id')
+			->join('pdf_templates', 'pdf_templates.id', '=', 'pdf_content.template_id')
+            ->select('files_directory.*', 'pdf_common_fields.*', 'pdf_content.*', 'pdf_templates.name')
+			->orderby('pdf_content.content_order','asc')
+			->where('files_directory.id',$data['userId'])
+
+            ->get();
+							
+							$value->page= $data['page']; 
+							$appendData=$this->loadTemplate('summarypage',$value,$dataSql1);	
 							
 						}
                      
@@ -203,10 +215,10 @@ class FlipbookDataController extends BaseController
 		//return view('flip.html.page'.$data['page']);
 	}
 	
-	private function loadTemplate($template,$data)
+	private function loadTemplate($template,$data,$data1=null)
 	{
 		//$returndata=view('flip.pages.page'.$data['page'])->render();
-		$returndata=view('flip.pages.'.$template,['data'=>$data])->render();
+		$returndata=view('flip.pages.'.$template,['data'=>$data,'data1'=>$data1])->render();
 		//dd($returndata);
 		return $returndata;
 		
