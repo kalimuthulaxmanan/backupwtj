@@ -2,7 +2,7 @@
     <table style="width: 100%;">
 		<tr>
             <td style="padding-left:15px;">
-				<p style="margin-top:22px;"><b style="font-weight:800;font-size:15px;color:#000">{{$data->itinerary_date_with_title}}</b></p>
+				<p style="margin-top:22px;"><b style="font-weight:600 !important;font-size:15px;color:#000">{{$data->itinerary_date_with_title}}</b></p>
                 <h1 style="font-size:50px;font-weight: 800px !important;">{{$data->title}}</h1><br /><br />
             </td>
 		</tr>

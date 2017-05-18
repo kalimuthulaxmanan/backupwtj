@@ -1,7 +1,7 @@
 <!-- Section Start -->
     <table style="width: 100%;">
 		<tr>
-            <td style="padding-left:15px;">
+            <td style="padding-left:15px;padding-top:15px;"">
                 <h1 style="font-size:55px; font-weight: 800px !important;">{{$data->title}}</h1><br /><br />
             </td>
         </tr>
