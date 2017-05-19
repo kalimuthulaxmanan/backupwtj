@@ -6,7 +6,7 @@
                 <img src="<?php echo url($data->upload_path);?>/<?php echo trim($travelagent->profile_image); ?>" alt="" title="" />
             </td>
             <td style="width:70%; padding-top: 15px;">
-				<p style="font-size:12px; margin:5px 0 !important;font-weight: 800 !important;">YOUR TRAVEL AGENT IN <?php echo $travelagent->place; ?></p>
+				<p style="font-size:12px; margin:5px 0 !important;font-weight: 800 !important; color:#000;">YOUR TRAVEL AGENT IN <?php echo $travelagent->place; ?></p>
 				<?php echo nl2br($travelagent->name); ?><br />
 				
 				<img src="<?php echo url($data->upload_path);?>/<?php echo trim($travelagent->logo); ?>" alt="" title="" style="height: 28px;width: 115px;padding-top:10px;" />	<br /><br />			

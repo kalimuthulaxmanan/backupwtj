@@ -164,7 +164,7 @@ class ImportExcelDataController extends BaseController
 		
 			if($row[25]!="")
 			{
-				$dateData=explode("|||",$row[23]);
+				$dateData=explode("|||",$row[25]);
 				$contentData=explode("|||",$row[26]);
 				foreach($dateData as $key=>$value)
 				{

@@ -1,4 +1,4 @@
-/* Steve jobs' book */
+	/* Steve jobs' book */
 
 body, ul, table, form{
 	margin:0;
@@ -368,17 +368,8 @@ body, ul, table, form{
 	background-position:left top;
 	background-repeat:repeat-y;
 }
-
-
-
-
-
-
-
-
-
 .sj-book .even .right-content-page{
-	padding-left: 20px;
+	padding-left: 25px;
 }
 .sj-book .odd .right-content-page{
 	padding-left: 20px;
@@ -494,10 +485,10 @@ body, ul, table, form{
 }
 .sj-book .footer img{
     width: 150px;
-    height: 30px;
+    height: 45px;
 	position: absolute;
 	bottom: 10px;
-	left: 10px;
+	left: 25px;
 }
 
 
@@ -587,17 +578,20 @@ body, ul, table, form{
 .index-footer img{
 	float: left;
 	width: 150px;
-	height: 30px;	
-	padding-left: 0px !important;
+	height: 45px;	
+	padding-left: 25px !important;
 }
 .index-footer .right{
 	width: 50%;
-	display: inline-block;
-	text-align: right;
+    display: inline-block;
+    text-align: right;
+    line-height: 1;
+    padding-bottom: 10px;
 }
 .index-footer .right h1{
 	margin: 0;
     font-size: 70px;
+    padding-right: 15px;
     text-transform: capitalize;
 }
 .ml-30{
@@ -605,4 +599,7 @@ body, ul, table, form{
 }
 .pt-10{
 	padding-top: 10px;
+}
+.date{
+	margin-right: 20px;
 }

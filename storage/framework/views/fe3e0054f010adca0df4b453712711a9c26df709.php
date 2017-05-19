@@ -11,16 +11,16 @@
 	src: url(../fonts/helveticaneueltStd-ultLt25.ttf);
 }
 </style>
-<script type="text/javascript" src="{{ url('extras/jquery.min.1.7.js')}}"></script>
-<script type="text/javascript" src="{{ url('extras/jquery-ui-1.8.20.custom.min.js')}}"></script>
-<script type="text/javascript" src="{{ url('extras/jquery.mousewheel.min.js')}}"></script>
-<script type="text/javascript" src="{{ url('extras/modernizr.2.5.3.min.js')}}"></script>
-<script type="text/javascript" src="{{ url('lib/hash.js')}}"></script>
+<script type="text/javascript" src="<?php echo e(url('extras/jquery.min.1.7.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(url('extras/jquery-ui-1.8.20.custom.min.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(url('extras/jquery.mousewheel.min.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(url('extras/modernizr.2.5.3.min.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(url('lib/hash.js')); ?>"></script>
 </head>
 <body>
 	
-	<input type="hidden" name="userId" id="userId" value="{{ $id }}" />
-    <input type="hidden" name="pagescount" id="pagescount" value="{{$filepagesCount}}" >
+	<input type="hidden" name="userId" id="userId" value="<?php echo e($id); ?>" />
+    <input type="hidden" name="pagescount" id="pagescount" value="<?php echo e($filepagesCount); ?>" >
 <div id="canvas">
 	<div id="book-zoom">
 		<div class="sj-book">
@@ -291,9 +291,9 @@ $('#canvas').css({visibility: 'hidden'});
 
 yepnope({
 	test : Modernizr.csstransforms,
-	yep: ['{{ url("lib/turn.min.js")}}'],
-	nope: ['{{ url("lib/turn.html4.min.js")}}', '{{ url("css/jquery.ui.html4.css")}}', '{{ url("css/steve-jobs-html4.css")}}'],
-	both: ['{{ url("js/steve-jobs.js")}}', '{{ url("css/jquery.ui.css")}}', '{{ url("css/steve-jobs.css")}}'],
+	yep: ['<?php echo e(url("lib/turn.min.js")); ?>'],
+	nope: ['<?php echo e(url("lib/turn.html4.min.js")); ?>', '<?php echo e(url("css/jquery.ui.html4.css")); ?>', '<?php echo e(url("css/steve-jobs-html4.css")); ?>'],
+	both: ['<?php echo e(url("js/steve-jobs.js")); ?>', '<?php echo e(url("css/jquery.ui.css")); ?>', '<?php echo e(url("css/steve-jobs.css")); ?>'],
 	complete: loadApp
 });
 

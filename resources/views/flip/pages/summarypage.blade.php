@@ -48,6 +48,7 @@
 					</tr>
 				</table>
 			</div>
+</div>
 	<footer class="pdf">    
 	  <div class="">
 		<div class="row">
@@ -57,12 +58,11 @@
 						<p class="bold">Date of release: <?php $dates="$data->date_of_release";$date=date_create_from_format("Y-m-d","$dates");echo date_format($date,"M d, Y"); ?></p>
 					</div>                      
 				</div>
-				<div class="col-md-6 col-sm-6 col-xs-12 footer-height text-right">
+				<div class="summaryfooter col-md-6 col-sm-6 col-xs-12 footer-height text-right">
 					<img class="footer-image right" src="{{url('/')}}/<?php echo $data->upload_path; ?><?php echo trim($data->signature); ?>" alt="" title="" />
 				</div>
 			</div>               
 		</div>          		
 	  </div>          		
-	</footer>      
-</div>
+	</footer>   
 <span class="page-number">{{$data->page}}</span>
