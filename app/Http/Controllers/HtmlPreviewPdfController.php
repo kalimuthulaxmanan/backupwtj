@@ -55,6 +55,8 @@ class HtmlPreviewPdfController extends Controller
 						->where('files_directory.id',$id)
 
             ->get();
+		
+//	dd($data);
 	
 		$appendData="";
 		
@@ -71,7 +73,7 @@ class HtmlPreviewPdfController extends Controller
 						$appendData.=$this->loadTemplate('frontpage',$value);
 
 						$appendData.=$this->loadTemplate('emptypage',$value);	
-						$appendData.=$this->loadTemplate('summarypage',$value);	
+						$appendData.=$this->loadTemplate('summarypage',$value,$data);	
 						
 					break;	
 
@@ -279,10 +281,10 @@ $galleries = DB::table('files_directory')
 		
 	}
 	
-	private function loadTemplate($template,$data)
+	private function loadTemplate($template,$data,$data1=null)
 	{
 		
-		$returndata=view('layouts.html.'.$template,['data'=>$data])->render();
+		$returndata=view('layouts.html.'.$template,['data'=>$data,'data1'=>$data1])->render();
 		//dd($returndata);
 		return $returndata;
 		

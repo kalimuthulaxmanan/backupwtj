@@ -12,30 +12,16 @@
             </td>
 		</tr>
         <tr><td colspan="2" style="text-align:center"><h1 style="font-size: 30px;font-weight: 500 !important;letter-spacing: 1px;color: #000">Summary<br /><br /></h1></td></tr>
-		<tr class="summary-left">
-			<td>Welcome in France</td>
-			<td>page 04</td>
-		</tr>
-		<tr class="summary-left">
-			<td>Your itinerary</td>
-			<td>page 06</td>
-		</tr>
-		<tr class="summary-left">
-			<td>Champagne</td>
-			<td>page 10</td>
-		</tr>
-		<tr class="summary-left">
-			<td>Paris</td>
-			<td>page 12</td>
-		</tr>
-		<tr class="summary-left">
-			<td>Detailed itinerary</td>
-			<td>page 18</td>
-		</tr>
-		<tr class="summary-left">
-			<td>Sales and terms conditions</td>
-			<td>page 19</td>
-		</tr>
+		@foreach($data1 as $pages)
+					
+						@if ($pages->show_summery === 1)
+					
+						<tr>
+						<td>{{ $pages->title }}</td>
+						<td>Page {{ $pages->content_order+2 }}</td>
+						</tr>
+					@endif
+					@endforeach
 	</table>
 	
     <table style="height:80px;position:absolute;bottom:0px;">

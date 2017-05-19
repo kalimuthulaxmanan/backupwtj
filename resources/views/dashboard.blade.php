@@ -369,7 +369,7 @@
                                         	@foreach($pdflist as $file)
                                             <tr>
                                             	<td>{{$file->file_name}}</td>
-												<td>{{$file->firstName}}</td>
+												<td>{{$file->email}}</td>
 												<td>{{$file->created_at}}</td>
 												
 												<td>
