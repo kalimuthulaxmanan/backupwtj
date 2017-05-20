@@ -21,7 +21,7 @@
 					@foreach($data->itineraryData as $itineraryValue)
 					  <tr>
 						<td style="width:75px;vertical-align:top;line-height:20px;"><?php $dates="$itineraryValue->event_date";$date=date_create_from_format("Y-m-d","$dates");
-								echo date_format($date,"M d"); ?>: </td>
+								echo date_format($date,"F d"); ?>: </td>
 					 	<td style="padding-bottom:15px;font-size:14px;vertical-align:top;line-height:20px;">{!!nl2br($itineraryValue->description)!!}</td>
 					  </tr>
 					@endforeach

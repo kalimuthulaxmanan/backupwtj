@@ -16,7 +16,7 @@
 				<h1 class="left-title">{{$data->title}}</h1> 
 				@foreach($data->detailitineraryDatas as $detail_itineraryData)
 				<p><b><?php $dates=$detail_itineraryData->event_date; $date=date_create_from_format("Y-m-d","$dates");
-echo date_format($date,"M d");?></b></p>
+echo date_format($date,"F d");?></b></p>
 				<p class="lh-20 detailitinerary-content">
 					{!!nl2br($detail_itineraryData->description)!!}<br />										 
 				</p> 

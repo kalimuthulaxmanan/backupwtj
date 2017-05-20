@@ -1,16 +1,20 @@
 <!-- Section Start -->
 <style>
-.bold span b{
+.bold p{
+    text-align: justify;
+}
+.bold p b{
     font-weight: 600 !important;
+    color:#000;
 }
 </style>
     <table style="width:100%;padding-top:15px;">
 		<tr style="">
             <td style="width:30%;vertical-align:top;">
-				<h1 style="font-size: 25px;margin-top:0;padding-left:15px; line-height:20px;">{{$data->title}}</h1>   
+				<h1 style="font-size: 25px;margin-top:0;padding-left:15px; line-height:20px; color:#000;">{{$data->title}}</h1>   
             </td>
-            <td style="width:70%;padding-top:10px;" class="bold">
-				<span>{!!nl2br($data->content)!!}</span><br /><br />
+            <td style="width:70%;padding-top:10px;padding-right:15px;" class="bold">
+				<p>{!!nl2br($data->content)!!}</p><br /><br />
 			
             </td>
 		</tr>

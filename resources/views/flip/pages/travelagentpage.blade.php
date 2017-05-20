@@ -8,9 +8,9 @@
 	<div class="last-content">
 		
 		<p><b>YOUR TRAVEL AGENT IN <?php echo $travelagent->place; ?></b><br />
-			<?php echo $travelagent->name; ?><br />
+			{!!nl2br($travelagent->name)!!}<br/>
 		
-			<img src="<?php echo url ($data->upload_path);?>/<?php echo trim($travelagent->logo); ?>" style="height: 40px;width: 200px;padding-top:5px;" alt="" title="">						
+			<img src="<?php echo url ($data->upload_path);?>/<?php echo trim($travelagent->logo); ?>" style="height: 40px;width: 150px;padding-top:10px;" alt="" title="">						
 		</p>
 	</div>
 	<?php } ?>

@@ -25,8 +25,8 @@
 				<div class="col-md-9 col-sm-9 col-xs-12 footer-height text-right">
 					<div class="footer-content">
 						<h1><?php echo $data->place; ?></h1>
-						<h3><?php  $dates="$data->start_date"; $date=date_create_from_format("Y-m-d","$dates");
-echo date_format($date,"M d");?> - <?php $datesend="$data->end_date"; $date=date_create_from_format("Y-m-d","$datesend");echo date_format($date,"M d Y");?></h3>
+						<h3 style="font-size: 25px"><?php  $dates="$data->start_date"; $date=date_create_from_format("Y-m-d","$dates");
+echo date_format($date,"M d, Y");?> - <?php $datesend="$data->end_date"; $date=date_create_from_format("Y-m-d","$datesend");echo date_format($date,"M d, Y");?></h3>
 					</div>                        
 				</div>
 			</div>                

@@ -23,7 +23,11 @@
 					
 						<tr>
 						<td>{{ $pages->title }}</td>
-						<td>Page {{ $pages->content_order+2 }}</td>
+						<td style="text-align: left;">Page <?php
+						$num = $pages->content_order+2;
+						$num_padded = sprintf("%02d", $num);
+						echo $num_padded;
+						?></td>
 						</tr>
 					@endif
 					@endforeach
@@ -59,11 +63,11 @@
 			<div class="col-md-12">
 				<div class="col-md-6 col-sm-6 col-xs-12 footer-height">
 					<div class="footer-content left">
-						<p class="bold">Date of release:<?php $dates="$data->date_of_release";$date=date_create_from_format("Y-m-d","$dates");echo date_format($date,"M d, Y"); ?></p>
+						<p class="bold" style="font-size: 15px;">Date of release:<?php $dates="$data->date_of_release";$date=date_create_from_format("Y-m-d","$dates");echo date_format($date,"F d, Y"); ?></p>
 					</div>                      
 				</div>
 				<div class="col-md-6 col-sm-6 col-xs-12 footer-height text-right">
-					<img class="footer-image right" src="{{ url('/') }}/{{$data->upload_path}}/<?php echo trim($data->signature); ?>" alt="" title="" />
+					<img class="footer-image right" src="{{ url('/') }}/{{$data->upload_path}}/<?php echo trim($data->signature); ?>" alt="" title="" style="width:200px;"/>
 				</div>
 			</div>               
 		</div>          		
