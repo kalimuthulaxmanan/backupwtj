@@ -5,7 +5,7 @@
 		<p style="line-height:25px;">
 			@foreach($data->detailitineraryDatas as $detail_itineraryData)
 			&nbsp; &nbsp; &nbsp; - &nbsp; <?php $dates=$detail_itineraryData->event_date; $date=date_create_from_format("Y-m-d","$dates");
-echo date_format($date,"M d");?>: {!!nl2br($detail_itineraryData->description)!!}<br>
+echo date_format($date,"F d");?>: {!!nl2br($detail_itineraryData->description)!!}<br>
 			@endforeach
 							 
 		</p>

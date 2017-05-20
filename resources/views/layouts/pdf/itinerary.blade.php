@@ -8,7 +8,7 @@
 					<tr>
 						<td style="width:40;padding-bottom:10px;vertical-align:top;line-height:20px;">
 							<span><b><?php $dates="$itineraryValue->event_date";$date=date_create_from_format("Y-m-d","$dates");
-							echo date_format($date,"M d"); ?>:</b></span>
+							echo date_format($date,"F d"); ?>:</b></span>
 						</td>
 						<td style="padding-bottom:10px;vertical-align:top;line-height:20px;">
 							<span><b>{!!nl2br($itineraryValue->description)!!}</b></span>

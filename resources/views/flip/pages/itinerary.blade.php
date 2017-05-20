@@ -6,8 +6,8 @@
 			@foreach($data->itineraryData as $itineraryValue)
 			<tr>
 				<td style="width:60px;vertical-align:top;padding-bottom:10px;"><?php $dates="$itineraryValue->event_date";$date=date_create_from_format("Y-m-d","$dates");
-echo date_format($date,"M d"); ?>:</td>
-				<td style="vertical-align:top;padding-bottom:10px;">{{$itineraryValue->description}}</td>
+echo date_format($date,"F d"); ?>:</td>
+				<td style="vertical-align:top;padding-bottom:10px;">{!!nl2br($itineraryValue->description)!!}</td>
 			</tr>
 			@endforeach
 		</table>

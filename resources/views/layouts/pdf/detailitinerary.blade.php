@@ -8,7 +8,7 @@
 					<tr>
 						<td>
 						<b style="font-weight:800 !important;color:#444;"><?php $dates="$detail_itineraryData->event_date"; $date=date_create_from_format("Y-m-d","$dates");
-						echo date_format($date,"M d");?></b>
+						echo date_format($date,"F d");?></b>
 						</td><br /><br />
 					</tr>
 					<tr>	

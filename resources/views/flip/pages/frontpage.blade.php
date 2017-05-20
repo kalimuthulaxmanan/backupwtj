@@ -12,7 +12,7 @@
 	<div class="right">
 		<h1><?php echo $data->place; ?></h1>
 		<span class="date"><?php  $dates="$data->start_date"; $date=date_create_from_format("Y-m-d","$dates");
-echo date_format($date,"M d");?> - <?php $datesend="$data->end_date"; $date=date_create_from_format("Y-m-d","$datesend");echo date_format($date,"M d Y");?></span>
+echo date_format($date,"M d, Y");?> - <?php $datesend="$data->end_date"; $date=date_create_from_format("Y-m-d","$datesend");echo date_format($date,"M d, Y");?></span>
 	</div>
 </div>
 <span class="page-number">{{$data->page}}</span>

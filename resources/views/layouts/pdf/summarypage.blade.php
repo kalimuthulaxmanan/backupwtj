@@ -17,8 +17,12 @@
 						@if ($pages->show_summery === 1)
 					
 						<tr>
-						<td>{{ $pages->title }}</td>
-						<td>Page {{ $pages->content_order+2 }}</td>
+						<td style="padding-left: 180px;width: 50%;font-size: 15px;line-height: 20px;">{{ $pages->title }}</td>
+						<td style="width: 30%;font-size: 15px;line-height: 20px;">Page <?php
+						$num = $pages->content_order+2;
+						$num_padded = sprintf("%02d", $num);
+						echo $num_padded;
+						?></td>
 						</tr>
 					@endif
 					@endforeach
@@ -27,7 +31,7 @@
     <table style="height:80px;position:absolute;bottom:0px;">
 		<tr style="">
             <td style="width:50%;vertical-align:middle; padding-left: 15px; padding-bottom: 0px !important;">
-                <span>Date of release:<?php $dates="$data->date_of_release";$date=date_create_from_format("Y-m-d","$dates");echo date_format($date,"M d, Y"); ?></span>
+                <span>Date of release:<?php $dates="$data->date_of_release";$date=date_create_from_format("Y-m-d","$dates");echo date_format($date,"F d, Y"); ?></span>
             </td>
             <td style="width:50%;text-align:right; padding-right: 15px;">
                 <img src="{{url('/')}}/<?php echo $data->upload_path; ?><?php echo trim($data->signature); ?>" alt="" title="" style="width:150px;height:50px;" />
