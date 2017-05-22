@@ -7,21 +7,21 @@
 </style>
 <section class="">        
 	<div class="index-image change-image">
-	@foreach($data->frontImages as $frontImage)
+	<?php foreach($data->frontImages as $frontImage): ?>
 		
-		<img src="{{ url('/') }}/<?php echo trim($frontImage->image); ?>" id="image{{$frontImage->id}}" alt="" title="" />
+		<img src="<?php echo e(url('/')); ?>/<?php echo trim($frontImage->image); ?>" id="image<?php echo e($frontImage->id); ?>" alt="" title="" />
 		
 		<div class="img-overlay">
-			<a onclick="newFunction('image{{$frontImage->id}}',{{$frontImage->id}})" data-toggle="modal" data-target="#myModal" href="">Change Image</a>
+			<a onclick="newFunction('image<?php echo e($frontImage->id); ?>',<?php echo e($frontImage->id); ?>)" data-toggle="modal" data-target="#myModal" href="">Change Image</a>
 		</div>
-	@endforeach
+	<?php endforeach; ?>
 	</div>
 
 	<footer class="pdf">    
 		<div class="row">
 			<div class="col-md-12">
 				<div class="col-md-3 col-sm-3 col-xs-12 footer-height">
-					<img class="footer-image" src="{{ url('/') }}/<?php echo $data->upload_path; ?><?php echo trim($data->logo); ?>" alt="" title="" />
+					<img class="footer-image" src="<?php echo e(url('/')); ?>/<?php echo $data->upload_path; ?><?php echo trim($data->logo); ?>" alt="" title="" />
 				</div>
 				<div class="col-md-9 col-sm-9 col-xs-12 footer-height text-right">
 					<div class="footer-content">

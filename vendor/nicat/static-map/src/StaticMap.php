@@ -106,7 +106,7 @@ class StaticMap {
     {
         $attributes = $this->attributes($imgOptions);
 
-        return '<img ' . $attributes . ' src="' . $this->Google($center, $options) . '" />';
+        return '<img width=719 height=719 ' . $attributes . ' src="' . $this->Google($center, $options) . '" />';
     }
 
     /**
