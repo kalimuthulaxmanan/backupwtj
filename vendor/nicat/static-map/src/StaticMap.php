@@ -39,8 +39,11 @@ class StaticMap {
         if (isset($this->config['markers']))
         {
             if (is_array($this->config['markers']))
-            {
+				{    
+				$markerlength=sizeof($this->config['markers']);
+				$pathmarkers=[];	
                 $hiddenMarkers = [];
+				$i=1;	
                 foreach ($this->config['markers'] as $marker)
                 {
                     $notArray = false;
@@ -57,25 +60,37 @@ class StaticMap {
 
                     $centerOfMarker = $marker['center'];
                     unset($marker['center']);
-                    $hiddenMarkers[] = "&markers=" . $this->attributes($marker, '', [':', '%7C']) . $centerOfMarker;
-
+                    $hiddenMarkers[] = "&markers=color:0xFFFF00%7C" . $this->attributes($marker, '', [':', '%7C']) . $centerOfMarker;
+                    
+					if($i < $markerlength)
+					{
+					$pathmarkers[]=$centerOfMarker.'|';
+					
+					}
+					if($i == $markerlength)
+					{
+					
+					$pathmarkers[]=$centerOfMarker;
+					}
+					
                     if ($notArray)
                     {
                         break;
                     }
-
+               $i++;
                 }
-
+                $pathmarker= implode('', $pathmarkers);
                 $markers = implode('', $hiddenMarkers);
-
+				$path="&path=color:4885ed|weight:3|".$pathmarker;
+                 
             } else
             {
                 $markers = '&markers=' . $center;
             }
         }
 
-        $url = 'http://maps.googleapis.com/maps/api/staticmap?key=' . $this->config['key'] . '&center=' . $center . $zoom . $size . $mapType . $imageFormat . $markers;
-
+        $url = 'http://maps.googleapis.com/maps/api/staticmap?key=' . $this->config['key'] .$size .$markers.$path.'&sensor=false';
+      
         return $url;
     }
 

@@ -6,7 +6,7 @@
 </td>
 <td width=539>
 <p><span style="font-size: 30px;margin-top:0; padding-top:10px;"><?php echo e($data->title); ?></span></p>
-<p style="font-size: 13px"><?php echo nl2br($data->content); ?></p>
+<p style="font-size: 15px"><?php echo nl2br($data->content); ?></p>
 </td>
 </tr>
 </table>
