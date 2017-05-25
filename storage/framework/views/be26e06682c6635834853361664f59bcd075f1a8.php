@@ -366,9 +366,14 @@
                                         <tbody class="tbodypad">
                                         	<?php foreach($pdflist as $file): ?>
                                             <tr>
-                                            	<td><?php echo e($file->file_name); ?></td>
+                                            	<td><?php echo e($file->upload_file); ?></td>
+												<?php if($file->firstName!=null): ?>
+												<td><?php echo e($file->firstName); ?></td>
+												<?php else: ?>
 												<td><?php echo e($file->email); ?></td>
-												<td><?php echo e($file->created_at); ?></td>
+												<?php endif; ?>
+												<td><?php $dates="$file->created_at"; $date=date_create_from_format("Y-m-d H:i:s","$dates");
+                                                echo date_format($date,"M-d-Y"); ?></td>
 												
 												<td>
 												<a style="padding:10px 15px;" class="btn btn-primary btn-simple" rel="tooltip" data-original-title="Generate" href="<?php echo e(url('/generateHtmlPreview')); ?>/<?php echo e($file->id); ?>" ><i class="fa fa-cogs" aria-hidden="true"></i></a>

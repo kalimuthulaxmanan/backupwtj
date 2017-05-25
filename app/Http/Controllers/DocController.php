@@ -193,11 +193,16 @@ $data = DB::table('files_directory')
 			$html= view('pdf.wordview',['data'=>$appendData])->render(); 
 	
 			
-		
+		 $filename=$value->upload_file;
 		//return view('pdf.pdfview',['data'=>$appendData]);
-              $filename=$value->file_name;
-			header("Content-type: application/vnd.ms-word");
-        header("Content-Disposition: inline;Filename= $filename.doc");
+		   $dot=strrpos($filename,'.');
+		   $file=substr($filename,0,$dot); 
+			   
+		
+		//substr
+             
+			header("Content-type: application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        header("Content-Disposition: inline;Filename= $file.docx");
 
 echo $html; 
 		//dd($data);
