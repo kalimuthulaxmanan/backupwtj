@@ -201,8 +201,8 @@ $data = DB::table('files_directory')
 		
 		//substr
              
-			header("Content-type: application/vnd.openxmlformats-officedocument.wordprocessingml.document");
-        header("Content-Disposition: inline;Filename= $file.docx");
+			header("Content-type: application/msword");
+        header("Content-Disposition: attachment;Filename= $file.doc");
 
 echo $html; 
 		//dd($data);
