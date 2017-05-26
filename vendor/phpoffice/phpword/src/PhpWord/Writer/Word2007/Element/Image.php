@@ -37,6 +37,7 @@ class Image extends AbstractElement
     {
         $xmlWriter = $this->getXmlWriter();
         $element = $this->getElement();
+		
         if (!$element instanceof ImageElement) {
             return;
         }
@@ -75,13 +76,14 @@ class Image extends AbstractElement
         $xmlWriter->writeAttribute('r:id', 'rId' . $rId);
         $xmlWriter->writeAttribute('o:title', '');
         $xmlWriter->endElement(); // v:imagedata
-
+         
         $xmlWriter->endElement(); // v:shape
         $xmlWriter->endElement(); // w:pict
         $xmlWriter->endElement(); // w:r
 
         $this->endElementP();
-    }
+     
+	}
 
     /**
      * Write watermark element.

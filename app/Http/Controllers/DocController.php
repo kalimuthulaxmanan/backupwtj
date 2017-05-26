@@ -41,8 +41,9 @@ class DocController extends Controller
 	
 	public function generateDoc($id)
 	{
-		
-$data = DB::table('files_directory')
+   
+	
+/*$data = DB::table('files_directory')
             ->join('pdf_content', 'files_directory.id', '=', 'pdf_content.file_id')
             ->join('pdf_common_fields', 'files_directory.id', '=', 'pdf_common_fields.file_id')
 			->join('pdf_templates', 'pdf_templates.id', '=', 'pdf_content.template_id')
@@ -227,7 +228,7 @@ echo $html;
      * @return Response
      */
    
-}
+
 
 		
 		
@@ -236,8 +237,8 @@ echo $html;
 	
 		
 		
-/*	//image  with content template
-	$phpWord = new \PhpOffice\PhpWord\PhpWord();
+	//image  with content template
+/*	$phpWord = new \PhpOffice\PhpWord\PhpWord();
     $section = $phpWord->addSection(
 	array(
 		'paperSizeW'    => 7500,
@@ -252,13 +253,14 @@ echo $html;
 	$header = array('size' => 48, 'bold' => true);
 	
 	$section->addText('Welcome to France',$header);
-	$img1='http://localhost/dev_wtj/public/uploads/1494940055/test/front_page_image.jpg';
-	$img2='http://localhost/dev_wtj/public/uploads/1494940055/test/im3.jpg';
-    $img3='http://localhost/dev_wtj/public/uploads/1494940055/test/logo_image.png';
+   
+	$img1='uploads/1495778510/test//front_page_image.jpg';
+	$img2='http://localhost/dev_wtj/public/uploads/1495778510/test/im3.jpg';
+    $img3='http://localhost/dev_wtj/public/uploads/1495778510/test/logo_image.png';
 	$text='Mars is the fourth planet from the Sun and the second-smallest planet in the Solar System, after Mercury. Named after the Roman god of war, it is often referred to as the "Red Planet"[13][14] because the iron oxide prevalent on its surface gives it a reddish appearance.Mars is a terrestrial planet with a thin atmosphere, having surface features reminiscent both of the impact craters of the Moon and the valleys, deserts, and polar ice caps of Earth.';
-  
+     $section->addImage($img1);
 	// to add image
-	$imgtable=$section->addTable();	
+	/*$imgtable=$section->addTable();	
 	$imgtable->addRow();
 	
 	$cell1=$imgtable->addCell();
@@ -269,11 +271,12 @@ echo $html;
     $footertable=$section->addTable();
     $footertable->addRow();
     $footertable->addCell()->addImage($img3,array('width' => 150, 'height' => 50)); 
-    $section->addPagebreak();
+    $section->addPagebreak(); */
 	
-	$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'HTML');
-	$objWriter->save('helloWorld.doc');die;	  
-	
+/*	$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+
+	$objWriter->save('helloWorld.docx');die; 	 */  
+	}}
 /*	//itinary  template	
 	$phpWord = new \PhpOffice\PhpWord\PhpWord();
     $section = $phpWord->addSection();

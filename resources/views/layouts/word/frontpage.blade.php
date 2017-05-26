@@ -3,22 +3,36 @@
 		<img width=720 height=500 src="{{ url('/') }}/<?php echo trim($frontImage->image); ?>"  />
 	@endforeach
 	 
-<div style='mso-element:footer' id="fr1">
-<p class="MsoFooter">    
-    <table width=100% style="height:120px;position:absolute;bottom:30px;">
-		<tr style="">
-            <td width=20% style="vertical-align:bottom">
-                <img src="<?php echo url($data->upload_path); ?>/<?php echo trim($data->logo); ?>" alt="" title="" width="150" height="50" />
-            </td>
-            <td width=50% style="width:50%;text-align:right; padding-right: 25px;">
-                <h1 style="font-size:30px;text-transform:capitalize;line-height:70px;margin-bottom:-10px;margin-top:10px;">France</h1>
-                <p style="font-size:28px;margin:0;"><?php  $dates="$data->start_date"; $date=date_create_from_format("Y-m-d","$dates");
-echo date_format($date,"M d");?> - <?php $datesend="$data->end_date"; $date=date_create_from_format("Y-m-d","$datesend");echo date_format($date,"M d Y");?></p>
-            </td>
-		</tr>
-    </table>
-</p>	
-</div>	
+	 
+	 
+<table id='hrdftrtbl' border='0' cellspacing='0' cellpadding='0'>
+    <tr>
+    <td width="100%">
+    <div style='mso-element:footer' id='frf1'><span style='position:relative;z-index:-1'> 
+       <table width="100%">
+	   <tr>
+	   <td align="left" class="footer" width="50%"><img src="{{url('/')}}/<?php echo $data->upload_path; ?><?php echo trim($data->logo); ?>" alt="" title="" width="150" height="50" /></td>
+	   <td align="right" width="50%">
+	   <h1><?php echo $data->place; ?></h1>
+	   <p><?php  $dates="$data->start_date"; $date=date_create_from_format("Y-m-d","$dates");
+echo date_format($date,"M d, Y");?> - <?php $datesend="$data->end_date"; $date=date_create_from_format("Y-m-d","$datesend");echo date_format($date,"M d, Y");?></p></td>
+	   
+ </tr>
+</table>
+        <span style='mso-no-proof:yes'></span></span>
+           <p class= 'MsoFooter' >
+           <span style='mso-tab-count:2'></span>
+        </p>
+    </div>
+
+        <div style='mso-element:footer' id='ffrf1'>
+        <p class=MsoFooter></p>
+    </div>
+
+    </td></tr>
+    </table>	 
+	 
+	 	
     <!-- front page Section End -->
 </div>	
 	 
