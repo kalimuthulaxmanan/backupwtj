@@ -43,7 +43,7 @@ class DocController extends Controller
 	{
    
 	
-/*$data = DB::table('files_directory')
+$data = DB::table('files_directory')
             ->join('pdf_content', 'files_directory.id', '=', 'pdf_content.file_id')
             ->join('pdf_common_fields', 'files_directory.id', '=', 'pdf_common_fields.file_id')
 			->join('pdf_templates', 'pdf_templates.id', '=', 'pdf_content.template_id')
@@ -202,7 +202,7 @@ class DocController extends Controller
 		
 		//substr
              
-			header("Content-type: application/msword");
+		header("Content-type: application/msword");
         header("Content-Disposition: attachment;Filename= $file.doc");
 
 echo $html; 
@@ -221,7 +221,9 @@ echo $html;
 		
 	}
 
-    /**
+   
+}
+	/**
      * Display a list of all of the user's task.
      *
      * @param  Request  $request
@@ -276,7 +278,7 @@ echo $html;
 /*	$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
 
 	$objWriter->save('helloWorld.docx');die; 	 */  
-	}}
+	
 /*	//itinary  template	
 	$phpWord = new \PhpOffice\PhpWord\PhpWord();
     $section = $phpWord->addSection();
