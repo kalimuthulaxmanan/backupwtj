@@ -367,6 +367,10 @@ class ComposerStaticInitbddc9e74e177b03d7e6a3d4c97069de9
             array (
                 0 => __DIR__ . '/..' . '/phenx/php-svg-lib/src',
             ),
+            'Sunra\\PhpSimple\\HtmlDomParser' => 
+            array (
+                0 => __DIR__ . '/..' . '/sunra/php-simple-html-dom-parser/Src',
+            ),
             'Sabberworm\\CSS' => 
             array (
                 0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/lib',
@@ -457,6 +461,7 @@ class ComposerStaticInitbddc9e74e177b03d7e6a3d4c97069de9
         'App\\Http\\Controllers\\Auth\\PasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/PasswordController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/DashboardController.php',
+        'App\\Http\\Controllers\\DocController' => __DIR__ . '/../..' . '/app/Http/Controllers/DocController.php',
         'App\\Http\\Controllers\\FlipbookDataController' => __DIR__ . '/../..' . '/app/Http/Controllers/FlipbookDataController.php',
         'App\\Http\\Controllers\\HtmlPreviewPdfController' => __DIR__ . '/../..' . '/app/Http/Controllers/HtmlPreviewPdfController.php',
         'App\\Http\\Controllers\\ImportExcelDataController' => __DIR__ . '/../..' . '/app/Http/Controllers/ImportExcelDataController.php',
@@ -528,6 +533,8 @@ class ComposerStaticInitbddc9e74e177b03d7e6a3d4c97069de9
         'Aws\\ApplicationDiscoveryService\\Exception\\ApplicationDiscoveryServiceException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/ApplicationDiscoveryService/Exception/ApplicationDiscoveryServiceException.php',
         'Aws\\Appstream\\AppstreamClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Appstream/AppstreamClient.php',
         'Aws\\Appstream\\Exception\\AppstreamException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Appstream/Exception/AppstreamException.php',
+        'Aws\\Athena\\AthenaClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Athena/AthenaClient.php',
+        'Aws\\Athena\\Exception\\AthenaException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Athena/Exception/AthenaException.php',
         'Aws\\AutoScaling\\AutoScalingClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/AutoScaling/AutoScalingClient.php',
         'Aws\\AutoScaling\\Exception\\AutoScalingException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/AutoScaling/Exception/AutoScalingException.php',
         'Aws\\AwsClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/AwsClient.php',
@@ -3909,6 +3916,7 @@ class ComposerStaticInitbddc9e74e177b03d7e6a3d4c97069de9
         'SebastianBergmann\\RecursionContext\\Exception' => __DIR__ . '/..' . '/sebastian/recursion-context/src/Exception.php',
         'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => __DIR__ . '/..' . '/sebastian/recursion-context/src/InvalidArgumentException.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
+        'Sunra\\PhpSimple\\HtmlDomParser' => __DIR__ . '/..' . '/sunra/php-simple-html-dom-parser/Src/Sunra/PhpSimple/HtmlDomParser.php',
         'SuperClosure\\Analyzer\\AstAnalyzer' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Analyzer/AstAnalyzer.php',
         'SuperClosure\\Analyzer\\ClosureAnalyzer' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Analyzer/ClosureAnalyzer.php',
         'SuperClosure\\Analyzer\\Token' => __DIR__ . '/..' . '/jeremeamia/SuperClosure/src/Analyzer/Token.php',

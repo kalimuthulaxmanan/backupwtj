@@ -10,6 +10,7 @@ use Redirect;
 use DB;
 use StaticMap;
 use Response;
+use Sunra\PhpSimple\HtmlDomParser;
 
 class DocController extends Controller
 {
@@ -41,9 +42,9 @@ class DocController extends Controller
 	
 	public function generateDoc($id)
 	{
-   
+	 	
 	
-$data = DB::table('files_directory')
+/*$data = DB::table('files_directory')
             ->join('pdf_content', 'files_directory.id', '=', 'pdf_content.file_id')
             ->join('pdf_common_fields', 'files_directory.id', '=', 'pdf_common_fields.file_id')
 			->join('pdf_templates', 'pdf_templates.id', '=', 'pdf_content.template_id')
@@ -219,168 +220,209 @@ echo $html;
 		//dd($returndata);
 		return $returndata;
 		
-	}
+	} */
 
    
-}
+
 	/**
      * Display a list of all of the user's task.
      *
      * @param  Request  $request
      * @return Response
      */
-   
-
-
+  
+$phpWord = new \PhpOffice\PhpWord\PhpWord();
+				
+$data = DB::table('files_directory')
+            ->join('pdf_content', 'files_directory.id', '=', 'pdf_content.file_id')
+            ->join('pdf_common_fields', 'files_directory.id', '=', 'pdf_common_fields.file_id')
+			->join('pdf_templates', 'pdf_templates.id', '=', 'pdf_content.template_id')
+            ->select('files_directory.*', 'pdf_common_fields.*', 'pdf_content.*', 'pdf_templates.name')
+			->where('files_directory.id',$id)
+			->orderby('pdf_content.content_order','asc')
+            ->get();		
 		
-		
- 
-							
+if(!empty($data))
+		{
+			foreach($data as $key=>$value)
+			{
+switch($value->name)
 	
+	{
+  case "front_page":
+			
+	$frontImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get(); 
+    $value->frontImages=  $frontImages;
+	$this->frontpage($phpWord,$value);	
+	$this->logopage($phpWord,$value);
+	$this->summerypage($phpWord,$value,$data);		
+	break;			
+	
+ case "itinerary":
+	$itineraryData=DB::table('pdf_itinenary')->where('content_id',$value->id)->get();			
+	$itineraryImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get();
+	$value->itineraryData=$itineraryData;
+	$value->itineraryImages=$itineraryImages;			
+	$this->itinerary($phpWord,$value);
+    break;
+ case "detail_itinerary":
+	$detailitineraryDatas=DB::table('pdf_itinenary_details')->where('content_id',$value->id)->get();
+	$detailitineraryImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get();		
+	$value->detailitineraryDatas=$detailitineraryDatas;
+    $value->detailitineraryImages=$detailitineraryImages;
+	$this->detailed_itinary($phpWord,$value);
+	break;
+  case "image_with_content":
+	$contentImages=DB::table('pdf_content_images')->where('content_id',$value->id)->select('image')->get();
+	$value->contentImages= $contentImages;		
+	if($value->itinerary_date_with_title=="" || $value->itinerary_date_with_title==null)
+	   {
+		$this->image_with_content($phpWord,$value);
+	   }
+	   else{      
+	   		$this->itinary_image_with_content($phpWord,$value);				
+	       }
+	break;
+  case "travel_agent":
+	$travel_agent=DB::table('pdf_travel_agent')->where('content_id',$value->id)->select('name','profile_image','logo','place')->get();
+	$value->travel_agent=$travel_agent; 
+	$this->travalagent($phpWord,$value);					   
+  break;	
+	case "full_image_page":
+		 $fullImages=DB::table('pdf_content_images')->where('content_id',$value->id)->select('image')->get();
+		 $value->fullImages= $fullImages;
+         $this->fullpage($phpWord,$value);							
+	break;
+
+	case "empty_page":
+	  $this->emptypage($phpWord,$value);						
+	  break;			
+	case "empty_page_with_title":
+	 $this->emptypagetitle($phpWord,$value);						
+	break;		
+	case "content_only":
+	  $title="$value->title";
+ 
+		if(strpos($title,"and terms")==null || strpos($title,"and terms")== true  )
+		{
+      
+		$this->toptitlecontent($phpWord,$value);
+		}
+		else
+		{
 		
+		$this->contentonly($phpWord,$value);
+		}							
+    break;
+			
+	case "map":
+
+	 $Mapdetails=DB::table('pdf_map')->where('file_id',$value->file_id)->select('lat','lon')->get();	
+	 $i=0;
+	 foreach($Mapdetails as $detail)
+		{
+		$i+=1;
+		$markers[]=['center'=> "$detail->lat,$detail->lon",'label'=>"$i"];
+
+		}
+		$Mapimage= StaticMap::GoogleWithImg("$detail->lat,$detail->lon", ['markers' => $markers,'zoom'=>'8','with' =>'640', 'height' =>'640' ]); 
+		$value->Mapimage=$Mapimage;
+		$str ="$Mapimage";	
+		$dom = HtmlDomParser::str_get_html( $str );	
+		$elems = $dom->find('img');
 		
+		$map=$elems[0]->attr['src'];	
+        $this->map($phpWord,$map);
+							
+break;		
+	
+	
+	}
+ 				
+	}
+  }			
+    /*$this->image_with_content($phpWord);
+	$this->itinerary($phpWord);
+	$this->detailed_itinary($phpWord);
+	$this->frontpage($phpWord);
+	$this->travalagent($phpWord);
+	$this->fullpage($phpWord);
+	$this->emptypage($phpWord);
+	$this->contentonly($phpWord);
+	$this->toptitlecontent($phpWord);	
+	$this->summerypage($phpWord);	*/
+    $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+	$objWriter->save('helloWorld.docx');die; 
+		
+				
+ 
+
+
+}
+	
+function image_with_content($phpWord,$value)
+{
 	//image  with content template
-/*	$phpWord = new \PhpOffice\PhpWord\PhpWord();
-    $section = $phpWord->addSection(
-	array(
-		'paperSizeW'    => 7500,
-		'paperSizeH'    => 7500,
+	
+    	$section = $phpWord->addSection(
+    array(
+		'pageSizeH'   => 10800,
+		'pageSizeW'	   => 10800,
         'marginLeft'   => 200,
         'marginRight'  => 200,
-        'marginTop'    => 200,
+        'marginTop'    => 300,
         'marginBottom' => 200,
-        'headerHeight' => 50,
+        'headerHeight' => 300,
         'footerHeight' => 50,
-    ));
-	$header = array('size' => 48, 'bold' => true);
+    )
+);
+	$header = array('name' => 'SimSun','size' => 22.5, 'bold' => true);
 	
-	$section->addText('Welcome to France',$header);
+	$section->addText($value->title,$header);
    
-	$img1='uploads/1495778510/test//front_page_image.jpg';
-	$img2='http://localhost/dev_wtj/public/uploads/1495778510/test/im3.jpg';
-    $img3='http://localhost/dev_wtj/public/uploads/1495778510/test/logo_image.png';
-	$text='Mars is the fourth planet from the Sun and the second-smallest planet in the Solar System, after Mercury. Named after the Roman god of war, it is often referred to as the "Red Planet"[13][14] because the iron oxide prevalent on its surface gives it a reddish appearance.Mars is a terrestrial planet with a thin atmosphere, having surface features reminiscent both of the impact craters of the Moon and the valleys, deserts, and polar ice caps of Earth.';
-     $section->addImage($img1);
+
+	$text=$value->content;
+    
+	$textlines = explode("\n", $text);
+	
 	// to add image
-	/*$imgtable=$section->addTable();	
+	$imgtable=$section->addTable();
 	$imgtable->addRow();
 	
-	$cell1=$imgtable->addCell();
-	$cell1->addImage($img1,array('width' => 210, 'height' => 210));
-	$cell1->addImage($img2,array('width' => 210, 'height' => 210));	
-    $imgtable->addCell(array('valign' => 'top','textDirection'=> \PhpOffice\PhpWord\Style\Cell::TEXT_DIR_BTLR))->addText($text);
 	
-    $footertable=$section->addTable();
+	$cell1=$imgtable->addCell(3400);
+	foreach($value->contentImages as $contentImage)
+	{
+	$img1=url('/').'/'.trim($contentImage->image);	
+	$cell1->addImage($img1,array('width' => 300, 'height' => 200));
+	$cell1->addTextbreak(2);	
+	}	
+	
+    $description=$imgtable->addCell(7400);
+	
+    for ($i = 0; $i < sizeof($textlines); $i++) {
+    $description->addText($textlines[$i],array('name' => 'SimSun' ,'size' => 10.5 ,'color' => 'gray'));
+     }
+    $footertable=$section->addFooter()->addTable();
     $footertable->addRow();
-    $footertable->addCell()->addImage($img3,array('width' => 150, 'height' => 50)); 
-    $section->addPagebreak(); */
-	
-/*	$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-
-	$objWriter->save('helloWorld.docx');die; 	 */  
-	
-/*	//itinary  template	
-	$phpWord = new \PhpOffice\PhpWord\PhpWord();
-    $section = $phpWord->addSection();
-	$header = array('size' => 48, 'bold' => true);
-	
-	$section->addText('Itinerary title',$header);
-	$img1='http://localhost/dev_wtj/public/uploads/1494940055/test/im3.jpg';
-	$img2='http://localhost/dev_wtj/public/uploads/1494940055/test/im1.jpg';
-    $img3='http://localhost/dev_wtj/public/uploads/1494940055/test/im2.jpg';
-	$img4='http://localhost/dev_wtj/public/uploads/1494940055/test/im4.jpg';
-	$img5='http://localhost/dev_wtj/public/uploads/1494940055/test/logo_image.png';	
-	
-  
-	// to add image
-	$itinerarytable=$section->addTable(5000);	
-	$itinerarytable->addRow();
-	$date=$itinerarytable->addCell(200);	
-	$date->addText('Apr 28:');
-	$date->addText('Apr 29:');
-	$date->addText('Apr 30:');
-		
-	$description=$itinerarytable->addCell(1000);
-	$description->addText('Arrival in Tokyo');
-	$description->addText('Hakone');
-	$description->addText('Departureh.');
-		
-	$img=$itinerarytable->addCell(3800);
-	$img->addImage($img1,array('width' => 210, 'height' => 210));
-	$img->addImage($img2,array('width' => 210, 'height' => 210));
-	$img->addImage($img3,array('width' => 210, 'height' => 210));	
-	$img->addImage($img4,array('width' => 210, 'height' => 210));
-		
+    $footertable->addCell(2250)->addImage(url('/').'/'.$value->upload_path.trim($value->logo),array('width' => 150, 'height' => 50)); 
     
-		
-    $footertable=$section->addTable();
-    $footertable->addRow();
-    $footertable->addCell()->addImage($img5,array('width' => 150, 'height' => 50));
- 
 	
-	$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'HTML');
-	$objWriter->save('helloWorld.doc');die;   */
-		
-/*
-	// detailed itinary 	
-	$phpWord = new \PhpOffice\PhpWord\PhpWord();
-    $section = $phpWord->addSection();
-	$header = array('size' => 48, 'bold' => true);
 	
-	$section->addText('Itinerary title',$header);
-	$img1='http://localhost/dev_wtj/public/uploads/1494940055/test/im3.jpg';
-	$img2='http://localhost/dev_wtj/public/uploads/1494940055/test/im1.jpg';
-    $img3='http://localhost/dev_wtj/public/uploads/1494940055/test/im2.jpg';
-	$img4='http://localhost/dev_wtj/public/uploads/1494940055/test/im4.jpg';
-	$img5='http://localhost/dev_wtj/public/uploads/1494940055/test/logo_image.png';	
-	$text='Arrive at Narita/Haneda Airport independently
+    		
 
-After entry procedures, meeting English speaking greeting service, and Japanese speaking driver
+}
 
-Drive to Tokyo
-
-Transfer to the hotel (accommodation arranged directly by Tauck, not included in tour fare)
-
-Transfers will be arranged and invoiced as supplements (not included in base tour fare) according to flight schedule.
-
-Guests arriving on different flights cannot share greeting service or driver in case of delays
-
-Evening Cocktail Reception and Dinner (arranged directly by Tauck, not included in tour fare)';
-  
-	// to add image
-	$datailitinarytable=$section->addTable();
-	$datailitinarytable->addRow();
-	$descriptioncell=$datailitinarytable->addCell();
-	$descriptioncell->addText('Detailed itinerary title',$header);
-	$descriptionTable=$descriptioncell->addTable();
-	$imagecell=$datailitinarytable->addCell();
-	$imagecell->addImage($img1,array('width' => 210, 'height' => 210));
-	$imagecell->addImage($img2,array('width' => 210, 'height' => 210));
-	$imagecell->addImage($img3,array('width' => 210, 'height' => 210));
-	$imagecell->addImage($img4,array('width' => 210, 'height' => 210));	
+function map($phpWord,$map)
+{ 
 	
-	$descriptionTable->addRow();
-	$date=$descriptionTable->addCell();
-	$date->addText('Jan 01');
-	$descriptionTable->addRow();	
-	$description=$descriptionTable->addCell();
-	$description->addText($text);	
-		
-		
-    $footertable=$section->addTable();
-    $footertable->addRow();
-    $footertable->addCell()->addImage($img5,array('width' => 150, 'height' => 50));
- 
-	
-	$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'HTML');
-	$objWriter->save('helloWorld.doc');die;  	*/
-		
-  // frontpage
-/*	$phpWord = new \PhpOffice\PhpWord\PhpWord();
-   
-	
-	$section = $phpWord->addSection(
-    array(
+$mapstr="$map";	
+ $map=str_replace(" ","%20","$mapstr");	
+
+$fullpagesection = $phpWord->addSection(
+      array(
+		'pageSizeH'   => 10800,
+		'pageSizeW'	   => 10800,
         'marginLeft'   => 0,
         'marginRight'  => 0,
         'marginTop'    => 0,
@@ -388,31 +430,271 @@ Evening Cocktail Reception and Dinner (arranged directly by Tauck, not included 
         'headerHeight' => 0,
         'footerHeight' => 0,
     )
+    );
+	$fullpagesection->addImage($map,array('width' =>720, 'height' =>720));	
+	
+}
+	
+
+
+	
+	
+function itinary_image_with_content($phpWord,$value)
+{
+	//image  with content template
+	
+    $section = $phpWord->addSection(
+    array(
+		'pageSizeH'   => 10800,
+		'pageSizeW'	   => 10800,
+        'marginLeft'   => 200,
+        'marginRight'  => 200,
+        'marginTop'    => 300,
+        'marginBottom' => 200,
+        'headerHeight' => 300,
+        'footerHeight' => 50,
+    )
+);
+	$header = array('name' => 'SimSun','size' => 22.5, 'bold' => true);
+	$section->addText($value->itinerary_date_with_title,array('name' => 'SimSun','size' => 11.5,'bold'=> true));
+	$section->addText($value->title,$header);
+   
+
+	$text=$value->content;
+  
+	$textlines = explode("\n", $text);
+	
+	// to add image
+	$imgtable=$section->addTable();
+	$imgtable->addRow();
+	
+	
+	$cell1=$imgtable->addCell(3400);
+	foreach($value->contentImages as $contentImage)
+	{
+	$img1=url('/').'/'.trim($contentImage->image);	
+	$cell1->addImage($img1,array('width' => 300, 'height' => 200));
+	$cell1->addTextbreak(2);	
+	}	
+	
+    $description=$imgtable->addCell(7400);
+	
+    for ($i = 0; $i < sizeof($textlines); $i++) {
+    $description->addText($textlines[$i],array('name' => 'SimSun' ,'size' => 10.5 ,'color' => 'gray'));
+     }
+    $footertable=$section->addFooter()->addTable();
+    $footertable->addRow();
+    $footertable->addCell(2250)->addImage(url('/').'/'.$value->upload_path.trim($value->logo),array('width' => 150, 'height' => 50)); 
+}
+	
+	
+	
+	
+function logopage($phpWord,$value)
+{
+$logopagesection = $phpWord->addSection(
+    array(
+		'pageSizeH'   => 10800,
+		'pageSizeW'	   => 10800,
+        'marginLeft'   => 200,
+        'marginRight'  => 200,
+        'marginTop'    => 300,
+        'marginBottom' => 200,
+        'headerHeight' => 300,
+        'footerHeight' => 50,
+    )
+);
+
+$logopagesection->addFooter()->addImage(url('/').'/'.$value->upload_path.trim($value->logo),array('width' => 150, 'height' => 50));
+
+}
+	
+function itinerary($phpWord,$value)
+{
+
+
+	
+	$header = array('name' => 'SimSun','size' => 37.5, 'bold' => true);
+	$itinerarysection = $phpWord->addSection(
+    array(
+		'pageSizeH'   => 10800,
+		'pageSizeW'	   => 10800,
+        'marginLeft'   => 200,
+        'marginRight'  => 200,
+        'marginTop'    => 300,
+        'marginBottom' => 200,
+        'headerHeight' => 300,
+        'footerHeight' => 50,
+    )
+);
+
+	
+  
+	// to add image
+	$itinerarytable=$itinerarysection->addTable();
+	$itinerarytable->addRow();
+	
+	$itinerarysubcell=$itinerarytable->addCell(7200);
+	$itinerarysubcell->addText($value->title,$header);
+	$itinerarysubtable=$itinerarysubcell->addTable();
+	
+	$img=$itinerarytable->addCell(3600);
+	
+	foreach($value->itineraryImages as $itineraryImage )
+	{
+	$img1=url('/').'/'.trim($itineraryImage->image);
+		
+	$img->addImage($img1,array('width' => 230, 'height' => 130));
+	}
+		
+	foreach($value->itineraryData as $itineraryValue)
+	{
+	$dates="$itineraryValue->event_date";
+	$date=date_create_from_format("Y-m-d","$dates");
+	$itinerarydate= date_format($date,"M d");
+	$itinerarydes=$itineraryValue->description;	
+		
+	$itinerarysubtable->addRow();	
+	$date=$itinerarysubtable->addCell(2000);
+	$date->addText("$itinerarydate:",array('name' => 'SimSun' ,'size' => 12 ,'color' => 'gray'));
+	$date->addTextBreak(1);
+	
+		
+	$description=$itinerarysubtable->addCell(5250);
+	$description->addText($itinerarydes,array('name' => 'SimSun' ,'size' => 12 ,'color' => 'gray'));
+	$description->addTextBreak(1);
+	}	
+	
+		
+    
+		
+    $footertable=$itinerarysection->addFooter()->addTable();
+    $footertable->addRow();
+    $footertable->addCell(2250)->addImage(url('/').'/'.$value->upload_path.trim($value->logo),array('width' => 150, 'height' => 50));
+   
+	
+}
+	
+function detailed_itinary($phpWord,$value)
+{
+	
+
+    $detailed_itinarysection = $phpWord->addSection( array(
+		'pageSizeH'   => 10800,
+		'pageSizeW'	   => 10800,
+        'marginLeft'   => 200,
+        'marginRight'  => 200,
+        'marginTop'    => 300,
+        'marginBottom' => 200,
+        'headerHeight' => 300,
+        'footerHeight' => 50,
+    ));
+	$header = array('name' => 'SimSun','size' => 22.5, 'bold' => true);
+	
+	
+
+	
+
+	// to add image
+	$datailitinarytable=$detailed_itinarysection->addTable();
+	$datailitinarytable->addRow();
+	$descriptioncell=$datailitinarytable->addCell(7000);
+	$descriptioncell->addText($value->title,$header);
+	$descriptionTable=$descriptioncell->addTable();
+	$imagecell=$datailitinarytable->addCell(3800);
+	foreach($value->detailitineraryImages as $detailitineraryImage)
+	{
+	$img1=url('/').'/'.trim($detailitineraryImage->image);
+	$imagecell->addImage($img1,array('width' => 230, 'height' => 130));
+	}
+	foreach($value->detailitineraryDatas as $detail_itineraryData)
+	{
+	$dates="$detail_itineraryData->event_date";
+	$date=date_create_from_format("Y-m-d","$dates");
+	$detail_itinerarydate=date_format($date,"M d");
+	
+	$descriptionTable->addRow();
+	$date=$descriptionTable->addCell(7000);
+	$date->addText($detail_itinerarydate,array('name' => 'SimSun' ,'size' => 12 ,'color' => 'gray','bold' => true));
+	$descriptionTable->addRow();
+	$text=$detail_itineraryData->description;	
+    $textlines = explode("\n", $text);	
+	
+	$description=$descriptionTable->addCell(7000);
+	for ($i = 0; $i < sizeof($textlines); $i++) {
+    $description->addText($textlines[$i]);
+		
+                }
+	}
+	//$description->addText($text,array('name' => 'SimSun' ,'size' => 12 ,'color' => 'gray'));	
+		
+		
+    $footertable=$detailed_itinarysection->addFooter()->addTable();
+    $footertable->addRow();
+    $footertable->addCell(2250)->addImage(url('/').'/'.$value->upload_path.trim($value->logo),array('width' => 150, 'height' => 50));	
+ 
+}
+	
+	
+	
+	
+		
+function frontpage($phpWord,$value)
+{   
+	 $dates="$value->start_date";
+	 $date=date_create_from_format("Y-m-d","$dates");
+	 $startdate=date_format($date,"M d, Y");
+	 $datesend="$value->end_date"; 
+	 $date=date_create_from_format("Y-m-d","$datesend");
+ 	 $enddate=date_format($date,"M d, Y");
+	
+	 //url('/').'/'.$value->upload_path.trim($value->logo)
+	$frontpagesection = $phpWord->addSection(
+    array(
+		'pageSizeH'   => 10800,
+		'pageSizeW'	   => 10800,
+        'marginLeft'   => 0,
+        'marginRight'  => 0,
+        'marginTop'    => 0,
+        'marginBottom' => 0,
+        'headerHeight' => 0,
+        'footerHeight' => 50,
+    )
     );	
-	$img1='http://localhost/dev_wtj/public/uploads/1494940055/test/front_page_image.jpg';
-	$img2='http://localhost/dev_wtj/public/uploads/1494940055/test/logo_image.png';	
-    $section->addImage($img1,array('width' => 680, 'height' => 500));
-	$footertable=$section->addTable();	
+	foreach($value->frontImages as $frontimage)
+	{
+	$fimage= url('/').'/'.$frontimage->image;
+	
+	}
+	
+		
+    $frontpagesection->addImage($fimage,array('width' => 750, 'height' => 500));
+	$footertable=$frontpagesection->addFooter()->addTable();	
 	$footertable->addRow();
-	$imgcell=$footertable->addCell(3800);
-	$imgcell->addImage($img2,array('width' => 150, 'height' => 50));
-	$textcell=$footertable->addCell();
-	$textcell->addtext('France');
-	$textcell->addtext('April 08 2017');	
-		
-	$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'HTML');
-	$objWriter->save('helloWorld.doc');die;  */	
-		
-  /*  //Travel agent
-   $img1='http://localhost/dev_wtj/public/uploads/1494940055/test/agg1.jpg';
-   $img2='http://localhost/dev_wtj/public/uploads/1494940055/test/agg2.jpg';
-   $img3='http://localhost/dev_wtj/public/uploads/1494940055/test/ag1.jpg';
-   $img4='http://localhost/dev_wtj/public/uploads/1494940055/test/ag2.jpg';		
+	$imgcell=$footertable->addCell(8000);
+	$imgcell->addImage(url('/').'/'.$value->upload_path.trim($value->logo),array('width' => 150, 'height' => 50));
+	$textcell=$footertable->addCell(3000);
+	$textcell->addtext($value->place,array('name' => 'SimSun' ,'size' => 22.5 ,'color' => 'gray','bold' => true));
+	$textcell->addtext($startdate.'-'.$enddate,array('name' => 'SimSun' ,'size' => 12 ,'color' => 'gray'));	
+	
+
+
+
+
+
+}
+	
+function travalagent($phpWord,$value)
+{
+  //Travel agent
+ 	
 	   
 		
-   $phpWord= new \PhpOffice\PhpWord\PhpWord();
-   $section = $phpWord->addSection(
+   
+   $travalagentsection = $phpWord->addSection(
     array(
+	    'pageSizeH'   => 10800,
+		'pageSizeW'	   => 10800,
         'marginLeft'   => 200,
         'marginRight'  => 200,
         'marginTop'    => 500,
@@ -421,236 +703,278 @@ Evening Cocktail Reception and Dinner (arranged directly by Tauck, not included 
         'footerHeight' => 200,
     )
     );	
-	$travelagenttable=$section->addTable();
+	$travelagenttable=$travalagentsection->addTable();
+	
+	foreach($value->travel_agent as $travelagent)
+	{	
 	$travelagenttable->addRow();
-	$profilecell=$travelagenttable->addCell();	
-	$profilecell->addImage($img1,array('width' => 100, 'height' => 100));
-	$profilecell->addImage($img2,array('width' => 100, 'height' => 100));
-	$namecell=$travelagenttable->addCell();
-	$namecell->addText('YOUR TRAVEL AGENT IN NETHERLANDS');	
-	$namecell->addText('Obama');		
-	$namecell->addImage($img3,array('width' => 115, 'height' => 28));
-	$namecell->addText('YOUR TRAVEL AGENT IN IRRAEL');	
-	$namecell->addText('Tramp');	
-	$namecell->addImage($img4,array('width' => 115, 'height' => 28));	
 	
+	$profile=url($value->upload_path).'/'.trim($travelagent->profile_image);
+	$logo=url($value->upload_path).'/'.trim($travelagent->logo);	
 		
-	$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'HTML');
-	$objWriter->save('helloWorld.doc');die;	*/
+	$agentcell1=$travelagenttable->addCell(2000);	
+	$agentcell1->addImage($profile,array('width' => 100, 'height' => 100));
 	
-		
-		
-		//full image page	
-  /* 	$img1='http://localhost/dev_wtj/public/uploads/1494940055/test/mars.jpg';
-	$phpWord= new \PhpOffice\PhpWord\PhpWord();
-	$section = $phpWord->addSection(
-    array(
-		'paperSize'    => 'A4',
-        'marginLeft'   => 200,
-        'marginRight'  => 200,
-        'marginTop'    => 200,
-        'marginBottom' => 200,
-        'headerHeight' => 50,
-        'footerHeight' => 50,
+	$namecell1=$travelagenttable->addCell(5000);
+	$namecell1->addText("YOUR TRAVEL AGENT IN $travelagent->place",array('name' => 'SimSun' ,'size' => 9 ,'color' => 'gray','bold' => true));	
+	$namecell1->addText($travelagent->name,array('name' => 'SimSun' ,'size' => 12 ,'color' => 'gray'));
+	$namecell1->addImage($logo,array('width' => 115, 'height' => 28));
+	}
+   $travalagentsection->addFooter()->addText('');
+	
+
+}
+	
+function fullpage($phpWord,$value)
+{
+   foreach($value->fullImages as $fullimage){
+	$img1=url('/').'/'.trim($fullimage->image);
+     }
+	
+	$fullpagesection = $phpWord->addSection(
+      array(
+		'pageSizeH'   => 10800,
+		'pageSizeW'	   => 10800,
+        'marginLeft'   => 0,
+        'marginRight'  => 0,
+        'marginTop'    => 0,
+        'marginBottom' => 0,
+        'headerHeight' => 0,
+        'footerHeight' => 0,
     )
     );
-	$section->addImage($img1,array('width' =>680, 'height' =>900));	
-	$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'HTML');
-	$objWriter->save('helloWorld.doc');die;	*/
-    /*    //empty page with title
-    $img1='http://localhost/dev_wtj/public/uploads/1494940055/test/Signature_image.jpg';
-	$phpWord= new \PhpOffice\PhpWord\PhpWord();	
-	$section = $phpWord->addSection(
+	$fullpagesection->addImage($img1,array('width' =>720, 'height' =>720));	
+	
+}
+
+function  emptypage($phpWord,$value)
+{   
+	//empty page with title
+    $img1='http://localhost/dev_wtj/public/uploads/1495778510/test/Signature_image.jpg';
+	
+	$emptypagesection = $phpWord->addSection(
     array(
-		'paperSize'    => 'A4',
-        'marginLeft'   => 200,
-        'marginRight'  => 200,
-        'marginTop'    => 200,
-        'marginBottom' => 200,
-        'headerHeight' => 50,
-        'footerHeight' => 100,
+		'pageSizeH'   => 10800,
+		'pageSizeW'	   => 10800,
+        'marginLeft'   => 0,
+        'marginRight'  => 0,
+        'marginTop'    => 0,
+        'marginBottom' => 0,
+        'headerHeight' => 0,
+        'footerHeight' => 0,
     )
     );	
-    $imgstyle= array('positioning'      => \PhpOffice\PhpWord\Style\Image::POSITION_ABSOLUTE);		
-
-	$section->addText('ARMONGDON IS COMING',array('size' => 28, 'bold' => true, 'align' =>'right'));	
-	$section->addImage($img1,array('width' => 150, 'height' => 50 )); 	
 	
-	$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'HTML');
-	$objWriter->save('helloWorld.doc');die;	*/
-    
-		
-		
-		
-/*		// sales and terms condtions
-    $text='Please note that our quotes are merely informative as all services are subject to availability. All fares and availabilities will therefore be confirmed on the day you confirm your client’s booking by faxing us back the signed credit card authorization form.
-
-TOTAL COST INCLUDES THE FOLLOWING:
-
-The total NET price provided by Découvertes includes the services listed, a tailor-made itinerary, Découvertes’ fees and taxes. We consider that our negotiated rates are confidential and therefore, as a general rule, Découvertes does not provide a break-down of rates and services – thank you for your understanding.
-
-VIP TREATMENT
-
-- Personalised Itinerary
-- Prepaid Voucher/s
-- Co-ordination and Support
-- 24 hours Concierge service (Assistance) during your trip
-
-TRIP COST DOES NOT INCLUDE:
-
-- Airfare not listed in the itinerary
-- Transfers not specified in the itinerary
-- Entrances fees when not mentioned
-- Meals when not mentioned
-- Room Service
-- Excess Baggage Charges
-- Porterage
-- Passport and Visa Fees
-- Personal & Travel Insurance
-- Gratuities
-- Any Item specified as ‘Own Arrangements’';
-		
-		
-	$phpWord = new \PhpOffice\PhpWord\PhpWord();
-    $section=$phpWord->addSection(
-    array(
-		'paperSize'    => 'A4',
-        'marginLeft'   => 200,
-        'marginRight'  => 200,
-        'marginTop'    => 200,
-        'marginBottom' => 200,
-        'headerHeight' => 50,
-        'footerHeight' => 100,
-    ) 
-   );
-	$contenttable=$section->addTable(array(
-      'unit' => \PhpOffice\PhpWord\Style\Table::WIDTH_PERCENT,
-      'width' => 100 * 50,
-    ));
-	$contenttable->addRow(5000);	
-	$contenttable->addCell(2000,array('valign' => 'top'))->addText('Sales and terms conditions');
-	$contenttable->addCell(3000)->addText(nl2br($text));	
-
-$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'HTML');
-$objWriter->save('helloWorld.doc'); */
-		
-		
-	/*	
-	// Terms conditions
-		
-		$text='RESERVATIONS
-
-GUIDE- DRIVERS Vs DRIVER-GUIDES:
-
-Our Guide-drivers will chauffeur your clients; they are also licensed to guide and accompany them into museums and monuments.
-
-Driver-guides are NOT qualified to enter and guide your clients into museums, as well as around historical monuments and sights, for this purpose we recommend your clients have either a driver AND a guide or a Guide who is licensed and insured to drive. Our Driver-guides all speak very good English and will chauffeur your clients on sightseeing tours, their knowledge of the historical aspects of the territory can NOT be incompared to that of a guide.
-
-A 30% deposit is requested at the time of booking and full payment 45 days prior to your clients arrival in France, unless otherwise advised. Payment is made in Euros and can be made by credit card, US Dollars check, Euro check or wire transfer.
-
-Découvertes accepts the following credit cards: American Express, Visa and Mastercard. Please note that Découvertes does not charge any supplement for credit card payments.
-
-FINAL DOCUMENTS
-
-You will receive, via email, 30 days prior to the travelers arrival in France the following documentation: General Prepaid Voucher, Individual Vouchers for hotels and special services where required.';
-		
-		
-    $phpWord = new \PhpOffice\PhpWord\PhpWord();
-    $section=$phpWord->addSection(
-    array(
-		'paperSize'    => 'A4',
-        'marginLeft'   => 200,
-        'marginRight'  => 200,
-        'marginTop'    => 200,
-        'marginBottom' => 200,
-        'headerHeight' => 50,
-        'footerHeight' => 100,
-    ) 
-   );
-	$contenttable=$section->addTable(array(
-      'unit' => 'pct',
-      'width' => 100 * 50,
-    ));
-	$contenttable->addRow(5000);	
-	$contenttable->addCell(2000);
-	$contentcell=$contenttable->addCell(3000);
-	$contentcell->addText('Terms conditions',array('size' => 28, 'bold' => true, 'align' =>'right'));
-	$contentcell->addText(nl2br($text));	
-    
-	$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'HTML');
-    $objWriter->save('helloWorld.doc');	*/
-		
-	//summer page	
-	 	
-/*	$img1='http://localhost/dev_wtj/public/uploads/1494940055/test/Signature_image.jpg';	
-	$phpWord = new \PhpOffice\PhpWord\PhpWord();
-    $section=$phpWord->addSection(
-    array(
-		'paperSize'    => 'A4',
-        'marginLeft'   => 200,
-        'marginRight'  => 200,
-        'marginTop'    => 200,
-        'marginBottom' => 200,
-        'headerHeight' => 50,
-        'footerHeight' => 100,
-    ) 
-   );
-	$summerytable=$section->addTable(array('width' => 100 * 50, 'unit' => 'pct', 'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER));
-	$summerytable->addRow();
-	$textcell=$summerytable->addCell(2500,array('gridSpan' => 2 ,'valign' => 'center', 'textDirection' => \PhpOffice\PhpWord\Style\Cell::TEXT_DIR_BTLR));
-	$textcell->addText('Distinguished guests:Antonio Compton');
-	$textcell->addText('Agency:American Express - Boston (HQ)');
-	$textcell->addText('Agent: Cassandra Angus');
-	$textcell->addTextBreak(2);	
-	$textcell->addText('Duration: 1 day / 0 nights');
-	$textcell->addText('Number of Persons:2');
-	$summerytable->addRow();
-	$headcell=$summerytable->addCell(2500,array('gridSpan' => 2 ,'valign' => 'center', 'textDirection' => \PhpOffice\PhpWord\Style\Cell::TEXT_DIR_BTLR));	
-    $headcell->addText('Summary');
-	$summerytable->addRow();	
-	$summerytable->addCell()->addText('Welcome in France');
-	$summerytable->addCell()->addText('page 04');	
-   	$summerytable->addRow();	
-	$summerytable->addCell()->addText('Your itinerary');
-	$summerytable->addCell()->addText('page 06');	
-	$summerytable->addRow();	
-	$summerytable->addCell()->addText('Champagne');
-	$summerytable->addCell()->addText('page 10');	
-	$summerytable->addRow();	
-	$summerytable->addCell()->addText('Paris');
-	$summerytable->addCell()->addText('page 12');	
-   	$summerytable->addRow();	
-	$summerytable->addCell()->addText('Detailed itinerary');
-	$summerytable->addCell()->addText('page 18');	
-	$summerytable->addRow();	
-	$summerytable->addCell()->addText('Sales and terms conditions	');
-	$summerytable->addCell()->addText('page 19');		
-		
-    $footertable=$section->addTable();
+    	$tableStyle = array(
+       'borderColor' => '006699',
+       'borderSize'  => 0,
+       'cellMargin'  => 0,
+	    'bgColor'   => "$value->empty_page_color"	
+        );
+		$firstRowStyle = array("bgColor" => "$value->empty_page_color");
+		$phpWord->addTableStyle('emptypageTable', $tableStyle, $firstRowStyle);
+		$emptypagetable = $emptypagesection->addTable('emptypageTable');
+    		
+    //$emptypagetable=$emptypagesection->addTable( array('bgColor' => '66BBFF'));
+	$emptypagetable->addRow(10810);
+	$emptypagecell=$emptypagetable->addcell(10800);
+	
+	$footertable=$emptypagesection->addFooter()->addTable();
     $footertable->addRow();
-	$textcell=$footertable->addCell();
-	$textcell->addtext('Date of release:Mar 29, 2017');	
-	$imgcell=$footertable->addCell(3800);
-	$imgcell->addImage($img1,array('width' => 150, 'height' => 50)); 
+    $footertable->addCell(3000)->addImage(url('/').'/'.$value->upload_path.trim($value->signature),array('width' => 150, 'height' => 50)); 
+		
+
+
+}
+	
+function  emptypagetitle($phpWord,$value)
+{   
+	//empty page with title
+    $img1='http://localhost/dev_wtj/public/uploads/1495778510/test/Signature_image.jpg';
+	
+	$emptypagesection = $phpWord->addSection(
+    array(
+		'pageSizeH'   => 10800,
+		'pageSizeW'	   => 10800,
+        'marginLeft'   => 0,
+        'marginRight'  => 0,
+        'marginTop'    => 0,
+        'marginBottom' => 0,
+        'headerHeight' => 0,
+        'footerHeight' => 0,
+    )
+    );	
+	
+    	$tableStyle = array(
+       'borderColor' => '006699',
+       'borderSize'  => 0,
+       'cellMargin'  => 0,
+	    'bgColor'   => "$value->empty_page_color"	
+        );
+		$firstRowStyle = array("bgColor" => "$value->empty_page_color");
+		$phpWord->addTableStyle('emptypageTable', $tableStyle, $firstRowStyle);
+		$emptypagetable = $emptypagesection->addTable('emptypageTable');
+    		
+    //$emptypagetable=$emptypagesection->addTable( array('bgColor' => '66BBFF'));
+	$emptypagetable->addRow(10810);
+	$emptypagecell=$emptypagetable->addcell(10800);
+	$emptypagecell->addText("$value->title",array('name' =>'SimSun', 'size' => 48.5, 'bold' => true, 'align' =>'right'));	
+	
+	$footertable=$emptypagesection->addFooter()->addTable();
+    $footertable->addRow();
+    $footertable->addCell(3000)->addImage(url('/').'/'.$value->upload_path.trim($value->signature),array('width' => 150, 'height' => 50)); 
+
+
+}	
+	
+function  contentonly($phpWord,$value)
+{
+	// sales and terms condtions
+    $text=$value->content;
+		
+   $textlines = explode("\n", $text);		
+	
+    $contentonlysection=$phpWord->addSection(
+     array(
+		'pageSizeH'   => 10800,
+		'pageSizeW'	   => 10800,
+        'marginLeft'   => 0,
+        'marginRight'  => 0,
+        'marginTop'    => 0,
+        'marginBottom' => 0,
+        'headerHeight' => 0,
+        'footerHeight' => 50,
+    )
+   );
+	$contenttable=$contentonlysection->addTable();
+	$contenttable->addRow();	
+	$contenttable->addCell(3000,array('valign' => 'top'))->addText($value->title,array('name' => 'SimSun' ,'size' => 22.5 ,'color' => 'gray','bold' => true));
+	
+
+	
+	$description=$contenttable->addCell(7800);
+	for ($i = 0; $i < sizeof($textlines); $i++) {
+    $description->addText($textlines[$i],array('name' => 'SimSun' ,'size' => 10.5 ,'color' => 'gray'));
+	
+	}
+	
+	$footertable=$contentonlysection->addFooter()->addTable();
+    $footertable->addRow();
+    $footertable->addCell(3000)->addImage(url('/').'/'.$value->upload_path.trim($value->logo),array('width' => 150, 'height' => 50));
+
+}
+
+function toptitlecontent($phpWord,$value)
+{
+// Terms conditions
+		
+  $text=$value->content;
+		
+  $textlines = explode("\n", $text);		
+
+    $toptitlecontentsection=$phpWord->addSection(
+    array(
+		'pageSizeH'   => 10800,
+		'pageSizeW'	   => 10800,
+        'marginLeft'   => 0,
+        'marginRight'  => 0,
+        'marginTop'    => 0,
+        'marginBottom' => 0,
+        'headerHeight' => 0,
+        'footerHeight' => 50,
+    )
+   );
+	
+	$contenttable= $toptitlecontentsection->addTable();
+	$contenttable->addRow();	
+	$contenttable->addCell(2000);
+	$contentcell=$contenttable->addCell(8800);
+	$contentcell->addText($value->title,array('name' => 'SimSun' ,'size' => 22.5 ,'color' => 'gray','align' =>'right','bold' => true));
+	$contentcell->addTextbreak(2);
+	for ($i = 0; $i < sizeof($textlines); $i++) {
+    $contentcell->addText($textlines[$i],array('name' => 'SimSun' ,'size' => 10.5 ,'color' => 'gray'));
+	
+	}
+	
+    $footertable=$toptitlecontentsection->addFooter()->addTable();
+    $footertable->addRow();
+    $footertable->addCell(3000)->addImage(url('/').'/'.$value->upload_path.trim($value->logo),array('width' => 150, 'height' => 50));
+
+
+
+}
+
+function summerypage($phpWord,$value,$data)
+{
+	 
+   $dates="$value->date_of_release";
+   $date=date_create_from_format("Y-m-d","$dates"); 
+   $releasedate=date_format($date,"M d, Y");
+	
+		
+	$signature=url('/').'/'.$value->upload_path.$value->signature;	
+	
+    $summerypagesection=$phpWord->addSection(
+     array(
+		'pageSizeH'   => 10800,
+		'pageSizeW'	   => 10800,
+        'marginLeft'   => 300,
+        'marginRight'  => 300,
+        'marginTop'    => 300,
+        'marginBottom' => 300,
+        'headerHeight' => 300,
+        'footerHeight' => 50,
+    )
+   );
+	
+	
+	
+	$summerytable=$summerypagesection->addTable(array('alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER));
+	$summerytable->addRow();
+	$textcell=$summerytable->addCell(5400,array('gridSpan' => 2 ,'valign' => 'center'));
+	
+	$textcell->addText("Distinguished guests:$value->distinguished_guests",array('name' => 'SimSun' ,'size' => 10.5 ,'color' => 'gray','align'=>'center'));
+	$textcell->addText("Agency:$value->agency",array('name' => 'SimSun' ,'size' => 10.5 ,'color' => 'gray'));
+	$textcell->addText("Agent:$value->agent",array('name' => 'SimSun' ,'size' => 10.5 ,'color' => 'gray'));
+	$textcell->addTextBreak(2);	
+	$textcell->addText("Duration:$value->duration_day day / $value->duration_night nights",array('name' => 'SimSun' ,'size' => 11.25 ,'color' => 'gray','bold' => true));
+	$textcell->addText("Number of Persons:$value->no_of_persons",array('name' => 'SimSun' ,'size' => 11.25 ,'color' => 'gray','bold' => true));
+	
+	$summerytable->addRow();
+	
+	$headcell=$summerytable->addCell(5400,array('gridSpan' => 2 ,'valign' => 'center'));	
+    $headcell->addText('Summary',array('name' => 'SimSun' ,'size' => 22.5 ,'color' => 'gray'));
+	
+		
+	foreach($data as $pages)
+	{
+	if ($pages->show_summery === 1)
+	{
+	$summerytable->addRow();
+	$summerytable->addCell(4000)->addText("$pages->title",array('name' => 'SimSun' ,'size' => 11 ,'color' => 'gray'));
+	$summerytable->addCell(4000)->addText("Page $pages->content_order+2 ",array('name' => 'SimSun' ,'size' => 11 ,'color' => 'gray'));	
+	}
+	}	
+		
+		
+    $footertable=$summerypagesection->addFooter()->addTable();
+    $footertable->addRow();
+	$textcell=$footertable->addCell(8250);
+	$textcell->addtext("Date of release:$releasedate",array('name' => 'SimSun' ,'size' => 11 ,'color' => 'gray'));	
+	$imgcell=$footertable->addCell(2500);
+	
+	$imgcell->addImage($signature,array('width' => 150, 'height' => 50)); 
 	
 	 
-		
-		
-$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'HTML');
-$objWriter->save('helloWorld.doc');   		*/
-		
 
 
-//$source='/var/www/html/dev_wtj/public/titleleftimagecontentpage.html';
-//$source='/var/www/html/dev_wtj/public/itinerarytitle.html';
-//$source='/var/www/html/dev_wtj/public/detaileditinerary.html';
-//$source='/var/www/html/dev_wtj/public/forntpage.html';		
-//$source='/var/www/html/dev_wtj/public/tablecheck.html';		
-//$phpWord = \PhpOffice\PhpWord\IOFactory::load($source, 'HTML');
-//echo "<pre>";
-//print_r($phpWord);die();		
-//$phpWord->save('helloWorld.doc');
-//echo "document created"; 	
+}
+	
+	
+
+
+
+}	
 		
 		
 	
