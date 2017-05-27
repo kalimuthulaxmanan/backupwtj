@@ -238,7 +238,7 @@ $data = DB::table('files_directory')
             ->join('pdf_common_fields', 'files_directory.id', '=', 'pdf_common_fields.file_id')
 			->join('pdf_templates', 'pdf_templates.id', '=', 'pdf_content.template_id')
             ->select('files_directory.*', 'pdf_common_fields.*', 'pdf_content.*', 'pdf_templates.name')
-			->where('files_directory.id',$id)
+			->where('files_directory.id',base64_decode($id))
 			->orderby('pdf_content.content_order','asc')
             ->get();		
 		
@@ -393,7 +393,9 @@ function image_with_content($phpWord,$value)
 	$cell1=$imgtable->addCell(3400);
 	foreach($value->contentImages as $contentImage)
 	{
-	$img1=url('/').'/'.trim($contentImage->image);	
+	$img1=url('/').'/'.trim($contentImage->image);
+	$img1=str_replace(" ","%20","$img1");
+		
 	$cell1->addImage($img1,array('width' => 300, 'height' => 200));
 	$cell1->addTextbreak(2);	
 	}	
@@ -405,7 +407,9 @@ function image_with_content($phpWord,$value)
      }
     $footertable=$section->addFooter()->addTable();
     $footertable->addRow();
-    $footertable->addCell(2250)->addImage(url('/').'/'.$value->upload_path.trim($value->logo),array('width' => 150, 'height' => 50)); 
+	$logo=url('/').'/'.$value->upload_path.trim($value->logo);
+	$logo=str_replace(" ","%20","$logo");
+    $footertable->addCell(2250)->addImage($logo,array('width' => 150, 'height' => 50)); 
     
 	
 	
@@ -472,7 +476,8 @@ function itinary_image_with_content($phpWord,$value)
 	$cell1=$imgtable->addCell(3400);
 	foreach($value->contentImages as $contentImage)
 	{
-	$img1=url('/').'/'.trim($contentImage->image);	
+	$img1=url('/').'/'.trim($contentImage->image);
+	$img1=str_replace(" ","%20","$img1");	
 	$cell1->addImage($img1,array('width' => 300, 'height' => 200));
 	$cell1->addTextbreak(2);	
 	}	
@@ -484,7 +489,9 @@ function itinary_image_with_content($phpWord,$value)
      }
     $footertable=$section->addFooter()->addTable();
     $footertable->addRow();
-    $footertable->addCell(2250)->addImage(url('/').'/'.$value->upload_path.trim($value->logo),array('width' => 150, 'height' => 50)); 
+	$logo=url('/').'/'.$value->upload_path.trim($value->logo);
+	$logo=str_replace(" ","%20","$logo");
+    $footertable->addCell(2250)->addImage($logo,array('width' => 150, 'height' => 50));
 }
 	
 	
@@ -504,8 +511,10 @@ $logopagesection = $phpWord->addSection(
         'footerHeight' => 50,
     )
 );
+$logo=url('/').'/'.$value->upload_path.trim($value->logo);
+$logo=str_replace(" ","%20","$logo");
 
-$logopagesection->addFooter()->addImage(url('/').'/'.$value->upload_path.trim($value->logo),array('width' => 150, 'height' => 50));
+$logopagesection->addFooter()->addImage($logo,array('width' => 150, 'height' => 50));
 
 }
 	
@@ -543,7 +552,7 @@ function itinerary($phpWord,$value)
 	foreach($value->itineraryImages as $itineraryImage )
 	{
 	$img1=url('/').'/'.trim($itineraryImage->image);
-		
+	$img1=str_replace(" ","%20","$img1");	
 	$img->addImage($img1,array('width' => 230, 'height' => 130));
 	}
 		
@@ -570,7 +579,9 @@ function itinerary($phpWord,$value)
 		
     $footertable=$itinerarysection->addFooter()->addTable();
     $footertable->addRow();
-    $footertable->addCell(2250)->addImage(url('/').'/'.$value->upload_path.trim($value->logo),array('width' => 150, 'height' => 50));
+    $logo=url('/').'/'.$value->upload_path.trim($value->logo);
+	$logo=str_replace(" ","%20","$logo");
+    $footertable->addCell(2250)->addImage($logo,array('width' => 150, 'height' => 50)); 
    
 	
 }
@@ -605,6 +616,7 @@ function detailed_itinary($phpWord,$value)
 	foreach($value->detailitineraryImages as $detailitineraryImage)
 	{
 	$img1=url('/').'/'.trim($detailitineraryImage->image);
+	$img1=str_replace(" ","%20","$img1");	
 	$imagecell->addImage($img1,array('width' => 230, 'height' => 130));
 	}
 	foreach($value->detailitineraryDatas as $detail_itineraryData)
@@ -631,7 +643,9 @@ function detailed_itinary($phpWord,$value)
 		
     $footertable=$detailed_itinarysection->addFooter()->addTable();
     $footertable->addRow();
-    $footertable->addCell(2250)->addImage(url('/').'/'.$value->upload_path.trim($value->logo),array('width' => 150, 'height' => 50));	
+    $logo=url('/').'/'.$value->upload_path.trim($value->logo);
+	$logo=str_replace(" ","%20","$logo");
+    $footertable->addCell(2250)->addImage($logo,array('width' => 150, 'height' => 50)); 
  
 }
 	
@@ -664,6 +678,7 @@ function frontpage($phpWord,$value)
 	foreach($value->frontImages as $frontimage)
 	{
 	$fimage= url('/').'/'.$frontimage->image;
+	$fimage=str_replace(" ","%20","$fimage");	
 	
 	}
 	
@@ -672,7 +687,10 @@ function frontpage($phpWord,$value)
 	$footertable=$frontpagesection->addFooter()->addTable();	
 	$footertable->addRow();
 	$imgcell=$footertable->addCell(8000);
-	$imgcell->addImage(url('/').'/'.$value->upload_path.trim($value->logo),array('width' => 150, 'height' => 50));
+	$logo=url('/').'/'.$value->upload_path.trim($value->logo);
+	$logo=str_replace(" ","%20","$logo");
+   
+	$imgcell->addImage($logo,array('width' => 150, 'height' => 50));
 	$textcell=$footertable->addCell(3000);
 	$textcell->addtext($value->place,array('name' => 'SimSun' ,'size' => 22.5 ,'color' => 'gray','bold' => true));
 	$textcell->addtext($startdate.'-'.$enddate,array('name' => 'SimSun' ,'size' => 12 ,'color' => 'gray'));	
@@ -710,7 +728,9 @@ function travalagent($phpWord,$value)
 	$travelagenttable->addRow();
 	
 	$profile=url($value->upload_path).'/'.trim($travelagent->profile_image);
-	$logo=url($value->upload_path).'/'.trim($travelagent->logo);	
+	$profile=str_replace(" ","%20","$profile");	
+	$logo=url($value->upload_path).'/'.trim($travelagent->logo);
+	$logo=str_replace(" ","%20","$logo");		
 		
 	$agentcell1=$travelagenttable->addCell(2000);	
 	$agentcell1->addImage($profile,array('width' => 100, 'height' => 100));
@@ -729,6 +749,7 @@ function fullpage($phpWord,$value)
 {
    foreach($value->fullImages as $fullimage){
 	$img1=url('/').'/'.trim($fullimage->image);
+	$img1=str_replace(" ","%20","$img1");   
      }
 	
 	$fullpagesection = $phpWord->addSection(
@@ -781,7 +802,9 @@ function  emptypage($phpWord,$value)
 	
 	$footertable=$emptypagesection->addFooter()->addTable();
     $footertable->addRow();
-    $footertable->addCell(3000)->addImage(url('/').'/'.$value->upload_path.trim($value->signature),array('width' => 150, 'height' => 50)); 
+   $logo=url('/').'/'.$value->upload_path.trim($value->signature);
+	$logo=str_replace(" ","%20","$logo");
+    $footertable->addCell(2250)->addImage($logo,array('width' => 150, 'height' => 50)); 
 		
 
 
@@ -822,8 +845,9 @@ function  emptypagetitle($phpWord,$value)
 	
 	$footertable=$emptypagesection->addFooter()->addTable();
     $footertable->addRow();
-    $footertable->addCell(3000)->addImage(url('/').'/'.$value->upload_path.trim($value->signature),array('width' => 150, 'height' => 50)); 
-
+    $logo=url('/').'/'.$value->upload_path.trim($value->signature);
+	$logo=str_replace(" ","%20","$logo");
+    $footertable->addCell(2250)->addImage($logo,array('width' => 150, 'height' => 50)); 
 
 }	
 	
@@ -860,7 +884,9 @@ function  contentonly($phpWord,$value)
 	
 	$footertable=$contentonlysection->addFooter()->addTable();
     $footertable->addRow();
-    $footertable->addCell(3000)->addImage(url('/').'/'.$value->upload_path.trim($value->logo),array('width' => 150, 'height' => 50));
+    $logo=url('/').'/'.$value->upload_path.trim($value->logo);
+	$logo=str_replace(" ","%20","$logo");
+    $footertable->addCell(2250)->addImage($logo,array('width' => 150, 'height' => 50)); 
 
 }
 
@@ -898,8 +924,9 @@ function toptitlecontent($phpWord,$value)
 	
     $footertable=$toptitlecontentsection->addFooter()->addTable();
     $footertable->addRow();
-    $footertable->addCell(3000)->addImage(url('/').'/'.$value->upload_path.trim($value->logo),array('width' => 150, 'height' => 50));
-
+    $logo=url('/').'/'.$value->upload_path.trim($value->logo);
+	$logo=str_replace(" ","%20","$logo");
+    $footertable->addCell(2250)->addImage($logo,array('width' => 150, 'height' => 50)); 
 
 
 }
@@ -914,6 +941,8 @@ function summerypage($phpWord,$value,$data)
 		
 	$signature=url('/').'/'.$value->upload_path.$value->signature;	
 	
+    $signature=str_replace(" ","%20","$signature");
+    
     $summerypagesection=$phpWord->addSection(
      array(
 		'pageSizeH'   => 10800,
