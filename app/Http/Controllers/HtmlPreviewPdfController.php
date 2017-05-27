@@ -43,8 +43,15 @@ class HtmlPreviewPdfController extends Controller
 
     }
 	
+	function decodeUrlData($id)
+	{
+		return base64_decode($id);
+	}
+	
 	public function generateHtmlPreview($id)
 	{
+		
+		$id=$this->decodeUrlData($id);
 		
 		$data = DB::table('files_directory')
             ->join('pdf_content', 'files_directory.id', '=', 'pdf_content.file_id')
@@ -270,9 +277,11 @@ $galleries = DB::table('files_directory')
         view()->share('galleries',$galleries);
 		//view()->share('galimage',$galimage);
 		
+		//dd($id);
 		
 		
-		return view('pdf.htmlview',['data'=>$appendData,'uploadpath'=>$uploadpath,'fileid'=>$id]);
+		
+		return view('pdf.htmlview',['data'=>$appendData,'uploadpath'=>$uploadpath,'fileid'=>base64_encode($id)]);
 
 		
 		//dd($data);

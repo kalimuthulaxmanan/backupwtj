@@ -224,8 +224,15 @@ class FlipbookDataController extends BaseController
 		
 	}
 	
+	
+	function decodeUrlData($id)
+	{
+		return base64_decode($id);
+	}
+	
 	public function flipbook($id)
 	{
+		$id=$this->decodeUrlData($id);
 		$filepage = DB::table('pdf_content')->where('file_id',$id)->count();
 		
 		$filepagesCount=$filepage+2;
