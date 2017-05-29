@@ -310,7 +310,6 @@ switch($value->name)
 		}
 		else
 		{
-		
 		$this->contentonly($phpWord,$value);
 		}							
     break;
@@ -351,13 +350,46 @@ break;
 	$this->contentonly($phpWord);
 	$this->toptitlecontent($phpWord);	
 	$this->summerypage($phpWord);	*/
-    $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-	$objWriter->save('helloWorld.docx');die; 
 		
-				
+		
+		 $filename=$value->upload_file;
+		//return view('pdf.pdfview',['data'=>$appendData]);
+		   $dot=strrpos($filename,'.');
+		   $file=substr($filename,0,$dot);
+		$filename = "$file.docx";
+		
+
+header( "Content-Type:   application/vnd.openxmlformats-officedocument.wordprocessingml.document" );// you should look for the real header that a word2007 document needs!!!
+header( 'Content-Disposition: attachment; filename='.$filename );
+
+$h2d_file_uri = tempnam( "", "htd" );
+$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+ob_clean();		
+$objWriter->save( "php://output" );		
+exit;		
+		
+		
+		
+/*    $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+	$filename = "$file.docx";
+	ob_clean();
+    $objWriter->save('php://output');
+    exit; 
  
 
-
+// The following offers file to user on client side: deletes temp version of file
+	header('Content-Description: File Transfer');
+	header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+	header('Content-Disposition: attachment; filename='.$filename);
+	header('Content-Transfer-Encoding: binary');
+	header('Expires: 0');
+	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+	header('Pragma: public');
+	header('Content-Length: ' . filesize($filename));
+	flush();
+	readfile($filename);
+	unlink($filename); // deletes the temporary file */
+	        
 }
 	
 function image_with_content($phpWord,$value)
@@ -376,7 +408,7 @@ function image_with_content($phpWord,$value)
         'footerHeight' => 50,
     )
 );
-	$header = array('name' => 'SimSun','size' => 22.5, 'bold' => true);
+	$header = array('name' => 'Times New Roman','size' => 22.5, 'bold' => true);
 	
 	$section->addText($value->title,$header);
    
@@ -396,14 +428,14 @@ function image_with_content($phpWord,$value)
 	$img1=url('/').'/'.trim($contentImage->image);
 	$img1=str_replace(" ","%20","$img1");
 		
-	$cell1->addImage($img1,array('width' => 300, 'height' => 200));
+	$cell1->addImage($img1,array('width' => 218, 'height' => 200));
 	$cell1->addTextbreak(2);	
 	}	
 	
     $description=$imgtable->addCell(7400);
 	
     for ($i = 0; $i < sizeof($textlines); $i++) {
-    $description->addText($textlines[$i],array('name' => 'SimSun' ,'size' => 10.5 ,'color' => 'gray'));
+    $description->addText($textlines[$i],array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
      }
     $footertable=$section->addFooter()->addTable();
     $footertable->addRow();
@@ -459,8 +491,8 @@ function itinary_image_with_content($phpWord,$value)
         'footerHeight' => 50,
     )
 );
-	$header = array('name' => 'SimSun','size' => 22.5, 'bold' => true);
-	$section->addText($value->itinerary_date_with_title,array('name' => 'SimSun','size' => 11.5,'bold'=> true));
+	$header = array('name' => 'Times New Roman','size' => 22.5, 'bold' => true);
+	$section->addText($value->itinerary_date_with_title,array('name' => 'Times New Roman','size' => 11.5,'bold'=> true));
 	$section->addText($value->title,$header);
    
 
@@ -478,14 +510,14 @@ function itinary_image_with_content($phpWord,$value)
 	{
 	$img1=url('/').'/'.trim($contentImage->image);
 	$img1=str_replace(" ","%20","$img1");	
-	$cell1->addImage($img1,array('width' => 300, 'height' => 200));
+	$cell1->addImage($img1,array('width' => 218, 'height' => 200));
 	$cell1->addTextbreak(2);	
 	}	
 	
     $description=$imgtable->addCell(7400);
 	
     for ($i = 0; $i < sizeof($textlines); $i++) {
-    $description->addText($textlines[$i],array('name' => 'SimSun' ,'size' => 10.5 ,'color' => 'gray'));
+    $description->addText($textlines[$i],array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
      }
     $footertable=$section->addFooter()->addTable();
     $footertable->addRow();
@@ -523,7 +555,7 @@ function itinerary($phpWord,$value)
 
 
 	
-	$header = array('name' => 'SimSun','size' => 37.5, 'bold' => true);
+	$header = array('name' => 'Times New Roman','size' => 37.5, 'bold' => true);
 	$itinerarysection = $phpWord->addSection(
     array(
 		'pageSizeH'   => 10800,
@@ -553,7 +585,7 @@ function itinerary($phpWord,$value)
 	{
 	$img1=url('/').'/'.trim($itineraryImage->image);
 	$img1=str_replace(" ","%20","$img1");	
-	$img->addImage($img1,array('width' => 230, 'height' => 130));
+	$img->addImage($img1,array('width' => 230, 'height' => 120));
 	}
 		
 	foreach($value->itineraryData as $itineraryValue)
@@ -565,12 +597,12 @@ function itinerary($phpWord,$value)
 		
 	$itinerarysubtable->addRow();	
 	$date=$itinerarysubtable->addCell(2000);
-	$date->addText("$itinerarydate:",array('name' => 'SimSun' ,'size' => 12 ,'color' => 'gray'));
+	$date->addText("$itinerarydate:",array('name' => 'Times New Roman' ,'size' => 12 ,'color' => 'gray'));
 	$date->addTextBreak(1);
 	
 		
 	$description=$itinerarysubtable->addCell(5250);
-	$description->addText($itinerarydes,array('name' => 'SimSun' ,'size' => 12 ,'color' => 'gray'));
+	$description->addText($itinerarydes,array('name' => 'Times New Roman' ,'size' => 12 ,'color' => 'gray'));
 	$description->addTextBreak(1);
 	}	
 	
@@ -600,7 +632,7 @@ function detailed_itinary($phpWord,$value)
         'headerHeight' => 300,
         'footerHeight' => 50,
     ));
-	$header = array('name' => 'SimSun','size' => 22.5, 'bold' => true);
+	$header = array('name' => 'Times New Roman','size' => 22.5, 'bold' => true);
 	
 	
 
@@ -617,7 +649,7 @@ function detailed_itinary($phpWord,$value)
 	{
 	$img1=url('/').'/'.trim($detailitineraryImage->image);
 	$img1=str_replace(" ","%20","$img1");	
-	$imagecell->addImage($img1,array('width' => 230, 'height' => 130));
+	$imagecell->addImage($img1,array('width' => 230, 'height' => 120));
 	}
 	foreach($value->detailitineraryDatas as $detail_itineraryData)
 	{
@@ -627,7 +659,7 @@ function detailed_itinary($phpWord,$value)
 	
 	$descriptionTable->addRow();
 	$date=$descriptionTable->addCell(7000);
-	$date->addText($detail_itinerarydate,array('name' => 'SimSun' ,'size' => 12 ,'color' => 'gray','bold' => true));
+	$date->addText($detail_itinerarydate,array('name' => 'Times New Roman' ,'size' => 12 ,'color' => 'gray','bold' => true));
 	$descriptionTable->addRow();
 	$text=$detail_itineraryData->description;	
     $textlines = explode("\n", $text);	
@@ -638,7 +670,7 @@ function detailed_itinary($phpWord,$value)
 		
                 }
 	}
-	//$description->addText($text,array('name' => 'SimSun' ,'size' => 12 ,'color' => 'gray'));	
+	//$description->addText($text,array('name' => 'Times New Roman' ,'size' => 12 ,'color' => 'gray'));	
 		
 		
     $footertable=$detailed_itinarysection->addFooter()->addTable();
@@ -692,8 +724,8 @@ function frontpage($phpWord,$value)
    
 	$imgcell->addImage($logo,array('width' => 150, 'height' => 50));
 	$textcell=$footertable->addCell(3000);
-	$textcell->addtext($value->place,array('name' => 'SimSun' ,'size' => 22.5 ,'color' => 'gray','bold' => true));
-	$textcell->addtext($startdate.'-'.$enddate,array('name' => 'SimSun' ,'size' => 12 ,'color' => 'gray'));	
+	$textcell->addtext($value->place,array('name' => 'Times New Roman' ,'size' => 22.5 ,'color' => 'gray','bold' => true));
+	$textcell->addtext($startdate.'-'.$enddate,array('name' => 'Times New Roman' ,'size' => 12 ,'color' => 'gray'));	
 	
 
 
@@ -736,8 +768,8 @@ function travalagent($phpWord,$value)
 	$agentcell1->addImage($profile,array('width' => 100, 'height' => 100));
 	
 	$namecell1=$travelagenttable->addCell(5000);
-	$namecell1->addText("YOUR TRAVEL AGENT IN $travelagent->place",array('name' => 'SimSun' ,'size' => 9 ,'color' => 'gray','bold' => true));	
-	$namecell1->addText($travelagent->name,array('name' => 'SimSun' ,'size' => 12 ,'color' => 'gray'));
+	$namecell1->addText("YOUR TRAVEL AGENT IN $travelagent->place",array('name' => 'Times New Roman' ,'size' => 9 ,'color' => 'gray','bold' => true));	
+	$namecell1->addText($travelagent->name,array('name' => 'Times New Roman' ,'size' => 12 ,'color' => 'gray'));
 	$namecell1->addImage($logo,array('width' => 115, 'height' => 28));
 	}
    $travalagentsection->addFooter()->addText('');
@@ -831,7 +863,7 @@ function  emptypagetitle($phpWord,$value)
     	$tableStyle = array(
        'borderColor' => '006699',
        'borderSize'  => 0,
-       'cellMargin'  => 0,
+       'cellMargin' => 500,  
 	    'bgColor'   => "$value->empty_page_color"	
         );
 		$firstRowStyle = array("bgColor" => "$value->empty_page_color");
@@ -840,8 +872,8 @@ function  emptypagetitle($phpWord,$value)
     		
     //$emptypagetable=$emptypagesection->addTable( array('bgColor' => '66BBFF'));
 	$emptypagetable->addRow(10810);
-	$emptypagecell=$emptypagetable->addcell(10800);
-	$emptypagecell->addText("$value->title",array('name' =>'SimSun', 'size' => 48.5, 'bold' => true, 'align' =>'right'));	
+	$emptypagecell=$emptypagetable->addcell(10800,array('valign' => 'center'));
+	$emptypagecell->addText("$value->title",array('name' =>'Times New Roman', 'size' => 48.5, 'bold' => true, 'align' =>'right'));	
 	
 	$footertable=$emptypagesection->addFooter()->addTable();
     $footertable->addRow();
@@ -872,13 +904,13 @@ function  contentonly($phpWord,$value)
    );
 	$contenttable=$contentonlysection->addTable();
 	$contenttable->addRow();	
-	$contenttable->addCell(3000,array('valign' => 'top'))->addText($value->title,array('name' => 'SimSun' ,'size' => 22.5 ,'color' => 'gray','bold' => true));
+	$contenttable->addCell(3000,array('valign' => 'top'))->addText($value->title,array('name' => 'Times New Roman' ,'size' => 22.5 ,'color' => 'gray','bold' => true));
 	
 
 	
 	$description=$contenttable->addCell(7800);
 	for ($i = 0; $i < sizeof($textlines); $i++) {
-    $description->addText($textlines[$i],array('name' => 'SimSun' ,'size' => 10.5 ,'color' => 'gray'));
+    $description->addText($textlines[$i],array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
 	
 	}
 	
@@ -915,10 +947,10 @@ function toptitlecontent($phpWord,$value)
 	$contenttable->addRow();	
 	$contenttable->addCell(2000);
 	$contentcell=$contenttable->addCell(8800);
-	$contentcell->addText($value->title,array('name' => 'SimSun' ,'size' => 22.5 ,'color' => 'gray','align' =>'right','bold' => true));
+	$contentcell->addText($value->title,array('name' => 'Times New Roman' ,'size' => 22.5 ,'color' => 'gray','align' =>'right','bold' => true));
 	$contentcell->addTextbreak(2);
 	for ($i = 0; $i < sizeof($textlines); $i++) {
-    $contentcell->addText($textlines[$i],array('name' => 'SimSun' ,'size' => 10.5 ,'color' => 'gray'));
+    $contentcell->addText($textlines[$i],array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
 	
 	}
 	
@@ -949,7 +981,7 @@ function summerypage($phpWord,$value,$data)
 		'pageSizeW'	   => 10800,
         'marginLeft'   => 300,
         'marginRight'  => 300,
-        'marginTop'    => 300,
+        'marginTop'    => 1500,
         'marginBottom' => 300,
         'headerHeight' => 300,
         'footerHeight' => 50,
@@ -960,28 +992,74 @@ function summerypage($phpWord,$value,$data)
 	
 	$summerytable=$summerypagesection->addTable(array('alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER));
 	$summerytable->addRow();
-	$textcell=$summerytable->addCell(5400,array('gridSpan' => 2 ,'valign' => 'center'));
 	
-	$textcell->addText("Distinguished guests:$value->distinguished_guests",array('name' => 'SimSun' ,'size' => 10.5 ,'color' => 'gray','align'=>'center'));
-	$textcell->addText("Agency:$value->agency",array('name' => 'SimSun' ,'size' => 10.5 ,'color' => 'gray'));
-	$textcell->addText("Agent:$value->agent",array('name' => 'SimSun' ,'size' => 10.5 ,'color' => 'gray'));
-	$textcell->addTextBreak(2);	
-	$textcell->addText("Duration:$value->duration_day day / $value->duration_night nights",array('name' => 'SimSun' ,'size' => 11.25 ,'color' => 'gray','bold' => true));
-	$textcell->addText("Number of Persons:$value->no_of_persons",array('name' => 'SimSun' ,'size' => 11.25 ,'color' => 'gray','bold' => true));
+	$textcell=$summerytable->addCell(3000,array('valign' => 'center'));
+	$textcell->addText('Distinguished guests:',array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
+	
+	$textcell1=$summerytable->addCell(3000);
+	$textcell1->addText($value->distinguished_guests,array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
 	
 	$summerytable->addRow();
 	
-	$headcell=$summerytable->addCell(5400,array('gridSpan' => 2 ,'valign' => 'center'));	
-    $headcell->addText('Summary',array('name' => 'SimSun' ,'size' => 22.5 ,'color' => 'gray'));
+	$textcell2=$summerytable->addCell(3000,array('valign' => 'center'));
+	$textcell2->addText('Agency:',array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
+	
+	$textcell3=$summerytable->addCell(3000);
+	$textcell3->addText($value->agency,array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
+	
+	$summerytable->addRow();
+	
+	$textcell4=$summerytable->addCell(3000,array('valign' => 'center'));
+	$textcell4->addText('Agent:',array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
+	
+	$textcell5=$summerytable->addCell(3000);
+	$textcell5->addText($value->agent,array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
+	
+	$summerytable->addRow(500);
+	$cell1=$summerytable->addCell(5400,array('gridSpan' => 2 ,'valign' => 'center'));
+	
+	
+	
+	
+	$summerytable->addRow();
+	
+	$textcell10=$summerytable->addCell(3000,array('valign' => 'center'));
+	$textcell10->addText('Duration:',array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray','bold' => true));
+	
+	$textcell11=$summerytable->addCell(3000);
+	$textcell11->addText($value->duration_day. 'day / '.$value->duration_night . 'nights',array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray','bold' => true ));
+		
+	
+	$summerytable->addRow();
+	
+	$textcell12=$summerytable->addCell(3000,array('valign' => 'center'));
+	$textcell12->addText('Number of Persons:',array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray','bold' => true));
+	
+	$textcell13=$summerytable->addCell(3000);
+	$textcell13->addText($value->no_of_persons,array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray','bold' => true ));
+	
+	
+	$summerytable->addRow(1000);
+	$empty1=$summerytable->addCell(3000,array('gridSpan' => 2 ,'valign' => 'center'));
+	
+	
+	
+	
+	$summerytable->addRow();
+	$cellColSpan = array('gridSpan' => 2, 'valign' => 'center');
+	$headcell=$summerytable->addCell(3000,$cellColSpan);	
+    $headcell->addText('Summary',array('name' => 'Times New Roman' ,'size' => 22.5 ,'color' => 'gray'));
 	
 		
 	foreach($data as $pages)
 	{
 	if ($pages->show_summery === 1)
 	{
+	$page=$pages->content_order+2;	
 	$summerytable->addRow();
-	$summerytable->addCell(4000)->addText("$pages->title",array('name' => 'SimSun' ,'size' => 11 ,'color' => 'gray'));
-	$summerytable->addCell(4000)->addText("Page $pages->content_order+2 ",array('name' => 'SimSun' ,'size' => 11 ,'color' => 'gray'));	
+		
+	$summerytable->addCell(3000)->addText("$pages->title",array('name' => 'Times New Roman' ,'size' => 11 ,'color' => 'gray'));
+	$summerytable->addCell(3000)->addText("Page  $page",array('name' => 'Times New Roman' ,'size' => 11 ,'color' => 'gray'));	
 	}
 	}	
 		
@@ -989,7 +1067,7 @@ function summerypage($phpWord,$value,$data)
     $footertable=$summerypagesection->addFooter()->addTable();
     $footertable->addRow();
 	$textcell=$footertable->addCell(8250);
-	$textcell->addtext("Date of release:$releasedate",array('name' => 'SimSun' ,'size' => 11 ,'color' => 'gray'));	
+	$textcell->addtext("Date of release:$releasedate",array('name' => 'Times New Roman' ,'size' => 11 ,'color' => 'gray'));	
 	$imgcell=$footertable->addCell(2500);
 	
 	$imgcell->addImage($signature,array('width' => 150, 'height' => 50)); 

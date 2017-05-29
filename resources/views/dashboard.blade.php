@@ -380,7 +380,7 @@
 												<td>
 												<a style="padding:10px 15px;" class="btn btn-primary btn-simple" rel="tooltip" data-original-title="Generate" href="{{ url('/generateHtmlPreview') }}/{{base64_encode($file->id)}}" ><i class="fa fa-cogs" aria-hidden="true"></i></a>
 												<a style="padding:10px 15px;" class="btn btn-primary btn-simple" rel="tooltip" data-original-title="PDF" href="{{ url('/generatePdfPreview') }}/{{base64_encode($file->id)}}" target="_blank"><i class="material-icons">picture_as_pdf</i> </a>	
-                                                <a style="padding:10px 15px;" class="btn btn-primary btn-simple" rel="tooltip" data-original-title="Word" href="#" ><i class="fa fa-file-word-o " aria-hidden="true"></i></a>
+                                                <a style="padding:10px 15px;" class="btn btn-primary btn-simple" rel="tooltip" data-original-title="Word" href="{{ url('generateDoc') }}/{{base64_encode($file->id)}}" ><i class="fa fa-file-word-o " aria-hidden="true"></i></a>
 												<a style="padding:10px 15px;" class="btn btn-primary btn-simple" rel="tooltip" data-original-title="Flip Book" href="{{ url('/flipbook') }}/{{base64_encode($file->id)}}" target="_blank"><i class="fa fa-book" aria-hidden="true"></i></a>
 												<a style="padding:10px 15px;" class="btn btn-primary btn-simple" rel="tooltip" data-original-title="Delete" onclick="return confirm('Are you sure you want to delete this item?');" href="{{ url('/listdelete') }}/<?php echo base64_encode($file->id);?>"><i class="material-icons">delete</i></a></td>
 

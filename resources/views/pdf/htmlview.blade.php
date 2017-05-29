@@ -27,7 +27,7 @@
 									
 									</div>
 
-									<a href="{{ url('generateDoc') }}/{{$fileid}}" > <button type="button" class="btn btn-primary " target="_blank">Word</button></a>
+									<a href="{{ url('generateDoc') }}/{{$fileid}}"> <button type="button"  class="btn btn-primary " target="_blank">Word</button></a>
 									<a href="{{ url('/generatePdfPreview') }}/{{$fileid}}" target="_blank"> <button type="button" class="btn btn-primary ">PDF</button></a>	
 									<a href="{{ url('/flipbook') }}/{{$fileid}}" target="_blank" > <button type="button" class="btn btn-primary ">Flip Book</button></a>		    
 
