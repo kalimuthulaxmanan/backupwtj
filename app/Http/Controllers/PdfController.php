@@ -88,7 +88,9 @@ public function word()
 
 }
 public function listdelete($id)
-{
+{   
+	$id=base64_decode($id);
+	
 	$content=DB::table('pdf_content')->where('file_id',$id)->select('id')->get();
 	foreach($content as $contents) 
 	{

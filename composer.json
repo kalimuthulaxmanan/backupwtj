@@ -17,9 +17,8 @@
  "cornford/googlmapper": "2.*",
 		"league/flysystem-aws-s3-v3":"~1.0",
         "phpoffice/phpword": "^0.13.0",
-      
-		"sunra/php-simple-html-dom-parser": "1.5.2"
-
+      "sunra/php-simple-html-dom-parser": "1.5.2"
+		
 
     },
     "require-dev": {
