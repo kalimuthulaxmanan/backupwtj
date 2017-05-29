@@ -378,7 +378,7 @@
 												<td>
 												<a style="padding:10px 15px;" class="btn btn-primary btn-simple" rel="tooltip" data-original-title="Generate" href="<?php echo e(url('/generateHtmlPreview')); ?>/<?php echo e(base64_encode($file->id)); ?>" ><i class="fa fa-cogs" aria-hidden="true"></i></a>
 												<a style="padding:10px 15px;" class="btn btn-primary btn-simple" rel="tooltip" data-original-title="PDF" href="<?php echo e(url('/generatePdfPreview')); ?>/<?php echo e(base64_encode($file->id)); ?>" target="_blank"><i class="material-icons">picture_as_pdf</i> </a>	
-                                                <a style="padding:10px 15px;" class="btn btn-primary btn-simple" rel="tooltip" data-original-title="Word" href="#" ><i class="fa fa-file-word-o " aria-hidden="true"></i></a>
+                                                <a style="padding:10px 15px;" class="btn btn-primary btn-simple" rel="tooltip" data-original-title="Word" href="<?php echo e(url('generateDoc')); ?>/<?php echo e(base64_encode($file->id)); ?>" ><i class="fa fa-file-word-o " aria-hidden="true"></i></a>
 												<a style="padding:10px 15px;" class="btn btn-primary btn-simple" rel="tooltip" data-original-title="Flip Book" href="<?php echo e(url('/flipbook')); ?>/<?php echo e(base64_encode($file->id)); ?>" target="_blank"><i class="fa fa-book" aria-hidden="true"></i></a>
 												<a style="padding:10px 15px;" class="btn btn-primary btn-simple" rel="tooltip" data-original-title="Delete" onclick="return confirm('Are you sure you want to delete this item?');" href="<?php echo e(url('/listdelete')); ?>/<?php echo base64_encode($file->id);?>"><i class="material-icons">delete</i></a></td>
 

@@ -25,7 +25,7 @@
 									
 									</div>
 
-									<a href="<?php echo e(url('generateDoc')); ?>/<?php echo e($fileid); ?>" > <button type="button" class="btn btn-primary " target="_blank">Word</button></a>
+									<a href="<?php echo e(url('generateDoc')); ?>/<?php echo e($fileid); ?>"> <button type="button"  class="btn btn-primary " target="_blank">Word</button></a>
 									<a href="<?php echo e(url('/generatePdfPreview')); ?>/<?php echo e($fileid); ?>" target="_blank"> <button type="button" class="btn btn-primary ">PDF</button></a>	
 									<a href="<?php echo e(url('/flipbook')); ?>/<?php echo e($fileid); ?>" target="_blank" > <button type="button" class="btn btn-primary ">Flip Book</button></a>		    
 

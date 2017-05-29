@@ -44,8 +44,14 @@ class PdfPreviewPdfController extends Controller
 
     }
 	
+	function decodeUrlData($id)		
+ 	{		
+ 		return base64_decode($id);		
+ 	}
+	
 	public function generatePdfPreview($id)
 	{
+		$id=$this->decodeUrlData($id);
 		
 		$data = DB::table('files_directory')
             ->join('pdf_content', 'files_directory.id', '=', 'pdf_content.file_id')
