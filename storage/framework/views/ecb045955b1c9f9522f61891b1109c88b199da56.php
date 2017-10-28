@@ -24,19 +24,20 @@
 			<div class="table-body">
 				<h3>Summary</h3>
 				<table class="text-left" style="width: 100%">
-					
+					    <?php $i=0; ?>
 						<?php foreach($data1 as $pages): ?>
 					    
-					  	<?php if($pages->show_summery === 1): ?>
-					
+					  	<?php if($pages->show_summery == 1): ?>
+					    <?php if($i < 10){ ?> 
 						<tr>
-						<td><a href="#"><?php echo e($pages->title); ?></a></td>
+						<td><a href="#"><?php echo mb_substr($pages->title, 0,23); ?></a></td>
 						<td>Page <?php
 						$num = $pages->content_order+2;
 						$num_padded = sprintf("%02d", $num);
 						echo $num_padded;
 						?></td>
 						</tr>
+					    <?php $i++; } ?>
 					<?php endif; ?>
 					<?php endforeach; ?>
 				</table>

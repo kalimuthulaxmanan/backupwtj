@@ -56,7 +56,7 @@ class DashboardController extends Controller
 		/*list the all files */
 
 	$pdflist = DB::table('users')
-            ->join('files_directory', 'files_directory.user_id', '=','users.id')->limit(10)->get(); 
+            ->join('files_directory', 'files_directory.user_id', '=','users.id')->orderBy('files_directory.id','desc')->get(); 
 
 return view('dashboard',['pdflist'=>$pdflist]);
 		

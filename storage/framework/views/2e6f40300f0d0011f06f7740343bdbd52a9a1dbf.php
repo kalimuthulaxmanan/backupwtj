@@ -1,5 +1,5 @@
 
-<div class="book-content right-page" style="padding-top: 100px;">
+<div class="book-content right-page" style="padding-top: 70px;">
 	
 	<?php foreach($data->travel_agent as $travelagent) { ?>
 	<div class="last-image">

@@ -2,7 +2,7 @@
 <div class="book-content right-content-page">
 	<h2><?php echo e($data->title); ?></h2>
 	<div class="left-content">
-		<p style="line-height:25px;">
+		<p style="line-height:20px;">
 			<?php foreach($data->detailitineraryDatas as $detail_itineraryData): ?>
 			&nbsp; &nbsp; &nbsp; - &nbsp; <?php $dates=$detail_itineraryData->event_date; $date=date_create_from_format("Y-m-d","$dates");
 echo date_format($date,"F d");?>: <?php echo nl2br($detail_itineraryData->description); ?><br>

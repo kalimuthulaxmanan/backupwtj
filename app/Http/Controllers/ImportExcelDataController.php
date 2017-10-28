@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Artisan;
 use PHPExcel_IOFactory;
+use App\Http\Controllers\ValidateController;
+
 class ImportExcelDataController extends BaseController
 {
 	public $Filevalue;
+	public $countorder=1;
 	public function backgroundWork()
 	{
 		Artisan::call('import:excel');
@@ -19,13 +22,12 @@ class ImportExcelDataController extends BaseController
 	
 	private function validatedata($rows,$fileId)
 	{
-		 $templateId=$this->template_validate($rows);//die;
+	  $templateId=$this->template_validate($rows);//die;
       if($templateId)
-	  {
-		  
+	  {	  
 		  
 		  switch($rows[1])
-		  {
+		  {      
 			     case 'front_page':
 					  $this->insertFrontPage($rows,$templateId,$fileId);
 				  break;
@@ -90,7 +92,7 @@ class ImportExcelDataController extends BaseController
 		
 	}
 	
-	private function insert_content($row,$templateId,$fileId)
+private function insert_content($row,$templateId,$fileId,$count='NULL')
 	{
 		
 			$array=[
@@ -105,16 +107,59 @@ class ImportExcelDataController extends BaseController
 		];
 		
 	   $fillableRow=['15','16','17','19','20','21','22','0'];
+		if($row[1]=='content_only')
+		 {  
+			 
+			if(strpos($row[15],"and terms")!=null || strlen($row[15]) < 23)
+			{
+			 $lines=33;
+			}else{
+			$lines=30;
+			} 
+		    $str=$row[20];
+			$str=wordwrap($str,90, "\n");
+            $lines_arr = preg_split('/\n|\r/',$str);
+			$num_newlines = count($lines_arr); 
+		    $perpage=$num_newlines/$lines;
+			$roundperpage=round($perpage); 
+			if( $roundperpage  < $perpage )
+			{		
+			  $perpage=$roundperpage+1;
+			}
+			else{
+			$perpage=$roundperpage;
+			}
+		  $j=0;$k=0; 
+		  for($i=1;$i<=$perpage;$i++){
+		   $data=$this->generateData($array,$fillableRow,$row);
+		   $data['file_id']=$fileId->id;
+		   $data['user_id']=$fileId->user_id;
+	       $data['template_id']=$templateId;
+		   $data['created_at']=date('Y-m-d H:i:s');		  
+		   $contentess=array_slice($lines_arr,$k,$lines);
+			$string='';  
+		   foreach($contentess as $contentes){
+		     $string.=$contentes."\n";
+		   }	  
+		   $data['content']=$string;
+		   $content_id=$this->insert('pdf_content',$data);
+		   $k=$i*$lines;	  
+		  }
+		 }
 		
+		//dd($fileId);
+		
+		else{
 		$data=$this->generateData($array,$fillableRow,$row);
 		$data['file_id']=$fileId->id;
 		$data['user_id']=$fileId->user_id;
 		$data['template_id']=$templateId;
-		$data['created_at']=date('Y-m-d H:i:s');
-		//dd($fileId);
+		$data['created_at']=date('Y-m-d H:i:s');	
 		$content_id=$this->insert('pdf_content',$data);
+		}
+		if($count=='NULL'){
 		$this->insert_image_with_content($row,$content_id,$fileId->upload_path);
-		
+		}
 		return $content_id;
 	}
 		
@@ -159,7 +204,89 @@ class ImportExcelDataController extends BaseController
 	}
 	
 	private function insert_detail_itinerary($row,$templateId,$fileId)
-	{
+	{   
+		if($row[18]!="" && $row[25]!="" && $row[26]!=""){
+		$imageData=explode("|||",$row[18]);
+		$imgcount=count($imageData);
+		if($imgcount > 5)
+		{   
+		$datacount=$imgcount/5;
+		$roundcount=round($datacount);
+			if( $roundcount  < $datacount )
+			{		
+			  $datacount=$roundcount+1;
+			}
+			else{
+			$datacount=$roundcount;
+			}	
+		$j=0;$k=0;
+		for($i=1;$i<=$datacount;$i++)
+		{	
+	    		
+		$contentId=$this->insert_content($row,$templateId,$fileId,5);
+			
+        if($row[18]!="")
+		{
+			$upload_path=$fileId->upload_path;
+			$imageData=explode("|||",$row[18]);
+			$imageData=array_slice($imageData,$j,5);
+			
+			foreach($imageData as $key=>$value)
+			{
+				$imageData=["content_id"=>$contentId,"image"=>$upload_path.'/'.trim($value),'created_at'=>date('Y-m-d H:i:s')];
+				$this->insert('pdf_content_images',$imageData);
+			}
+
+		}
+			
+		
+			if($row[25]!="")
+			{
+				$row[25] =rtrim($row[25],"|||");
+				$dateData=explode("|||",$row[25]);
+				$dateDatacount=count($dateData);
+				
+				$datedataco=round($dateDatacount/$datacount);
+				//dd($dateData);
+				$row[26] =rtrim($row[26],"|||");
+				$contentData=explode("|||",$row[26]);
+				
+				
+				$contentData=array_slice($contentData,$k,$datedataco);
+				$dateData=array_slice($dateData,$k,$datedataco);	
+				
+				
+				foreach($dateData as $key=>$value)
+				{
+					$array=[
+					'file_id'=>$fileId->id,
+					'content_id'=>$contentId,
+					'event_date'=>date('Y-m-d',strtotime($value)),
+					'description'=>$contentData[$key],'created_at'=>date('Y-m-d H:i:s')
+				];
+					
+					//dd($array);
+					$inserted=$this->insert('pdf_itinenary_details',$array);
+					//dd($array);
+				}
+
+			}
+		else
+		{
+			
+			
+		}   
+		
+		
+		$j=$i*5;
+	
+		$k=$i*$datedataco;	
+		}	
+		
+		
+		}
+		
+		else{
 		    $contentId=$this->insert_content($row,$templateId,$fileId);	
 		
 			if($row[25]!="")
@@ -178,13 +305,94 @@ class ImportExcelDataController extends BaseController
 				}
 
 			}
-		
-		
+		}
+			
+		}	
 	}
 	
 	private function insert_itinerary($row,$templateId,$fileId)
-	{
-		//dd($row[23]);
+	{   if($row[18]!="" && $row[23]!="" &&  $row[24]!="")
+		{	
+		$imageData=explode("|||",$row[18]);
+		$imgcount=count($imageData);
+		if($imgcount > 5)
+		{
+		$datacount=$imgcount/5;
+		$roundcount=round($datacount);
+			if( $roundcount  < $datacount )
+			{		
+			  $datacount=$roundcount+1;
+			}
+			else{
+			$datacount=$roundcount;
+			}	
+		
+		$j=0;$k=0;	
+		for($i=1;$i<=$datacount;$i++)
+		{	
+	    		
+		$contentId=$this->insert_content($row,$templateId,$fileId,5);
+			
+        if($row[18]!="")
+		{
+			$upload_path=$fileId->upload_path;
+			$imageData=explode("|||",$row[18]);
+			$imageData=array_slice($imageData,$j,5);
+			foreach($imageData as $key=>$value)
+			{
+				$imageData=["content_id"=>$contentId,"image"=>$upload_path.'/'.trim($value),'created_at'=>date('Y-m-d H:i:s')];
+				$this->insert('pdf_content_images',$imageData);
+			}
+
+		}
+			
+		
+			if($row[23]!="")
+			{
+				
+				$dateData=explode("|||",$row[23]);
+				$dateDatacount=count($dateData);
+				
+				$datedataco=round($dateDatacount/$datacount);
+				//dd($dateData);
+				$contentData=explode("|||",$row[24]);
+				
+				
+				$contentData=array_slice($contentData,$k,$datedataco);
+				
+				$dateData=array_slice($dateData,$k,$datedataco);	
+				
+				
+				foreach($dateData as $key=>$value)
+				{
+					$array=[
+					'file_id'=>$fileId->id,
+					'content_id'=>$contentId,
+					'event_date'=>date('Y-m-d',strtotime($value)),
+					'description'=>$contentData[$key],'created_at'=>date('Y-m-d H:i:s')
+				];
+					
+					//dd($array);
+					$inserted=$this->insert('pdf_itinenary',$array);
+					//dd($array);
+				}
+
+			}
+		else
+		{
+			
+			
+		}   
+		
+		
+		$j=$i*5;
+	
+		$k=$i*$datedataco;	
+		}
+		
+		
+		}	
+		else{
 		$contentId=$this->insert_content($row,$templateId,$fileId);
 
 		
@@ -211,11 +419,12 @@ class ImportExcelDataController extends BaseController
 			}
 		else
 		{
-			echo "hai";
-			die;
+			
+			
 		}
-		
-
+		}
+			
+		}
 		
 	}
 	
@@ -268,6 +477,9 @@ class ImportExcelDataController extends BaseController
 		$data['file_id']=$fileId->id;
 		$data['user_id']=$fileId->user_id;
 		$data['created_at']=date('Y-m-d H:i:s');
+	    foreach($data as $key => $value){
+		$data[$key]=preg_replace('/[\x00-\x1F\x7F-\xFF]/', '  ', $value);
+		}     
 		$this->insert('pdf_common_fields',$data);
 
 	}
@@ -284,10 +496,23 @@ class ImportExcelDataController extends BaseController
 		$data=[];
 		foreach($fillableRow as $key=>$value)
 		{
-			if($array[$key]=="start_date" || $array[$key]=="end_date")
+			if($array[$key]=="start_date" || $array[$key]=="end_date" || $array[$key] == "date_of_release")
 			{
 			  $data[$array[$key]]=date('Y-m-d',strtotime($row[$value]));
 			}
+	        elseif($array[$key]=="show_summery"){
+			if($row[$value]=='yes' || $row[$value]=='Yes'){	
+			$data[$array[$key]]=1;
+			}	
+			else{
+			$data[$array[$key]]=0;
+			}	
+			}
+			elseif($array[$key]=="content_order"){
+			$data[$array[$key]]=$this->countorder;
+			$this->countorder=$this->countorder+1;	
+			}
+			
 			else
 			{
 				$data[$array[$key]]=trim($row[$value]);
@@ -321,9 +546,8 @@ class ImportExcelDataController extends BaseController
 		//dd($value);
 		$this->Filevalue=$value;
 		 $path=$value->upload_path.'/'.$value->file_name; //die;
-
-    //  $path='/home/kenhike/Downloads/Antonio Compton.xlsx';
-//dd($path);
+         //$path='/home/kenhiket430/Downloads/date09-18-2017/276_t1/data1.xlsx';
+ 
 		$data = \Excel::load($path,function($reader)								 
 		{
 			$reader->noHeading();

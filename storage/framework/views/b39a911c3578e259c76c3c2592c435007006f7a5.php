@@ -10,6 +10,7 @@
 	</div>
 	
 	<div class="right-content">
+		<?php $data->content=strip_tags($data->content, '<br><b><p><a>\n');    ?>
 		<p><?php echo nl2br($data->content); ?></p>
 	</div>
 	

@@ -25,6 +25,7 @@
 			</div>
 			<div class="col-md-8 col-sm-8 col-xs-12">
 				<p class="bold">
+				<?php $data->content=strip_tags($data->content, '<br><b><p><a>\n');    ?>	
 				<?php echo nl2br($data->content); ?>
 
 				</p>                

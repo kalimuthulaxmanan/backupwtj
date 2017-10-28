@@ -4,31 +4,31 @@
 		<div class="table-content pt-150">
 			<div class="table-header">
 				<p>  
-				Distinguished guests:{{$data->distinguished_guests}} <br>
-				Agency:{{$data->agency}}<br>
-				Agent: {{$data->agent}}
+				Distinguished guests  :   {{$data->distinguished_guests}} <br>
+				Agency  :   {{$data->agency}}<br>
+				Agent  :   {{$data->agent}}
 				</p>
 				<h5>
-				Duration: {{$data->duration_day}} day / {{$data->duration_night}} nights<br>
-				Number of Persons:{{$data->no_of_persons}}
+				Duration  :   {{$data->duration_day}} days / {{$data->duration_night}} nights<br>
+				Number of Persons  :   {{$data->no_of_persons}}
 				</h5>
 			</div>
 			<div class="table-body">
 				<h3>Summary</h3>
 				<table>
-					
+					<?php $i=0; ?>
 					@foreach($data1 as $pages)
-					
-						@if ($pages->show_summery === 1)
-					
+						@if ($pages->show_summery == 1)
+					      <?php if($i < 10){ ?> 
 						<tr>
 						<td>{{ $pages->title }}</td>
-						<td style="text-align: left;">Page <?php
+						<td style="text-align: left; width: 60px;">page <?php
 						$num = $pages->content_order+2;
 						$num_padded = sprintf("%02d", $num);
 						echo $num_padded;
 						?></td>
 						</tr>
+					      <?php $i++; } ?>
 					@endif
 					@endforeach
 					
@@ -63,7 +63,7 @@
 			<div class="col-md-12">
 				<div class="col-md-6 col-sm-6 col-xs-12 footer-height">
 					<div class="footer-content left">
-						<p class="bold" style="font-size: 15px;">Date of release:<?php $dates="$data->date_of_release";$date=date_create_from_format("Y-m-d","$dates");echo date_format($date,"F d, Y"); ?></p>
+						<p class="bold" style="font-size: 15px;">Date of release  :   <?php $dates="$data->date_of_release";$date=date_create_from_format("Y-m-d","$dates");echo date_format($date,"F d, Y"); ?></p>
 					</div>                      
 				</div>
 				<div class="col-md-6 col-sm-6 col-xs-12 footer-height text-right">

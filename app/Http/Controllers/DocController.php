@@ -43,7 +43,7 @@ class DocController extends Controller
 	public function generateDoc($id)
 	{
 	 	
-	
+	try{
 /*$data = DB::table('files_directory')
             ->join('pdf_content', 'files_directory.id', '=', 'pdf_content.file_id')
             ->join('pdf_common_fields', 'files_directory.id', '=', 'pdf_common_fields.file_id')
@@ -394,6 +394,14 @@ exit;
 	flush();
 	readfile($filename);
 	unlink($filename); // deletes the temporary file */
+		
+	}
+	catch(\Exception $e){
+        $errorMessage="Unable to generate document, Because invalid arguments or invalid image names";
+		return Redirect::back()->withErrors(['message', "$errorMessage"]);
+		//return redirect()->back()->with('message',"$errorMessage");	
+		
+	}	
 	        
 }
 	
@@ -415,7 +423,7 @@ function image_with_content($phpWord,$value)
 );
 	$header = array('name' => 'Times New Roman','size' => 22.5, 'bold' => true);
 	
-	$section->addText($value->title,$header);
+	$section->addText(htmlspecialchars($value->title),$header);
    
 
 	$text=$value->content;
@@ -432,22 +440,24 @@ function image_with_content($phpWord,$value)
 	{
 	$img1=url('/').'/'.trim($contentImage->image);
 	$img1=str_replace(" ","%20","$img1");
-		
-	$cell1->addImage($img1,array('width' => 218, 'height' => 200));
+	if(@is_array(getimagesize($img1))){
+    $cell1->addImage($img1,array('width' => 218, 'height' => 200));
+    }	
 	$cell1->addTextbreak(2);	
 	}	
 	
     $description=$imgtable->addCell(7400);
 	
     for ($i = 0; $i < sizeof($textlines); $i++) {
-    $description->addText($textlines[$i],array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
+    $description->addText(htmlspecialchars($textlines[$i]),array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
      }
     $footertable=$section->addFooter()->addTable();
     $footertable->addRow();
 	$logo=url('/').'/'.$value->upload_path.trim($value->logo);
 	$logo=str_replace(" ","%20","$logo");
+	if(@is_array(getimagesize($logo))){
     $footertable->addCell(2250)->addImage($logo,array('width' => 150, 'height' => 50)); 
-    
+	}
 	
 	
     		
@@ -472,8 +482,9 @@ $fullpagesection = $phpWord->addSection(
         'footerHeight' => 0,
     )
     );
+	if(@is_array(getimagesize($map))){
 	$fullpagesection->addImage($map,array('width' =>720, 'height' =>720));	
-	
+	}
 }
 	
 
@@ -497,8 +508,8 @@ function itinary_image_with_content($phpWord,$value)
     )
 );
 	$header = array('name' => 'Times New Roman','size' => 22.5, 'bold' => true);
-	$section->addText($value->itinerary_date_with_title,array('name' => 'Times New Roman','size' => 11.5,'bold'=> true));
-	$section->addText($value->title,$header);
+	$section->addText(htmlspecialchars($value->itinerary_date_with_title),array('name' => 'Times New Roman','size' => 11.5,'bold'=> true));
+	$section->addText(htmlspecialchars($value->title),$header);
    
 
 	$text=$value->content;
@@ -514,21 +525,27 @@ function itinary_image_with_content($phpWord,$value)
 	foreach($value->contentImages as $contentImage)
 	{
 	$img1=url('/').'/'.trim($contentImage->image);
-	$img1=str_replace(" ","%20","$img1");	
-	$cell1->addImage($img1,array('width' => 218, 'height' => 200));
+	$img1=str_replace(" ","%20","$img1");
+		
+	if(@is_array(getimagesize($img1))){
+    $cell1->addImage($img1,array('width' => 218, 'height' => 200));
+    }	
 	$cell1->addTextbreak(2);	
 	}	
 	
     $description=$imgtable->addCell(7400);
 	
     for ($i = 0; $i < sizeof($textlines); $i++) {
-    $description->addText($textlines[$i],array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
+    $description->addText(htmlspecialchars($textlines[$i]),array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
      }
     $footertable=$section->addFooter()->addTable();
     $footertable->addRow();
 	$logo=url('/').'/'.$value->upload_path.trim($value->logo);
 	$logo=str_replace(" ","%20","$logo");
-    $footertable->addCell(2250)->addImage($logo,array('width' => 150, 'height' => 50));
+	if(@is_array(getimagesize($logo))){
+     $footertable->addCell(2250)->addImage($logo,array('width' => 150, 'height' => 50));
+    }
+   
 }
 	
 	
@@ -550,9 +567,9 @@ $logopagesection = $phpWord->addSection(
 );
 $logo=url('/').'/'.$value->upload_path.trim($value->logo);
 $logo=str_replace(" ","%20","$logo");
-
+if(@is_array(getimagesize($logo))){
 $logopagesection->addFooter()->addImage($logo,array('width' => 150, 'height' => 50));
-
+}
 }
 	
 function itinerary($phpWord,$value)
@@ -581,7 +598,7 @@ function itinerary($phpWord,$value)
 	$itinerarytable->addRow();
 	
 	$itinerarysubcell=$itinerarytable->addCell(7200);
-	$itinerarysubcell->addText($value->title,$header);
+	$itinerarysubcell->addText(htmlspecialchars($value->title),$header);
 	$itinerarysubtable=$itinerarysubcell->addTable();
 	
 	$img=$itinerarytable->addCell(3600);
@@ -589,8 +606,10 @@ function itinerary($phpWord,$value)
 	foreach($value->itineraryImages as $itineraryImage )
 	{
 	$img1=url('/').'/'.trim($itineraryImage->image);
-	$img1=str_replace(" ","%20","$img1");	
+	$img1=str_replace(" ","%20","$img1");
+	if(@is_array(getimagesize($img1))){
 	$img->addImage($img1,array('width' => 230, 'height' => 120));
+	}
 	}
 		
 	foreach($value->itineraryData as $itineraryValue)
@@ -607,7 +626,7 @@ function itinerary($phpWord,$value)
 	
 		
 	$description=$itinerarysubtable->addCell(5250);
-	$description->addText($itinerarydes,array('name' => 'Times New Roman' ,'size' => 12 ,'color' => 'gray'));
+	$description->addText(htmlspecialchars($itinerarydes),array('name' => 'Times New Roman' ,'size' => 12 ,'color' => 'gray'));
 	$description->addTextBreak(1);
 	}	
 	
@@ -618,8 +637,9 @@ function itinerary($phpWord,$value)
     $footertable->addRow();
     $logo=url('/').'/'.$value->upload_path.trim($value->logo);
 	$logo=str_replace(" ","%20","$logo");
+	if(@is_array(getimagesize($logo))){
     $footertable->addCell(2250)->addImage($logo,array('width' => 150, 'height' => 50)); 
-   
+	}
 	
 }
 	
@@ -647,14 +667,16 @@ function detailed_itinary($phpWord,$value)
 	$datailitinarytable=$detailed_itinarysection->addTable();
 	$datailitinarytable->addRow();
 	$descriptioncell=$datailitinarytable->addCell(7000);
-	$descriptioncell->addText($value->title,$header);
+	$descriptioncell->addText(htmlspecialchars($value->title),$header);
 	$descriptionTable=$descriptioncell->addTable();
 	$imagecell=$datailitinarytable->addCell(3800);
 	foreach($value->detailitineraryImages as $detailitineraryImage)
 	{
 	$img1=url('/').'/'.trim($detailitineraryImage->image);
 	$img1=str_replace(" ","%20","$img1");	
+	if(@is_array(getimagesize($img1))){	
 	$imagecell->addImage($img1,array('width' => 230, 'height' => 120));
+	}	
 	}
 	foreach($value->detailitineraryDatas as $detail_itineraryData)
 	{
@@ -664,14 +686,14 @@ function detailed_itinary($phpWord,$value)
 	
 	$descriptionTable->addRow();
 	$date=$descriptionTable->addCell(7000);
-	$date->addText($detail_itinerarydate,array('name' => 'Times New Roman' ,'size' => 12 ,'color' => 'gray','bold' => true));
+	$date->addText(htmlspecialchars($detail_itinerarydate),array('name' => 'Times New Roman' ,'size' => 12 ,'color' => 'gray','bold' => true));
 	$descriptionTable->addRow();
 	$text=$detail_itineraryData->description;	
     $textlines = explode("\n", $text);	
 	
 	$description=$descriptionTable->addCell(7000);
 	for ($i = 0; $i < sizeof($textlines); $i++) {
-    $description->addText($textlines[$i]);
+    $description->addText(htmlspecialchars($textlines[$i]));
 		
                 }
 	}
@@ -682,8 +704,9 @@ function detailed_itinary($phpWord,$value)
     $footertable->addRow();
     $logo=url('/').'/'.$value->upload_path.trim($value->logo);
 	$logo=str_replace(" ","%20","$logo");
+	if(@is_array(getimagesize($logo))){
     $footertable->addCell(2250)->addImage($logo,array('width' => 150, 'height' => 50)); 
- 
+	}
 }
 	
 	
@@ -711,26 +734,28 @@ function frontpage($phpWord,$value)
         'headerHeight' => 0,
         'footerHeight' => 50,
     )
-    );	
+    );
+	
 	foreach($value->frontImages as $frontimage)
 	{
 	$fimage= url('/').'/'.$frontimage->image;
 	$fimage=str_replace(" ","%20","$fimage");	
-	
 	}
 	
-		
+	if(@is_array(getimagesize($fimage))){	
     $frontpagesection->addImage($fimage,array('width' => 750, 'height' => 500));
+	}	
 	$footertable=$frontpagesection->addFooter()->addTable();	
 	$footertable->addRow();
 	$imgcell=$footertable->addCell(8000);
 	$logo=url('/').'/'.$value->upload_path.trim($value->logo);
 	$logo=str_replace(" ","%20","$logo");
-   
-	$imgcell->addImage($logo,array('width' => 150, 'height' => 50));
+    if(@is_array(getimagesize($logo))){
+     $imgcell->addImage($logo,array('width' => 150, 'height' => 50));
+    }
 	$textcell=$footertable->addCell(3000);
-	$textcell->addtext($value->place,array('name' => 'Times New Roman' ,'size' => 22.5 ,'color' => 'gray','bold' => true));
-	$textcell->addtext($startdate.'-'.$enddate,array('name' => 'Times New Roman' ,'size' => 12 ,'color' => 'gray'));	
+	$textcell->addtext(htmlspecialchars($value->country),array('name' => 'Times New Roman' ,'size' => 22.5 ,'color' => 'gray','bold' => true));
+	$textcell->addtext(htmlspecialchars($startdate.'-'.$enddate),array('name' => 'Times New Roman' ,'size' => 12 ,'color' => 'gray'));	
 	
 
 
@@ -769,13 +794,17 @@ function travalagent($phpWord,$value)
 	$logo=url($value->upload_path).'/'.trim($travelagent->logo);
 	$logo=str_replace(" ","%20","$logo");		
 		
-	$agentcell1=$travelagenttable->addCell(2000);	
+	$agentcell1=$travelagenttable->addCell(2000);
+	if(@is_array(getimagesize($profile))){	
 	$agentcell1->addImage($profile,array('width' => 100, 'height' => 100));
-	
+	}
 	$namecell1=$travelagenttable->addCell(5000);
-	$namecell1->addText("YOUR TRAVEL AGENT IN $travelagent->place",array('name' => 'Times New Roman' ,'size' => 9 ,'color' => 'gray','bold' => true));	
-	$namecell1->addText($travelagent->name,array('name' => 'Times New Roman' ,'size' => 12 ,'color' => 'gray'));
+	$namecell1->addText(htmlspecialchars("YOUR TRAVEL AGENT IN $travelagent->place"),array('name' => 'Times New Roman' ,'size' => 9 ,'color' => 'gray','bold' => true));	
+	$namecell1->addText(htmlspecialchars($travelagent->name),array('name' => 'Times New Roman' ,'size' => 12 ,'color' => 'gray'));
+	if(@is_array(getimagesize($logo))){	
 	$namecell1->addImage($logo,array('width' => 115, 'height' => 28));
+	}	
+	
 	}
    $travalagentsection->addFooter()->addText('');
 	
@@ -801,8 +830,9 @@ function fullpage($phpWord,$value)
         'footerHeight' => 0,
     )
     );
+	if(@is_array(getimagesize($img1))){
 	$fullpagesection->addImage($img1,array('width' =>720, 'height' =>720));	
-	
+	}
 }
 
 function  emptypage($phpWord,$value)
@@ -841,8 +871,9 @@ function  emptypage($phpWord,$value)
     $footertable->addRow();
    $logo=url('/').'/'.$value->upload_path.trim($value->signature);
 	$logo=str_replace(" ","%20","$logo");
+	if(@is_array(getimagesize($logo))){
     $footertable->addCell(2250)->addImage($logo,array('width' => 150, 'height' => 50)); 
-		
+	}	
 
 
 }
@@ -878,14 +909,15 @@ function  emptypagetitle($phpWord,$value)
     //$emptypagetable=$emptypagesection->addTable( array('bgColor' => '66BBFF'));
 	$emptypagetable->addRow(10810);
 	$emptypagecell=$emptypagetable->addcell(10800,array('valign' => 'center'));
-	$emptypagecell->addText("$value->title",array('name' =>'Times New Roman', 'size' => 48.5, 'bold' => true, 'align' =>'right'));	
+	$emptypagecell->addText(htmlspecialchars("$value->title"),array('name' =>'Times New Roman', 'size' => 48.5, 'bold' => true, 'align' =>'right'));	
 	
 	$footertable=$emptypagesection->addFooter()->addTable();
     $footertable->addRow();
     $logo=url('/').'/'.$value->upload_path.trim($value->signature);
 	$logo=str_replace(" ","%20","$logo");
+	if(@is_array(getimagesize($logo))){
     $footertable->addCell(2250)->addImage($logo,array('width' => 150, 'height' => 50)); 
-
+	}
 }	
 	
 function  contentonly($phpWord,$value)
@@ -909,13 +941,13 @@ function  contentonly($phpWord,$value)
    );
 	$contenttable=$contentonlysection->addTable();
 	$contenttable->addRow();	
-	$contenttable->addCell(3000,array('valign' => 'top'))->addText($value->title,array('name' => 'Times New Roman' ,'size' => 22.5 ,'color' => 'gray','bold' => true));
+	$contenttable->addCell(3000,array('valign' => 'top'))->addText(htmlspecialchars($value->title),array('name' => 'Times New Roman' ,'size' => 22.5 ,'color' => 'gray','bold' => true));
 	
 
 	
 	$description=$contenttable->addCell(7800);
 	for ($i = 0; $i < sizeof($textlines); $i++) {
-    $description->addText($textlines[$i],array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
+    $description->addText(htmlspecialchars($textlines[$i]),array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
 	
 	}
 	
@@ -923,8 +955,9 @@ function  contentonly($phpWord,$value)
     $footertable->addRow();
     $logo=url('/').'/'.$value->upload_path.trim($value->logo);
 	$logo=str_replace(" ","%20","$logo");
+	if(@is_array(getimagesize($logo))){
     $footertable->addCell(2250)->addImage($logo,array('width' => 150, 'height' => 50)); 
-
+	}
 }
 
 function toptitlecontent($phpWord,$value)
@@ -952,10 +985,10 @@ function toptitlecontent($phpWord,$value)
 	$contenttable->addRow();	
 	$contenttable->addCell(2000);
 	$contentcell=$contenttable->addCell(8800);
-	$contentcell->addText($value->title,array('name' => 'Times New Roman' ,'size' => 22.5 ,'color' => 'gray','align' =>'right','bold' => true));
+	$contentcell->addText(htmlspecialchars($value->title),array('name' => 'Times New Roman' ,'size' => 22.5 ,'color' => 'gray','align' =>'right','bold' => true));
 	$contentcell->addTextbreak(2);
 	for ($i = 0; $i < sizeof($textlines); $i++) {
-    $contentcell->addText($textlines[$i],array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
+    $contentcell->addText(htmlspecialchars($textlines[$i]),array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
 	
 	}
 	
@@ -963,8 +996,9 @@ function toptitlecontent($phpWord,$value)
     $footertable->addRow();
     $logo=url('/').'/'.$value->upload_path.trim($value->logo);
 	$logo=str_replace(" ","%20","$logo");
+	if(@is_array(getimagesize($logo))){
     $footertable->addCell(2250)->addImage($logo,array('width' => 150, 'height' => 50)); 
-
+	}
 
 }
 
@@ -1002,7 +1036,7 @@ function summerypage($phpWord,$value,$data)
 	$textcell->addText('Distinguished guests:',array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
 	
 	$textcell1=$summerytable->addCell(3000);
-	$textcell1->addText($value->distinguished_guests,array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
+	$textcell1->addText(htmlspecialchars($value->distinguished_guests),array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
 	
 	$summerytable->addRow();
 	
@@ -1010,7 +1044,7 @@ function summerypage($phpWord,$value,$data)
 	$textcell2->addText('Agency:',array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
 	
 	$textcell3=$summerytable->addCell(3000);
-	$textcell3->addText($value->agency,array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
+	$textcell3->addText(htmlspecialchars($value->agency),array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
 	
 	$summerytable->addRow();
 	
@@ -1018,7 +1052,7 @@ function summerypage($phpWord,$value,$data)
 	$textcell4->addText('Agent:',array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
 	
 	$textcell5=$summerytable->addCell(3000);
-	$textcell5->addText($value->agent,array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
+	$textcell5->addText(htmlspecialchars($value->agent),array('name' => 'Times New Roman' ,'size' => 10.5 ,'color' => 'gray'));
 	
 	$summerytable->addRow(500);
 	$cell1=$summerytable->addCell(5400,array('gridSpan' => 2 ,'valign' => 'center'));
@@ -1058,12 +1092,12 @@ function summerypage($phpWord,$value,$data)
 		
 	foreach($data as $pages)
 	{
-	if ($pages->show_summery === 1)
+	if ($pages->show_summery == 1)
 	{
 	$page=$pages->content_order+2;	
 	$summerytable->addRow();
 		
-	$summerytable->addCell(3000)->addText("$pages->title",array('name' => 'Times New Roman' ,'size' => 11 ,'color' => 'gray'));
+	$summerytable->addCell(3000)->addText(htmlspecialchars("$pages->title"),array('name' => 'Times New Roman' ,'size' => 11 ,'color' => 'gray'));
 	$summerytable->addCell(3000)->addText("Page  $page",array('name' => 'Times New Roman' ,'size' => 11 ,'color' => 'gray'));	
 	}
 	}	
@@ -1074,9 +1108,9 @@ function summerypage($phpWord,$value,$data)
 	$textcell=$footertable->addCell(8250);
 	$textcell->addtext("Date of release:$releasedate",array('name' => 'Times New Roman' ,'size' => 11 ,'color' => 'gray'));	
 	$imgcell=$footertable->addCell(2500);
-	
+	if(@is_array(getimagesize($signature))){
 	$imgcell->addImage($signature,array('width' => 150, 'height' => 50)); 
-	
+	}
 	 
 
 

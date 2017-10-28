@@ -51,8 +51,16 @@ class PdfPreviewPdfController extends Controller
 	
 	public function generatePdfPreview($id)
 	{
+		try{
 		$id=$this->decodeUrlData($id);
-		
+		$publicpath=public_path();
+		$filename=base64_encode($id);	
+		if (!(file_exists($publicpath.'/pdf/'.$filename.'.pdf'))){
+			DB::table('files_directory')
+            ->where('id', $id)
+            ->update(['pdf_name' => '0']);		
+		}
+			
 		$data = DB::table('files_directory')
             ->join('pdf_content', 'files_directory.id', '=', 'pdf_content.file_id')
             ->join('pdf_common_fields', 'files_directory.id', '=', 'pdf_common_fields.file_id')
@@ -196,15 +204,29 @@ class PdfPreviewPdfController extends Controller
 		{
 			
 		}
+		$publicpath=public_path();
+		$filename=base64_encode($id);	
+		//dd($publicpath.'/pdf/'.$file_name.'.pdf');	
 		//dd($appendData);
-		return  PDF::loadView('pdf.pdfview',['data'=>$appendData])->stream();
+		 PDF::loadView('pdf.pdfview',['data'=>$appendData])->save($publicpath.'/pdf/'.$filename.'.pdf');
 		//		return view ('pdf.pdfview',['data'=>$appendData]);
 		//return view('pdf.pdfview',['data'=>$appendData]);
+        
+		if (file_exists($publicpath.'/pdf/'.$filename.'.pdf')){
+			DB::table('files_directory')
+            ->where('id', $id)
+            ->update(['pdf_name' => '1']);		
+		}
 
 		
 		//dd($data);
+		}
+		catch(\Exception $e){
+		$errorMessage="Unable to generate document, Because invalid arguments or invalid image names";
+		return Redirect::back()->withErrors(['message', "$errorMessage"]);
 		
-
+		}
+ 
 		
 	}
 	

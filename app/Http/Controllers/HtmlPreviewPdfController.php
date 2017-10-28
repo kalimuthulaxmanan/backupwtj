@@ -50,6 +50,19 @@ class HtmlPreviewPdfController extends Controller
 	
 	public function generateHtmlPreview($id)
 	{
+		try{
+			$url= url('/generatePdfPreview').'/'.$id;
+		    $ch = curl_init();
+			$timeout = 5;
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,false);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,false);
+			curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+			$data = curl_exec($ch);
+			curl_close($ch);
 		
 		$id=$this->decodeUrlData($id);
 		
@@ -285,6 +298,11 @@ $galleries = DB::table('files_directory')
 
 		
 		//dd($data);
+		}
+		catch (\Exception $e){
+		$errorMessage="Unable to generate document, Because invalid arguments or invalid image names";
+		return Redirect::back()->withErrors(['message', "$errorMessage"]);
+		}
 		
 
 		

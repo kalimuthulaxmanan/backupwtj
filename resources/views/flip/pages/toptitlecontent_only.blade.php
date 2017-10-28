@@ -5,6 +5,7 @@
 
 	<div class="right-content">
 		<h1>{{$data->title}}</h1>
+		<?php $data->content=strip_tags($data->content, '<br><b><p><a>\n');    ?>
 		<p>{!!nl2br($data->content)!!}</p> 
 	</div>	
 </div>

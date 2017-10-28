@@ -10,11 +10,14 @@
                                     <p class="category">Details about the Files</p>
                                 </div>-->
                                 <div class="card-content table-responsive">
+									<?php if($errors->any()): ?>
+									<body onload="demo.showNotification('top','center',4,'Unable to generate document, because of invalid arguments or invalid image names')"/>
+                                      <?php endif; ?>
 									
 									<!-- PDF view start -->
-
+                                    <?php  $publicpath=public_path(); $file_path = $publicpath.'/pdf/'.$fileid.'.pdf'; ?>
 									<a href="<?php echo e(url('generateDoc')); ?>/<?php echo e($fileid); ?>"> <button type="button"  class="btn btn-primary " target="_blank">Word</button></a>
-									<a href="<?php echo e(url('/generatePdfPreview')); ?>/<?php echo e($fileid); ?>" target="_blank"> <button type="button" class="btn btn-primary ">PDF</button></a>	
+									<a href="<?php echo e(url('/download')); ?>/<?php echo e($fileid); ?>.pdf"> <button  <?php if (!(file_exists($file_path))){ echo 'disabled';} ?> type="button" class="btn btn-primary ">PDF</button></a>	
 									<a href="<?php echo e(url('/flipbook')); ?>/<?php echo e($fileid); ?>" target="_blank"> <button type="button" class="btn btn-primary ">Flip Book</button></a>	
                                     <input type="hidden" name="uploadpath" value="<?php echo $uploadpath; ?>"  id="uploadpath"/>
 									<a href="<?php echo e(url('/pdflist')); ?>"> <button type="button" class="btn btn-primary ">Back</button></a>
@@ -26,7 +29,7 @@
 									</div>
 
 									<a href="<?php echo e(url('generateDoc')); ?>/<?php echo e($fileid); ?>"> <button type="button"  class="btn btn-primary " target="_blank">Word</button></a>
-									<a href="<?php echo e(url('/generatePdfPreview')); ?>/<?php echo e($fileid); ?>" target="_blank"> <button type="button" class="btn btn-primary ">PDF</button></a>	
+									<a href="<?php echo e(url('/download')); ?>/<?php echo e($fileid); ?>.pdf"> <button  <?php if (!(file_exists($file_path))){ echo 'disabled';} ?> type="button" class="btn btn-primary ">PDF</button></a>		
 									<a href="<?php echo e(url('/flipbook')); ?>/<?php echo e($fileid); ?>" target="_blank" > <button type="button" class="btn btn-primary ">Flip Book</button></a>		    
 
 									<!-- PDF view end -->

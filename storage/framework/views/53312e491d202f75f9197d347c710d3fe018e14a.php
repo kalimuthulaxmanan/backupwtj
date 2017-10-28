@@ -6,7 +6,7 @@
 				<table class="itinerary" style="padding-left: 0 !important">
 					<?php foreach($data->itineraryData as $itineraryValue): ?>	
 					<tr>
-						<td style="width:40;padding-bottom:10px;vertical-align:top;line-height:20px;">
+						<td style="width:60;padding-bottom:10px;vertical-align:top;line-height:20px;">
 							<span><b><?php $dates="$itineraryValue->event_date";$date=date_create_from_format("Y-m-d","$dates");
 							echo date_format($date,"F d"); ?>:</b></span>
 						</td>

@@ -58,8 +58,8 @@ return [
             'driver' => 's3',
             'key' => 'AKIAIK6VZUVMX4OHU64A',
             'secret' => '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',
-            'region' => 'us-east-2',
-            'bucket' => 'kenvisbuck',
+            'region' => 'ap-northeast-1',
+            'bucket' => 'soske-images',
         ],
 
     ],

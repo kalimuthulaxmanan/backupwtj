@@ -6,6 +6,7 @@
 			</div>
 			<div class="col-md-8 col-sm-8 col-xs-12 mt-25 sales-content">
 				<h1 class="font-36">{{$data->title}}</h1>
+				<?php $data->content=strip_tags($data->content, '<br><b><p><a>\n');    ?>
 				<p>{!!nl2br($data->content)!!}</p>
 			</div> 
 		</div>               

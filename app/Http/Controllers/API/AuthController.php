@@ -12,6 +12,9 @@ use DB;
 use ZipArchive;
 use File;
 use Storage;
+use App\Http\Controllers\ImportExcelDataController;
+use App\Http\Controllers\ValidateExcelDataController;
+use App\Http\Controllers\PdfController;
 class AuthController extends Controller
 { 
 	
@@ -57,7 +60,8 @@ class AuthController extends Controller
 	
 	public function client_list(Request $request)
 	{
-				$data=$request->all();
+				$data=$request->json()->all();
+		
 		$param=['api_token'];
 
 		$validationError=$this->validationInput($data,$param);
@@ -86,10 +90,9 @@ class AuthController extends Controller
 	
 	public function checkUser(Request $request)
 	{
-		
 
 		//$this->saveRegister($request->all());
-		$data=$request->all();
+		$data=$request->json()->all();
 		$param=['client_name','api_token','file_name'];
 
 		$validationError=$this->validationInput($data,$param);
@@ -108,18 +111,22 @@ class AuthController extends Controller
 
 		}
 		
-		//$staticPath=env('TEMP_UPLOAD_PATH').$data['file_name'];
-		
-		
-		
-			$exists = Storage::disk('s3')->exists($data['file_name']);
-		if(!$exists)
-		{
-		 
-			return response()->json(['Error'=>'File not available in S3 bucket.'],422);
+	//	$staticPath=env('TEMP_UPLOAD_PATH').'';
 
-			
-		}
+		   $filename=explode("/",$data['file_name']);
+		 
+		   foreach($filename as $filenames){
+		    $data['file_name']=$filenames;
+		   }
+
+        $url= Storage::disk('s3')->url($data['file_name']);
+
+        try {
+            fopen($url, 'r');
+        }
+        catch (\Exception $e){
+            return response()->json(['Error'=>'File not available in S3 bucket.'],422);
+        }
 		
 		
 		 $user = DB::table('users')->where('email', $data['client_name'])->first();
@@ -128,10 +135,27 @@ class AuthController extends Controller
 		if($user)
 		{
 			$data=['user_id'=>$user->id,'upload_path'=>$returnDirData['upload_path'],'upload_file'=>$data['file_name'],'file_name'=>$returnDirData['file_name'],'status'=>0,'created_at'=>date('Y-m-d H:i:s')];
-			$status=DB::table('files_directory')->insert($data);
-			
-			 $this->callBackgroundUrl();
-			
+			$status=DB::table('files_directory')->insertGetId($data);
+				
+			 $datastatus=$this->callBackgroundUrl();
+			if(is_array($datastatus))
+			 {
+			 $i=1;
+			 $errormsg='please correct the following errors and try again <br />';	 
+			 foreach($datastatus as $datastatuss)
+			 { 
+			 $errormsg.=$i.'. '.$datastatuss."<br />";
+			 $i++;
+			 }
+			 DB::table('files_directory')->where('id',$status)->delete(); 
+			 return response()->json(['Invaildfile'=>$errormsg],405);	 
+			 }
+		     if($datastatus== 'invalidfile'){
+				DB::table('files_directory')->where('id',$status)->delete(); 
+			 return response()->json(['Invaildfile'=>'Some of the arguments in data sheet are invalid. Please correct it and try again.'],405);
+			 }
+				 	
+		
 			return response()->json(['Success'=>'Data submission success'],200);
 		}
 		else
@@ -142,9 +166,27 @@ class AuthController extends Controller
 			$status=DB::table('users')->insertGetId($dataImport);
 			$filedata=['user_id'=>$status,'upload_path'=>$returnDirData['upload_path'],'upload_file'=>$data['file_name'],'file_name'=>$returnDirData['file_name'],'status'=>0,'created_at'=>date('Y-m-d H:i:s')];
 
-			$status=DB::table('files_directory')->insert($filedata);
+			$status=DB::table('files_directory')->insertGetId($filedata);
 			
-			 $this->callBackgroundUrl();
+			 $datastatus=$this->callBackgroundUrl();
+			 if(is_array($datastatus))
+			 {
+			 $i=1;
+			 $errormsg='please correct the following errors and try again <br />';	 
+			 foreach($datastatus as $datastatuss)
+			 { 
+			 $errormsg.=$i.'. '.$datastatuss."<br />";
+			 $i++;
+			 }
+			 DB::table('files_directory')->where('id',$status)->delete(); 
+			 return response()->json(['Invaildfile'=>$errormsg],405);	 
+			 }
+		     if($datastatus== 'invalidfile'){
+			 DB::table('files_directory')->where('id',$status)->delete(); 	 
+			 return response()->json(['Invaildfile'=>'Some of the arguments in data sheet are invalid. Please correct it and try again.'],405);
+			 }
+			 
+	
 			return response()->json(['Success'=>'Data submission success'],200);
 		}
 		
@@ -155,7 +197,40 @@ class AuthController extends Controller
 	private function callBackgroundUrl()
 	{
 		
-			$url=url('backgroundWork'); //die;
+		
+		$importdata=DB::table('files_directory')->where('status', 0)->get();
+		//print_r(file_get_contents('http://kenhike.com//robots.txt'));
+		
+		foreach($importdata as $key=>$value)
+		{  
+			
+			$ValidateExcelData=new ValidateExcelDataController();
+		    try{
+			$errors=$ValidateExcelData->importExcel($value);
+			$errors = array_filter($errors);	
+			if (!empty($errors)) {
+            return $errors; 
+			}	
+			}catch(\Exception $e){	
+			 return 'invalidfile';
+			}
+				
+			
+			$ImportExcelData=new ImportExcelDataController();
+		    try{
+			$ImportExcelData->importExcel($value);
+			
+			}catch(\Exception $e){
+			  
+			 return 'invalidfile';
+			} 	  
+			 
+			DB::table('files_directory')->where('id', $value->id)->update(array('status' => 1));
+		
+			
+		}
+		
+		/*	$url=url('backgroundWork'); //die;
 			//echo $url;die;
 			$curl_handle=curl_init();
 			curl_setopt($curl_handle,CURLOPT_URL, $url);
@@ -163,19 +238,26 @@ class AuthController extends Controller
 			curl_setopt($curl_handle,CURLOPT_TIMEOUT,2);
 			$buffer = curl_exec($curl_handle);
 			//	$httpcode = curl_getinfo($curl_handle, CURLINFO_HTTP_CODE);
-			curl_close($curl_handle);
+			curl_close($curl_handle); */
 		
 	}
 	
 	private function downloadZipFiles($directoryName,$dst,$fileName)
 	{
-		$exists = Storage::disk('s3')->exists($fileName);
-		if($exists)
-		{
-		  $contents = Storage::disk('s3')->get($fileName);
-		
-		file_put_contents($dst.$directoryName.'/'.$directoryName.".zip",$contents);	
-		}
+        $url= Storage::disk('s3')->url($fileName);
+
+        try {
+            file_put_contents($dst . $directoryName . '/' . $directoryName . ".zip", fopen($url, 'r'));
+        } catch (\Exception $e){
+            return response()->json(['Error'=>'File not available in S3 bucket.'],422);
+        }
+//        $exists = Storage::disk('s3')->exists($fileName);
+//		if($exists)
+//		{
+//		  $contents = Storage::disk('s3')->get($fileName);
+//
+//		file_put_contents($dst.$directoryName.'/'.$directoryName.".zip",$contents);
+//		}
 
 		
 		//return true;

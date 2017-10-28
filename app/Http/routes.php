@@ -28,6 +28,25 @@
 	$this->get('/backgroundWork', 'ImportExcelDataController@backgroundWork');
 	$this->get('/flipbook/{id}', 'FlipbookDataController@flipbook');
     $this->post('/flipbook/fetchFlipData', 'FlipbookDataController@fetchFlipData');
+    Route::get('/download/{filename}', function($filename)
+     {
+	 $publicpath=public_path();
+		
+	 $file_path = $publicpath.'/pdf/'.$filename;
+    if (file_exists($file_path))
+    {
+        // Send Download
+        return Response::download($file_path, $filename, [
+            'Content-Length: '. filesize($file_path)
+        ]);
+    }
+    else
+    {
+        $errorMessage="File does not exist unable generate file";
+		return Redirect::back()->withErrors(['message', "$errorMessage"]);
+    }
+	
+	});
 
 
 	
@@ -40,7 +59,7 @@
    	$this->get('/generateDoc/{id}', 'DocController@generateDoc');
 
 
-	$this->get('/generateHtmlPreview/{id}', 'HtmlPreviewPdfController@generateHtmlPreview');
+	$this->get('/generateHtmlPreview/{id}', 'HtmlPreviewPdfController@generateHtmlPreview')->middleware('revalidate');
 	$this->get('/generatePdfPreview/{id}', 'PdfPreviewPdfController@generatePdfPreview');
 
 	
@@ -63,7 +82,7 @@
 	$this->post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
 	$this->post('password/reset', 'Auth\PasswordController@reset');
 	
-	$this->get('/dashboard', 'DashboardController@index');
+	$this->get('/dashboard', 'DashboardController@index')->middleware('revalidate');
 
 
 	route::get('loginsample','Auth\AuthController@check');
@@ -94,7 +113,7 @@
 
 
 	//viewpdf file list
-	$this->get('/pdflist', 'PdfController@pdflist');
+	$this->get('/pdflist', 'PdfController@pdflist')->middleware('revalidate');
 	$this->get('/fileGenerate', 'PdfController@fileGenerate');
 	$this->get('/generate', 'PdfController@generate');
 	$this->get('/fileview', 'PdfController@fileview');
@@ -102,7 +121,8 @@
 	$this->get('/listdelete/{id}','PdfController@listdelete');
 	$this->post('/changeimage/{id}', 'PdfController@changeimage');
 	$this->post('/galleryupload/{id}', 'PdfController@galleryupload');	
-
+    $this->get('/form','FormController@index');
+    $this->post('/getzip','FormController@checkUser');
 	//Route::post('/galleryupload/{id}', 'PdfController@galleryupload');
 	$this->get('/emailcheck/{email}', 'DashboardController@checkemail');
 	$this->get('/phonecheck/{phone}', 'DashboardController@checkphone');

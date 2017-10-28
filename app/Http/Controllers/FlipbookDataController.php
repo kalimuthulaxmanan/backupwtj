@@ -231,7 +231,7 @@ class FlipbookDataController extends BaseController
 	}
 	
 	public function flipbook($id)
-	{
+	{   try{
 		$id=$this->decodeUrlData($id);
 		$filepage = DB::table('pdf_content')->where('file_id',$id)->count();
 		
@@ -249,6 +249,11 @@ class FlipbookDataController extends BaseController
 		//dd(Session::all());die;
 		//echo "hai";
 		return view('flip.flipbook',['id'=>$id,'filepagesCount'=>$filepagesCount]);
+	}
+	 catch(\Exception $e){
+	    $errorMessage="Unable to generate document, Because invalid arguments or invalid image names";
+		return Redirect::back()->withErrors(['message', "$errorMessage"]);
+	 }
 	}
 	
 	
