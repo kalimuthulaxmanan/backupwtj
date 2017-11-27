@@ -124,8 +124,8 @@ class ValidateExcelDataController extends BaseController
 		
 		foreach($data as $key => $value){
 		if($key=='title'){
-		  if(strlen($value) > 45){
-			 $msg='"HEADING / TITLE" field exceeds the 45 characters limit, please make it correct in  s.no '.$data['content_order'];
+		  if(strlen($value) > 55){
+			 $msg='"HEADING / TITLE" field exceeds the 55 characters limit, please make it correct in  s.no '.$data['content_order'];
 			 $this->error[]=$msg;  
 		  }
 		}
@@ -419,9 +419,9 @@ class ValidateExcelDataController extends BaseController
 			
 		 elseif ($key=='country' || $key == 'place')
 		 {
-			if(preg_match('/\\d/', $value) > 0 || strlen($value) > 9 )
+			if(preg_match('/\\d/', $value) > 0 || strlen($value) > 20 )
 			{
-			  $msg=	'"'.$key.'" field must be string and less than 9 character'; 
+			  $msg=	'"'.$key.'" field must be string and less than 20 character'; 
 			   $this->error[]=$msg;		
 			}
 		 

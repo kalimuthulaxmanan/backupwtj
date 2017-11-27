@@ -3,7 +3,7 @@
 		<tr>
             <td style="padding-left:15px;">
 				<p style="margin-top:22px;"><b style="font-weight:600 !important;font-size:15px;color:#000">{{$data->itinerary_date_with_title}}</b></p>
-                <h1 style="font-size:50px;font-weight: 800px !important;line-height: 40px;margin-top: 10px;color:#000">{{$data->title}}</h1><br /><br />
+                <h1 style="font-size:40px;font-weight: 700px !important;line-height: 40px;margin-top: 10px;color:#000">{!!ucfirst(strtolower(mb_substr($data->title, 0,55)))!!}</h1><br /><br />
             </td>
 		</tr>
 	</table>
@@ -16,6 +16,7 @@
             </td>
             <td style="width:70%;vertical-align:top; padding-right: 25px;">                
                 <span class="padd-left">
+				   <?php $data->content=strip_tags($data->content, '<br><b><p><a>\n');?>	
                    {!!nl2br($data->content)!!}
                 </span><br />
             </td>

@@ -10,7 +10,7 @@
 		<img src="{{ url('/') }}/<?php echo $data->upload_path; ?><?php echo trim($data->logo); ?>" alt="" title="" />
 	</div>
 	<div class="right">
-		<h1 style="font-size:59px;"><?php echo $data->country; ?></h1>
+		<h1 style="font-size:43px;"><?php echo $data->country; ?></h1>
 		<span class="date"><?php  $dates="$data->start_date"; $date=date_create_from_format("Y-m-d","$dates");
 echo date_format($date,"M d, Y");?> - <?php $datesend="$data->end_date"; $date=date_create_from_format("Y-m-d","$datesend");echo date_format($date,"M d, Y");?></span>
 	</div>

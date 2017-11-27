@@ -25,7 +25,7 @@
 						<tr>
 						<td><?php echo e($pages->title); ?></td>
 						<td style="text-align: left; width: 60px;">page <?php
-						$num = $pages->content_order+2;
+						$num = $pages->content_order+session('pageadd');
 						$num_padded = sprintf("%02d", $num);
 						echo $num_padded;
 						?></td>

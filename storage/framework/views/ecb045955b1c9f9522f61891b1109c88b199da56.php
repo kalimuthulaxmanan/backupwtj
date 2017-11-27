@@ -9,7 +9,7 @@
 
 <div class="table-contents text-center">  
 			<div class="table-header">
-				<p>  
+				<p style="font-size:12px">  
 				Distinguished guests:<?php echo e($data->distinguished_guests); ?> <br>
 				Agency:<?php echo e($data->agency); ?><br>
 				Agent: <?php echo e($data->agent); ?>
@@ -28,11 +28,11 @@
 						<?php foreach($data1 as $pages): ?>
 					    
 					  	<?php if($pages->show_summery == 1): ?>
-					    <?php if($i < 10){ ?> 
+					    <?php if($i < 9){ ?> 
 						<tr>
 						<td><a href="#"><?php echo mb_substr($pages->title, 0,23); ?></a></td>
 						<td>Page <?php
-						$num = $pages->content_order+2;
+						$num = $pages->content_order+session('pageadd');
 						$num_padded = sprintf("%02d", $num);
 						echo $num_padded;
 						?></td>

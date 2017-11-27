@@ -5,7 +5,7 @@
 			<div class="col-md-4 col-sm-4 col-xs-12">
 			</div>
 			<div class="col-md-8 col-sm-8 col-xs-12 mt-25 sales-content">
-				<h1 class="font-36"><?php echo e($data->title); ?></h1>
+				<h1 class="font-36" style="font-size:34px;"><?php echo e($data->title); ?></h1>
 				<?php $data->content=strip_tags($data->content, '<br><b><p><a>\n');    ?>
 				<p><?php echo nl2br($data->content); ?></p>
 			</div> 

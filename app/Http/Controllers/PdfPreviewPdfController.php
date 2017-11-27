@@ -84,7 +84,26 @@ class PdfPreviewPdfController extends Controller
 					
 						$appendData.=$this->loadTemplate('frontpage',$value);
 						$appendData.=$this->loadTemplate('emptypage',$value);	
-						$appendData.=$this->loadTemplate('summarypage',$value,$data);	
+						$summarycount = DB::table('files_directory')
+							->join('pdf_content', 'files_directory.id', '=', 'pdf_content.file_id')
+							->where([['files_directory.id',$id],['show_summery',1]])->count();
+						$loopcount=round($summarycount/10);
+						$pagno=$loopcount-1;
+						$mulpage=$loopcount*2;
+		                session(['pageadd' => $mulpage]);
+						for($i=0;$i<$loopcount;$i++){
+						$s=$i*10;	
+						$summarydata = DB::table('files_directory')
+							->join('pdf_content', 'files_directory.id', '=', 'pdf_content.file_id')
+							->join('pdf_common_fields', 'files_directory.id', '=', 'pdf_common_fields.file_id')
+							->where([['files_directory.id',$id],['show_summery',1]])->orderby('pdf_content.content_order','asc')->skip($s)->take(10)->get();
+						if($i==0){	
+						$appendData.=$this->loadTemplate('summarypage',$value,$summarydata);
+						}else{
+						$appendData.=$this->loadTemplate('emptypage',$value);	
+						$appendData.=$this->loadTemplate('summarypageext',$value,$summarydata);	
+						}
+						}	
 					break;	
 
 					case "itinerary":

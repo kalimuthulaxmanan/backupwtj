@@ -22,13 +22,24 @@ class FlipbookDataController extends BaseController
 	{
 		$data=$request->all();
 		
-		if($data['page']==1 || $data['page']==2 || $data['page']==3)
+		$summarycount = DB::table('files_directory')
+							->join('pdf_content', 'files_directory.id', '=', 'pdf_content.file_id')
+							->join('pdf_common_fields', 'files_directory.id', '=', 'pdf_common_fields.file_id')
+							->where([['files_directory.id',$data['userId']],['show_summery',1]])->count();
+		$loopcount=round($summarycount/10);
+		$mul=$loopcount*2;
+		$pagediv=$mul-1+2;
+		//$pagediv=$loopcount*2;
+		$pagno=$loopcount-1;
+		session(['pageadd' => $pagno]);
+		if($data['page']<=$pagediv)
 		{
 			$page=1;
 		}
 		else
-		{
-			$page=$data['page']-2;
+		{   $mulpage=$loopcount*2;
+		    session(['pageadd' => $mulpage]);
+			$page=$data['page']-$mulpage;
 		}
 		
 		$dataSql = DB::table('files_directory')
@@ -66,20 +77,26 @@ class FlipbookDataController extends BaseController
 							$appendData=$this->loadTemplate('emptypage',$value);
 						}
 						else
-						{  
-							
-									$dataSql1 = DB::table('files_directory')
-            ->join('pdf_content', 'files_directory.id', '=', 'pdf_content.file_id')
-            ->join('pdf_common_fields', 'files_directory.id', '=', 'pdf_common_fields.file_id')
-			->join('pdf_templates', 'pdf_templates.id', '=', 'pdf_content.template_id')
-            ->select('files_directory.*', 'pdf_common_fields.*', 'pdf_content.*', 'pdf_templates.name')
-			->orderby('pdf_content.content_order','asc')
-			->where('files_directory.id',$data['userId'])
-
-            ->get();
+						{
+						$i=$data['page']-1-3;
+						$s=$i*10;	
+						$summarydata = DB::table('files_directory')
+							->join('pdf_content', 'files_directory.id', '=', 'pdf_content.file_id')
+							->join('pdf_common_fields', 'files_directory.id', '=', 'pdf_common_fields.file_id')
+							->where([['files_directory.id',$data['userId']],['show_summery',1]])->orderby('pdf_content.content_order','asc')->skip($s)->take(10)->get();	
 							
 							$value->page= $data['page']; 
-							$appendData=$this->loadTemplate('summarypage',$value,$dataSql1);	
+							if($data['page']==3){
+							$appendData=$this->loadTemplate('summarypage',$value,$summarydata);	
+							}else{
+							if ($data['page'] % 2 != 0) {	
+							$appendData=$this->loadTemplate('summarypageext',$value,$summarydata);
+							}else{
+							  $value->page= $data['page'];
+							  $appendData=$this->loadTemplate('emptypage',$value);
+							}
+								
+							}	
 							
 						}
                      
@@ -234,15 +251,20 @@ class FlipbookDataController extends BaseController
 	{   try{
 		$id=$this->decodeUrlData($id);
 		$filepage = DB::table('pdf_content')->where('file_id',$id)->count();
-		
-		$filepagesCount=$filepage+2;
+		$summarycount = DB::table('files_directory')
+							->join('pdf_content', 'files_directory.id', '=', 'pdf_content.file_id')
+							->join('pdf_common_fields', 'files_directory.id', '=', 'pdf_common_fields.file_id')
+							->where([['files_directory.id',$id],['show_summery',1]])->count();
+		$loopcount=round($summarycount/10);
+		$muli=$loopcount*2;
+		$filepagesCount=$filepage+$muli;
 		if($filepagesCount%2==0)
 		{
-		$filepagesCount=$filepage+2;	
+		$filepagesCount=$filepagesCount;	
 		}
 		else
 		{
-	    $filepagesCount=$filepage+3;
+	    $filepagesCount=$filepagesCount+1;
 		}
 		
 		//dd($request->all());

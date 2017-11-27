@@ -6,6 +6,7 @@
 				<h1 class="font-28"><?php echo e($data->title); ?></h1>     
 			</div>
 			<div class="col-md-8 col-sm-8 col-xs-12 mt-25 sales-content">
+				<?php $data->content=strip_tags($data->content, '<br><b><p><a>\n');    ?>
 				<p><?php echo nl2br($data->content); ?></p>				
 			</div> 
 		</div>               

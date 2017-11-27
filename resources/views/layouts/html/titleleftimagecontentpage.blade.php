@@ -10,7 +10,7 @@
 		<div class="col-md-12">
 			<div class="title">     
 				<p class="mt-25"><b>{{$data->itinerary_date_with_title}}</b></p>
-				<h1 class="left-title">{{$data->title}}</h1>
+				<h1 class="left-title" style="font-size:53px">{{$data->title}}</h1>
 			</div>
 			<div class="col-md-4 col-sm-4 col-xs-12">  
 				@foreach($data->contentImages as $contentImage )

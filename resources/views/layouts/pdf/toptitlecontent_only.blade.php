@@ -14,6 +14,7 @@
             </td>
             <td style="width:70%; padding-right:15px;" class="bold">
 				<h1 style="font-size: 30px;margin-top:0;margin-bottom:15px; padding-top:10px;color:#000;">{{$data->title}}</h1>
+				<?php $data->content=strip_tags($data->content, '<br><b><p><a>\n');?>	
 				<p>{!!nl2br($data->content)!!}</p>
             </td>
 		</tr>

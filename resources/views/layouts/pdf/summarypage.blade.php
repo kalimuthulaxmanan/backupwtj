@@ -20,7 +20,7 @@
 						<tr>
 						<td style="padding-left: 180px;width: 50%;font-size: 15px;line-height: 20px;">{{ $pages->title }}</td>
 						<td style="width: 30%;font-size: 15px;line-height: 20px;">page <?php
-						$num = $pages->content_order+2;
+						$num = $pages->content_order+session('pageadd');
 						$num_padded = sprintf("%02d", $num);
 						echo $num_padded;
 						?></td>
