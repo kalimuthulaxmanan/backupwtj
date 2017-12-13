@@ -8,40 +8,40 @@
 </style>
 
 <div class="table-contents text-center">  
-			<div class="table-header">
-				<p style="font-size:12px">  
-				Distinguished guests:<?php echo e($data->distinguished_guests); ?> <br>
-				Agency:<?php echo e($data->agency); ?><br>
-				Agent: <?php echo e($data->agent); ?>
+	<div class="table-header">
+		<p style="font-size:12px">  
+		Distinguished guests:<?php echo e($data->distinguished_guests); ?> <br>
+		Agency:<?php echo e($data->agency); ?><br>
+		Agent: <?php echo e($data->agent); ?>
 
-				</p>
-				<h5>
-				Duration: <?php echo e($data->duration_day); ?> day / <?php echo e($data->duration_night); ?> nights<br>
-				Number of Persons:<?php echo e($data->no_of_persons); ?>
+		</p>
+		<h5 style="font-weight:500;color:#555;font-size:14px;">
+		Duration: <?php echo e($data->duration_day); ?> day / <?php echo e($data->duration_night); ?> nights<br>
+		Number of Persons:<?php echo e($data->no_of_persons); ?>
 
-				</h5>
-			</div>
-			<div class="table-body">
-				<h3>Summary</h3>
-				<table class="text-left" style="width: 100%">
-					    <?php $i=0; ?>
-						<?php foreach($data1 as $pages): ?>
-					    
-					  	<?php if($pages->show_summery == 1): ?>
-					    <?php if($i < 9){ ?> 
-						<tr>
-						<td><a href="#"><?php echo mb_substr($pages->title, 0,23); ?></a></td>
-						<td>Page <?php
-						$num = $pages->content_order+session('pageadd');
-						$num_padded = sprintf("%02d", $num);
-						echo $num_padded;
-						?></td>
-						</tr>
-					    <?php $i++; } ?>
-					<?php endif; ?>
-					<?php endforeach; ?>
-				</table>
-			</div>
+		</h5>
+	</div>
+	<div class="table-body">
+		<h3 style="font-size:24px;font-weight:500;">Summary</h3>
+		<table class="text-left" style="width: 100%">
+				<?php $i=0; ?>
+				<?php foreach($data1 as $pages): ?>
+
+				<?php if($pages->show_summery == 1): ?>
+				<?php if($i < 9){ ?> 
+				<tr>
+				<td><a href="#" style="color:#757575;background:none;"><?php echo mb_substr($pages->title, 0,23); ?></a></td>
+				<td>Page <?php
+				$num = $pages->content_order+session('pageadd');
+				$num_padded = sprintf("%02d", $num);
+				echo $num_padded;
+				?></td>
+				</tr>
+				<?php $i++; } ?>
+			<?php endif; ?>
+			<?php endforeach; ?>
+		</table>
+	</div>
 </div>
 <div class="index-footer summary-footer">
 	<div class="left">

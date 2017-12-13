@@ -8,38 +8,38 @@
 </style>
 
 <div class="table-contents text-center">  
-			<div class="table-header">
-				<p style="font-size:12px">  
-				Distinguished guests:{{$data->distinguished_guests}} <br>
-				Agency:{{$data->agency}}<br>
-				Agent: {{$data->agent}}
-				</p>
-				<h5>
-				Duration: {{$data->duration_day}} day / {{$data->duration_night}} nights<br>
-				Number of Persons:{{$data->no_of_persons}}
-				</h5>
-			</div>
-			<div class="table-body">
-				<h3>Summary</h3>
-				<table class="text-left" style="width: 100%">
-					    <?php $i=0; ?>
-						@foreach($data1 as $pages)
-					    
-					  	@if ($pages->show_summery == 1)
-					    <?php if($i < 9){ ?> 
-						<tr>
-						<td><a href="#">{!!  mb_substr($pages->title, 0,23)   !!}</a></td>
-						<td>Page <?php
-						$num = $pages->content_order+session('pageadd');
-						$num_padded = sprintf("%02d", $num);
-						echo $num_padded;
-						?></td>
-						</tr>
-					    <?php $i++; } ?>
-					@endif
-					@endforeach
-				</table>
-			</div>
+	<div class="table-header">
+		<p style="font-size:12px">  
+		Distinguished guests:{{$data->distinguished_guests}} <br>
+		Agency:{{$data->agency}}<br>
+		Agent: {{$data->agent}}
+		</p>
+		<h5 style="font-weight:500;color:#555;font-size:14px;">
+		Duration: {{$data->duration_day}} day / {{$data->duration_night}} nights<br>
+		Number of Persons:{{$data->no_of_persons}}
+		</h5>
+	</div>
+	<div class="table-body">
+		<h3 style="font-size:24px;font-weight:500;">Summary</h3>
+		<table class="text-left" style="width: 100%">
+				<?php $i=0; ?>
+				@foreach($data1 as $pages)
+
+				@if ($pages->show_summery == 1)
+				<?php if($i < 9){ ?> 
+				<tr>
+				<td><a href="#" style="color:#757575;background:none;">{!!  mb_substr($pages->title, 0,23)   !!}</a></td>
+				<td>Page <?php
+				$num = $pages->content_order+session('pageadd');
+				$num_padded = sprintf("%02d", $num);
+				echo $num_padded;
+				?></td>
+				</tr>
+				<?php $i++; } ?>
+			@endif
+			@endforeach
+		</table>
+	</div>
 </div>
 <div class="index-footer summary-footer">
 	<div class="left">
