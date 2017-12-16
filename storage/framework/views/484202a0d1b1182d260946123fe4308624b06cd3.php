@@ -16,7 +16,7 @@
                 <img src="<?php echo url($data->upload_path); ?>/<?php echo trim($data->logo); ?>" alt="" title="" style="width:150px;height:50px;" />
             </td>
             <td style="width:50%;text-align:right; padding-right: 20px;">
-                <h1 style="font-size:54px;text-transform:capitalize;line-height:70px;margin-bottom:-10px;margin-top:10px;"><?php echo $data->country; ?></h1>
+                <h1 style="font-size:100px;text-transform:capitalize;line-height:70px;margin-bottom:-10px;margin-top:10px;"><?php echo $data->country; ?></h1>
                 <span style="font-size:22px;margin:0;"><?php  $dates="$data->start_date"; $date=date_create_from_format("Y-m-d","$dates");
 echo date_format($date,"M d, Y");?> - <?php $datesend="$data->end_date"; $date=date_create_from_format("Y-m-d","$datesend");echo date_format($date,"M d, Y");?></span>
             </td>

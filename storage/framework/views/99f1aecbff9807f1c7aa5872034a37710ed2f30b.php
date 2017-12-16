@@ -1,9 +1,9 @@
 
 <div class="book-content right-page">
-	<div class="left-image terms-conditions"> 
+	<div class="left-image terms-conditions" style="width:17%;"> 
 		<h5><?php echo e($data->title); ?></h5>
 	</div>
-	<div class="right-content">
+	<div class="right-content" style="width:74%;">
 		<?php $data->content=strip_tags($data->content, '<br><b><p><a>\n');    ?>
 		<p><?php echo nl2br($data->content); ?></p> 
 	</div>	

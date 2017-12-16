@@ -419,9 +419,9 @@ class ValidateExcelDataController extends BaseController
 			
 		 elseif ($key=='country' || $key == 'place')
 		 {
-			if(preg_match('/\\d/', $value) > 0 || strlen($value) > 20 )
+			if(preg_match('/\\d/', $value) > 0 || strlen($value) > 8 )
 			{
-			  $msg=	'"'.$key.'" field must be string and less than 20 character'; 
+			  $msg=	'"'.$key.'" field must be string and less than 8 character'; 
 			   $this->error[]=$msg;		
 			}
 		 

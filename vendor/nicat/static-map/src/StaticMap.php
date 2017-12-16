@@ -60,7 +60,7 @@ class StaticMap {
 
                     $centerOfMarker = $marker['center'];
                     unset($marker['center']);
-                    $hiddenMarkers[] = "&markers=color:0xFFFF00%7C" . $this->attributes($marker, '', [':', '%7C']) . $centerOfMarker;
+                    $hiddenMarkers[] = "&markers=color:0xB28B09%7C" . $this->attributes($marker, '', [':', '%7C']) . $centerOfMarker;
                     
 					if($i < $markerlength)
 					{
