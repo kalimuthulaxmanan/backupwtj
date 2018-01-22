@@ -9,18 +9,18 @@
 
 <div class="table-contents text-center">  
 	<div class="table-header">
-		<p style="font-size:12px">  
+		<p style="font-size:11px">  
 		Distinguished guests:{{$data->distinguished_guests}} <br>
 		Agency:{{$data->agency}}<br>
 		Agent: {{$data->agent}}
 		</p>
-		<h5 style="font-weight:500;color:#555;font-size:14px;">
+		<h5 style="font-weight:500;font-size:12px;">
 		Duration: {{$data->duration_day}} day / {{$data->duration_night}} nights<br>
 		Number of Persons:{{$data->no_of_persons}}
 		</h5>
 	</div>
 	<div class="table-body">
-		<h3 style="font-size:24px;font-weight:500;">Summary</h3>
+		<h3 style="font-size:24px;font-weight:500;margin-bottom:10px;padding-top:10px;">Summary</h3>
 		<table class="text-left" style="width: 100%">
 				<?php $i=0; ?>
 				@foreach($data1 as $pages)

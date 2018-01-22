@@ -28,6 +28,7 @@
 	$this->get('/backgroundWork', 'ImportExcelDataController@backgroundWork');
 	$this->get('/flipbook/{id}', 'FlipbookDataController@flipbook');
     $this->post('/flipbook/fetchFlipData', 'FlipbookDataController@fetchFlipData');
+    $this->get('/flip/{name}','FlipbookDataController@flipURL');
     Route::get('/download/{filename}', function($filename)
      {
 	 $publicpath=public_path();

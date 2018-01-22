@@ -10,17 +10,20 @@
 	@foreach($data->frontImages as $frontImage)
 		
 		<img src="{{ url('/') }}/<?php echo trim($frontImage->image); ?>" id="image{{$frontImage->id}}" alt="" title="" />
-		
+			<img class="footer-image right" src="{{ url('/') }}/{{$data->upload_path}}/<?php echo trim($data->signature); ?>" alt="" title="" style="width:150px;height:50px;position:absolute;top:440px;left:10px;" />
 		<div class="img-overlay">
 			<a onclick="newFunction('image{{$frontImage->id}}',{{$frontImage->id}})" data-toggle="modal" data-target="#myModal" href="">Change Image</a>
 		</div>
 	@endforeach
 	</div>
 
-	<footer class="pdf">    
+	<footer class="pdf" style="height:115px">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="col-md-3 col-sm-3 col-xs-12 footer-height">
+				<div class="col-md-3 col-sm-3 col-xs-12 footer-height" style="height:115px">
+					@if(trim($data->additional_logo)!="")
+					<img class="footer-image" src="{{ url('/') }}/<?php echo $data->upload_path; ?><?php echo trim($data->additional_logo); ?>" alt="" title="" style="margin-bottom:15px;top:0"/>
+					@endif
 					<img class="footer-image" src="{{ url('/') }}/<?php echo $data->upload_path; ?><?php echo trim($data->logo); ?>" alt="" title="" />
 				</div>
 				<div class="col-md-9 col-sm-9 col-xs-12 footer-height text-right">

@@ -21,18 +21,35 @@
 	
 	<input type="hidden" name="userId" id="userId" value="<?php echo e($id); ?>" />
     <input type="hidden" name="pagescount" id="pagescount" value="<?php echo e($filepagesCount); ?>" >
-<div id="canvas">
-	<div id="book-zoom">
-		<div class="sj-book">
-			
-	
+	<div id="canvas">
+		<!-- Page Top Options -->
+		<div class="page-options">
+			<div class="options-box">
+				<div class="page-zoom">
+					<input type="range" title="Zoom" class="zoom" min="1" max="100" value="0">
+				</div>
+				<div id="page-left" class="page-arrow">
+					<a title="Previous Page"><span>&nbsp;</span></a>
+				</div>
+				<div id="page-right" class="page-arrow right">
+					<a title="Next Page"><span>&nbsp;</span></a>
+				</div>
+			</div>
+		</div>
+		<div id="zoom">
+			<!-- Left Arrow -->
+			<div id="arrow-left" class="arrow arrow-left"><a title="Previous Page"><span>&nbsp;</span></a></div>
+			<div id="book-zoom">
+				<div class="sj-book"></div>
+			</div>
+			<!-- Right Arrow -->
+			<div id="arrow-right" class="arrow arrow-right"><a title="Next Page"><span>&nbsp;</span></a></div>
+		</div>
+		<!-- Thumbnail -->
+		<div id="slider-bar" class="turnjs-slider">
+			<div id="slider"></div>
 		</div>
 	</div>
-	<div id="slider-bar" class="turnjs-slider">
-		<div id="slider"></div>
-	</div>
-</div>
-
 <script type="text/javascript">
 
 function loadApp() {
@@ -159,6 +176,15 @@ function loadApp() {
 		}
 
 	});
+	
+	$('#arrow-left a, #page-left a').click(function(){
+		$('.sj-book').turn('previous');		
+	});
+	$('#arrow-right a, #page-right a').click(function(){
+		$('.sj-book').turn('next');
+	});
+	
+	
 
 
 	// Flipbook

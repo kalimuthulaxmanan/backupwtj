@@ -1,5 +1,30 @@
 /* Steve jobs' book */
 
+var wheight=$(window).height();
+var zoommes=(wheight-635)/635*100;
+zoommes=Math.round(zoommes-7);
+var zoom=100+zoommes+'%';
+console.log(zoom);
+console.log(wheight);
+if($(window).width()  > 1440) {
+    $("#canvas").css("zoom", zoom);
+}
+
+
+// Zoom Slider
+$(document).ready(function(){
+	$(".page-zoom .zoom").change(function(){
+		var zoom_value = $(this).val();
+		var zoom_percentage = parseInt(zoom_value) + 100 + zoommes + '%';
+		$("#canvas").css("zoom", zoom_percentage);
+		var owidth = parseInt(zoom_value) + 100 + zoommes;
+		if ( owidth > 123){
+			$("body").css("overflow-x", "scroll");
+		}
+	});
+});
+
+
 function updateDepth(book, newPage) {
 
 	var page = book.turn('page'),
@@ -167,14 +192,14 @@ function zoomOut() {
 
 
 function moveBar(yes) {
-	if (Modernizr && Modernizr.csstransforms) {
+	/* if (Modernizr && Modernizr.csstransforms) {
 		$('#slider .ui-slider-handle').css({zIndex: yes ? -1 : 10000});
-	}
+	} */
 }
 
 function setPreview(view) {
 
-	var previewWidth = 115,
+	/* var previewWidth = 115,
 		previewHeight = 73,
 		previewSrc = 'pages/preview.jpg',
 		preview = $(_thumbPreview.children(':first')),
@@ -207,7 +232,7 @@ function setPreview(view) {
 
 	preview.css({backgroundPosition:
 		'0px -'+((view-1)*previewHeight)+'px'
-	});
+	}); */
 }
 
 function isChrome() {

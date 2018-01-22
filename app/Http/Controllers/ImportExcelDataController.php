@@ -72,17 +72,21 @@ class ImportExcelDataController extends BaseController
 			$profileImage=explode("|||",$row[31]);
 			$place=explode("|||",$row[32]);
 			$logo=explode("|||",$row[33]);
+			$addtional_logo=$row[8];
+			$footer_sign=$row[14];
 			foreach($name as $key=>$value)
 			{
 			 if(isset($value) && isset($profileImage[$key]) && isset($place[$key]))	
 			 {
 				$array=[
+				    'additional_logo' => $addtional_logo,
+                    'footer_sign' => $footer_sign,
 					'file_id'=>$fileId->id,
 					'content_id'=>$contentId,
 				'name'=>$value,
 					'profile_image'=>trim($profileImage[$key]),
 					'place'=>$place[$key],
-					'logo'=>trim($logo[$key]),'created_at'=>date('Y-m-d H:i:s')
+					'logo'=>'string','created_at'=>date('Y-m-d H:i:s')
 			];
 				$inserted=$this->insert('pdf_travel_agent',$array);
 			 }
@@ -121,9 +125,9 @@ private function insert_content($row,$templateId,$fileId,$count='NULL')
             $lines_arr = preg_split('/\n|\r/',$str);
 			$num_newlines = count($lines_arr); 
 		    $perpage=$num_newlines/$lines;
-			$roundperpage=round($perpage); 
+			$roundperpage=round($perpage);
 			if( $roundperpage  < $perpage )
-			{		
+			{
 			  $perpage=$roundperpage+1;
 			}
 			else{
@@ -455,7 +459,7 @@ private function insert_content($row,$templateId,$fileId,$count='NULL')
 	{
 		
 		$this->insert_content($row,$templateId,$fileId);
-		$fillableRow=['2','3','4','5','6','7','9','10','11','12','14','8','18','13'];
+		$fillableRow=['2','3','4','5','6','7','9','10','11','12','14','8','18','13','34'];
 		$array=[
 			'distinguished_guests',
 			'agency',
@@ -470,8 +474,10 @@ private function insert_content($row,$templateId,$fileId,$count='NULL')
 			'signature', 
 			'logo',
 			'front_page_image', 
-			'date_of_release'
+			'date_of_release',
+            'additional_logo'
 		];
+
 		
 		$data=$this->generateData($array,$fillableRow,$row);
 		$data['file_id']=$fileId->id;
@@ -479,8 +485,10 @@ private function insert_content($row,$templateId,$fileId,$count='NULL')
 		$data['created_at']=date('Y-m-d H:i:s');
 	    foreach($data as $key => $value){
 		$data[$key]=preg_replace('/[\x00-\x1F\x7F-\xFF]/', '  ', $value);
-		}     
+		}
+
 		$this->insert('pdf_common_fields',$data);
+
 
 	}
 	

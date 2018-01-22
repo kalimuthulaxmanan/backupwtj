@@ -9,4 +9,4 @@
 <div class="index-footer">
 	<img src="<?php echo e(url('/')); ?>/<?php echo $data->upload_path; ?><?php echo trim($data->logo); ?>" alt="" title="" />
 </div>
-<span class="page-number"><?php echo e($data->page); ?></span>
+<span class="page-number"></span>

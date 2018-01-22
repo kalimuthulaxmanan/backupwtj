@@ -66,7 +66,7 @@ class FlipbookDataController extends BaseController
 					case "front_page":
                         $frontImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get(); 
                         $value->frontImages= $frontImages;
-						
+
 						if($data['page']==1 )
 						{    $value->page= $data['page'];
 						
@@ -177,7 +177,7 @@ class FlipbookDataController extends BaseController
 							$appendData=$this->loadTemplate('mapimage',$value);							
 					break;	
 				    case "travel_agent":
-						    $travel_agent=DB::table('pdf_travel_agent')->where('content_id',$value->id)->select('name','profile_image','logo','place')->get();
+						    $travel_agent=DB::table('pdf_travel_agent')->where('content_id',$value->id)->select('name','profile_image','logo','place','additional_logo','footer_sign')->get();
 						    $value->travel_agent=$travel_agent; 
 						    $value->page= $data['page'];
 							$appendData=$this->loadTemplate('travelagentpage',$value);
@@ -277,6 +277,12 @@ class FlipbookDataController extends BaseController
 		return Redirect::back()->withErrors(['message', "$errorMessage"]);
 	 }
 	}
+	public  function flipURL($name){
+	    $name=$name.'.zip';
+        $fileid=DB::table('files_directory')->where('upload_file',$name)->orderBy('id','desc')->first();
+        $id=base64_encode($fileid->id);
+        return redirect("flipbook/$id");
+    }
 	
 	
 }

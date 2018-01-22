@@ -54,7 +54,7 @@ class PdfPreviewPdfController extends Controller
 		try{
 		$id=$this->decodeUrlData($id);
 		$publicpath=public_path();
-		$filename=base64_encode($id);	
+		$filename=base64_encode($id);
 		if (!(file_exists($publicpath.'/pdf/'.$filename.'.pdf'))){
 			DB::table('files_directory')
             ->where('id', $id)
@@ -81,7 +81,7 @@ class PdfPreviewPdfController extends Controller
 					case "front_page":
 						$frontImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get(); 
                         $value->frontImages=  $frontImages;
-					
+
 						$appendData.=$this->loadTemplate('frontpage',$value);
 						$appendData.=$this->loadTemplate('emptypage',$value);	
 						$summarycount = DB::table('files_directory')
@@ -164,7 +164,7 @@ class PdfPreviewPdfController extends Controller
 					break;
 					case "map":
 						
-						 $Mapdetails=DB::table('pdf_map')->where('file_id',$value->file_id)->select('lat','lon')->get();	
+						 $Mapdetails=DB::table('pdf_map')->where('file_id',$value->file_id)->select('lat','lon')->get();
                            $i=0;
                            foreach($Mapdetails as $detail)
 									{
@@ -172,14 +172,14 @@ class PdfPreviewPdfController extends Controller
 									$markers[]=['center'=> "$detail->lat,$detail->lon",'label'=>"$i"];
 
 									}
-		  			        $Mapimage= StaticMap::GoogleWithImg("$detail->lat,$detail->lon", ['markers' => $markers,'zoom'=>'8','with' =>'640', 'height' =>'640' ]); 
+		  			        $Mapimage= StaticMap::GoogleWithImg("$detail->lat,$detail->lon", ['markers' => $markers,'zoom'=>'8','with' =>'640', 'height' =>'640' ]);
 			 	            $value->Mapimage=$Mapimage;
-	                   
-						$appendData.=$this->loadTemplate('mapimage',$value);							
+
+						$appendData.=$this->loadTemplate('mapimage',$value);
 					break;	
 				    case "travel_agent":
-						    $travel_agent=DB::table('pdf_travel_agent')->where('content_id',$value->id)->select('name','profile_image','logo','place')->get();
-						    $value->travel_agent=$travel_agent; 
+						    $travel_agent=DB::table('pdf_travel_agent')->where('content_id',$value->id)->select('name','profile_image','logo','place','additional_logo','footer_sign')->get();
+						    $value->travel_agent=$travel_agent;
 							$appendData.=$this->loadTemplate('travelagentpage',$value);
 						   
 					break;
@@ -243,7 +243,7 @@ class PdfPreviewPdfController extends Controller
 		catch(\Exception $e){
 		$errorMessage="Unable to generate document, Because invalid arguments or invalid image names";
 		return Redirect::back()->withErrors(['message', "$errorMessage"]);
-		
+
 		}
  
 		

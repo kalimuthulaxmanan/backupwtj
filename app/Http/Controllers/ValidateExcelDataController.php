@@ -32,6 +32,7 @@ class ValidateExcelDataController extends BaseController
 		  {      
 			     case 'front_page':
 					  $this->insertFrontPage($rows,$templateId,$fileId);
+
 				  break;
 				  
 				  case 'empty_page':
@@ -75,7 +76,7 @@ class ValidateExcelDataController extends BaseController
 			$profileImage=explode("|||",$row[31]);
 			$place=explode("|||",$row[32]);
 			$logo=explode("|||",$row[33]);
-			if(count($name) > 4 || count($profileImage) > 4 || count($place) > 4 || count($logo) > 4)
+			if(count($name) > 3 || count($profileImage) > 3 || count($place) > 3)
 			{
 			 $msg='only 4 agents allow, please make it correct in  s.no '.$row[0];
 			 $this->error[]=$msg; 

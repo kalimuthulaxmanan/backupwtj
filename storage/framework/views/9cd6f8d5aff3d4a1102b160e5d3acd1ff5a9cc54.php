@@ -7,7 +7,10 @@
 
 <div class="index-footer">
 	<div class="left">
-		<img src="<?php echo e(url('/')); ?>/<?php echo $data->upload_path; ?><?php echo trim($data->logo); ?>" alt="" title="" />
+		<?php if($data->additional_logo!=""): ?>
+		<img src="<?php echo e(url('/')); ?>/<?php echo $data->upload_path; ?><?php echo trim($data->additional_logo); ?>" alt="" title="" style="margin-bottom:15px;" />
+	    <?php endif; ?>
+		<img src="<?php echo e(url('/')); ?>/<?php echo $data->upload_path; ?><?php echo trim($data->logo); ?>" alt="" title="" style="clear:left" />
 	</div>
 	<div class="right">
 		<h1 style="font-size:80px;"><?php echo $data->country; ?></h1>

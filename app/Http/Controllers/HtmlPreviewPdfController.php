@@ -89,7 +89,7 @@ class HtmlPreviewPdfController extends Controller
 					case "front_page":
                         $frontImages=DB::table('pdf_content_images')->where('content_id',$value->id)->get(); 
                         $value->frontImages=  $frontImages;
-                     
+
 						$appendData.=$this->loadTemplate('frontpage',$value);
 
 						$appendData.=$this->loadTemplate('emptypage',$value);
@@ -211,8 +211,8 @@ class HtmlPreviewPdfController extends Controller
 							$appendData.=$this->loadTemplate('mapimage',$value);							
 					break;	
 				    case "travel_agent":
-						    $travel_agent=DB::table('pdf_travel_agent')->where('content_id',$value->id)->select('name','profile_image','logo','place')->get();
-						    $value->travel_agent=$travel_agent; 
+						    $travel_agent=DB::table('pdf_travel_agent')->where('content_id',$value->id)->select('name','profile_image','logo','place','additional_logo','footer_sign')->get();
+						    $value->travel_agent=$travel_agent;
 							$appendData.=$this->loadTemplate('travelagentpage',$value);
 						   
 					break;

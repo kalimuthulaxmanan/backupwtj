@@ -1,4 +1,22 @@
-body, ul, table, form{
+body{
+	height: 100%;
+    position: absolute;
+    width: 100%;
+    background-color: #454545;
+	margin:0;
+	padding:0;
+	overflow:hidden;
+	overflow-y:scroll!important; 
+}
+body::-webkit-scrollbar {
+    width: 5px;
+	height: 8px;
+}
+body::-webkit-scrollbar-thumb {
+    background-color: #9b9c9c;
+    outline: #708090 solid 1px
+}
+ul, table, form{
 	margin:0;
 	padding:0;
 	overflow:hidden;
@@ -14,9 +32,13 @@ body, ul, table, form{
 #canvas{
 	width: 1200px;
 	height: 600px;
-	margin: 10px auto;
+	margin: auto;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
 	overflow: hidden;
-    padding: 15px 15px 30px;
+    padding: 15px 50px 30px;
 }
 
 #book-zoom{
@@ -286,7 +308,7 @@ body, ul, table, form{
 	/* background-image:-moz-linear-gradient(left, #fff 95%, #dadada 100%); */
 	/* background-image:-ms-linear-gradient(left, #fff 95%, #dadada 100%); */
 	/* background-image:-o-linear-gradient(left, #fff 95%, #dadada 100%); */
-	/* background-image:linear-gradient(left, #fff 95%, #dadada 100%); */100%);
+	/* background-image:linear-gradient(left, #fff 95%, #dadada 100%); */
 }
 
 .sj-book .odd{
@@ -423,7 +445,7 @@ body, ul, table, form{
 	padding-left: 20px;
 }
 .sj-book .page-number{
-	color:#000;
+	color:rgb(200, 200, 200);
 	width:100%;
 	bottom:0px;
 	position:absolute;
@@ -432,10 +454,13 @@ body, ul, table, form{
 	line-height:30px;
 	font-size:11px;
 }
+.sj-book .odd .page-number{
+	display:none
+}
 
 .sj-book .table-contents{
-	font-size:16px;
-	width:350px;
+	font-size:12px;
+	width:300px;
 	margin:100px auto;
 	color:#757575;
 }
@@ -677,4 +702,172 @@ body, ul, table, form{
 }
 .date{
 	margin-right: 20px;
+}
+
+.travel-footer{
+	position:absolute;
+	bottom: 20px;
+	width: 85%;
+	text-align: center;
+}
+.travel-footer img{	
+    width: 140px;
+    height: 40px;
+}
+
+/*** New Styles ***/
+#canvas {
+    position: relative;
+	height: auto
+}
+#zoom {
+    position: relative;
+}
+.turnjs-slider {
+    width: 600px;
+    height: 8px;
+    background: #3a3a3a;
+}
+.turnjs-slider .ui-slider-handle {
+    background-color: white;
+	z-index: 100!important;
+}
+.arrow{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    z-index: 1000;
+	opacity: 0;
+}
+.arrow:hover{
+	opacity: 0.5;
+}
+.arrow a{
+    position: absolute;
+    width: 50px;
+    text-align: center;
+	cursor: pointer;
+    height: 70%;
+	margin: auto;
+    background: #3a3a3a;
+    bottom: 0;
+    top: 0;
+}
+.arrow a span{ 
+    height: 0px;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent; 
+	border-right:10px solid white; 
+    position: absolute;
+    top: calc(50% - 15px);
+    left: calc(50% - 7px);
+    opacity: 0.5;
+}
+.arrow:hover span{
+	opacity: 1;
+}
+.arrow-right{
+	right: 0;
+}
+.arrow-right a{
+    right: 0;
+}
+.arrow-right a span{
+    transform: rotate(180deg);
+    left: auto;
+    right: calc(50% - 7px);
+}
+@media(min-width:1300px){
+	#canvas{
+		overflow: visible
+	}
+	.arrow{
+		opacity: 1!important
+	}
+	.arrow-left{
+		left: -50px;
+	}
+	.arrow-right{
+		right: -50px;
+	}
+}
+
+.page-options{
+	display: block;
+    padding: 0 0 15px;
+	height: 45px;
+	text-align: center
+}
+.page-options .options-box{
+	display: inline-block;
+    padding: 10px 50px;
+    background: #383a3a;
+}
+.page-zoom {
+	display: inline-block;
+    float: left;
+    padding-right: 15px;
+}
+.zoom {
+    -webkit-appearance: none;
+    height: 5px;
+    background: #fff;
+    outline: none;
+	cursor: pointer;
+    opacity: 0.5;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+.zoom:hover {
+    opacity: 1;
+}
+.zoom::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 20px;
+    background: #ffb200;
+    cursor: pointer;
+}
+.zoom::-moz-range-thumb {
+    width: 10px;
+    height: 20px;
+    background: #ffb200;
+    cursor: pointer;
+}
+.page-arrow{
+    float: left;
+	display: inline-block
+}
+.page-arrow a{
+    width: 20px;
+    height: 20px;
+	cursor: pointer;
+	position: relative;
+	display: inline-block
+}
+.page-arrow a span{ 
+    height: 0px;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent; 
+	border-right:10px solid white; 
+    position: absolute;
+    opacity: 0.5;
+	left: 0
+}
+.page-arrow a:hover span{
+    opacity: 1
+}
+.page-arrow.right{
+	padding-left: 5px;
+}
+.page-arrow.right a{}
+.page-arrow.right a span{
+	left: auto;
+	right: 0;
+    transform: rotate(180deg);
+}
+.turnjs-slider .thumbnail{
+	display: none!important
 }
