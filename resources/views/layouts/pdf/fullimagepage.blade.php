@@ -7,7 +7,9 @@
     <table style="height:120px;position:absolute;bottom:0px;">
 		<tr style="">
             <td style="width:50%;text-align:right; padding-right: 15px;">	
-                <img src="{{url('/')}}/{{$data->upload_path}}/<?php echo trim($data->signature); ?>" alt="" title="" style="width:150px;height:50px;" />
+               	@if(trim($data->full_page_image)!="")
+                <img src="{{url('/')}}/{{$data->upload_path}}/<?php echo trim($data->full_page_image); ?>" alt="" title="" style="width:150px;height:50px;" />
+				@endif
             </td>
 		</tr>
     </table>

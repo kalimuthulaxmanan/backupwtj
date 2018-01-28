@@ -10,47 +10,139 @@
 	font-family: 'helvetica25';
 	src: url(../fonts/helveticaneueltStd-ultLt25.ttf);
 }
+	.thumbnail{
+		padding: 15px;
+		position: fixed;
+		background-color: #454545;
+		bottom: 0;
+		width: calc(100% - 30px);
+	}
+	.flip{
+		display: block;
+		margin: 0 auto;	
+		overflow: hidden;
+		width: 100%;
+		height: 60px;
+	}
+	.flip::-webkit-scrollbar {
+		width: 0px;
+		height: 1px;
+	}
+	.flip::-webkit-scrollbar-thumb {
+		background-color: #9b9c9c;
+		outline: #708090 solid 1px
+	}
+	.flip > li{
+		cursor: pointer;
+	    display: inline-block;
+	    width: 10%;
+		list-style: none;
+		opacity: .5;
+	}	
+	.flip > li:hover, .flip > li.activethumbil{
+		opacity: 1;
+	}		
+	.flip > li:last-child{
+		padding-right: 0px;
+	}	
+	.flip > li img{
+		float: left;
+		width: 50%;
+		height: auto;
+	}	
+	.flip > li:first-child{
+		text-align: right
+	}
+	.flip > li:first-child img{
+		float: none
+	}		
 </style>
-<script type="text/javascript" src="{{ url('extras/jquery.min.1.7.js')}}"></script>
+		
+<script type="text/javascript" src="{{ url('extras/jquery.min.1.7.js')}}"></script>	
 <script type="text/javascript" src="{{ url('extras/jquery-ui-1.8.20.custom.min.js')}}"></script>
+ <script src="https://code.jquery.com/jquery-1.12.4.js"></script> 		
 <script type="text/javascript" src="{{ url('extras/jquery.mousewheel.min.js')}}"></script>
 <script type="text/javascript" src="{{ url('extras/modernizr.2.5.3.min.js')}}"></script>
+	
 <script type="text/javascript" src="{{ url('lib/hash.js')}}"></script>
+
 </head>
 <body>
-	
 	<input type="hidden" name="userId" id="userId" value="{{ $id }}" />
     <input type="hidden" name="pagescount" id="pagescount" value="{{$filepagesCount}}" >
-	<div id="canvas">
-		<!-- Page Top Options -->
-		<div class="page-options">
-			<div class="options-box">
-				<div class="page-zoom">
-					<input type="range" title="Zoom" class="zoom" min="1" max="100" value="0">
-				</div>
-				<div id="page-left" class="page-arrow">
-					<a title="Previous Page"><span>&nbsp;</span></a>
-				</div>
-				<div id="page-right" class="page-arrow right">
-					<a title="Next Page"><span>&nbsp;</span></a>
-				</div>
+		
+	<!-- Page Top Options -->
+	<div class="zoom-top">
+	<div class="page-options">
+		<div class="options-box">
+			<div class="page-zoom">
+				<input type="range" id="rangezoom" title="Zoom" class="zoom" min="1" max="100" value="0">
+			</div>
+			<div id="page-left" class="page-arrow">
+				<a title="Previous Page"><span>&nbsp;</span></a>
+			</div>
+			<div id="page-right" class="page-arrow right">
+				<a title="Next Page"><span>&nbsp;</span></a>
 			</div>
 		</div>
+	</div>
+	</div>
+
+	<!-- Left Arrow -->
+	<div id="arrow-left" class="arrow arrow-left"><a title="Previous Page"><svg class="nav-button" width="30" height="30" viewBox="0 0 36 93" xmlns="http://www.w3.org/2000/svg"><path class="nav-button" d="M29.958 0L0 46.035l29.958 46.02H36L6.042 46.035 36 0z"></path></svg></a></div>
+
+	<div id="canvas">
 		<div id="zoom">
-			<!-- Left Arrow -->
-			<div id="arrow-left" class="arrow arrow-left"><a title="Previous Page"><span>&nbsp;</span></a></div>
 			<div id="book-zoom">
 				<div class="sj-book"></div>
 			</div>
-			<!-- Right Arrow -->
-			<div id="arrow-right" class="arrow arrow-right"><a title="Next Page"><span>&nbsp;</span></a></div>
-		</div>
-		<!-- Thumbnail -->
-		<div id="slider-bar" class="turnjs-slider">
-			<div id="slider"></div>
 		</div>
 	</div>
+
+	<!-- Right Arrow -->
+	<div id="arrow-right" class="arrow arrow-right"><a title="Next Page"><svg class="nav-button" width="30" height="30" viewBox="0 0 36 93" xmlns="http://www.w3.org/2000/svg"><path class="nav-button" d="M6.042 0L36 46.035 6.042 92.055H0l29.958-46.02L0 0z"></path></svg></a></div>
+
+	<!-- Thumbnail -->	
+	<div class="thumbnail">
+		<ul id="content-slider" class="flip">
+			<?php $i=1; ?>
+			@foreach($thumbil as $thumbils)
+			@if($i==1)
+			<li id="{{$i}}" class="activethumbil" onclick="<?php echo 'pageTurn('.$i.')' ?>">
+			<img src="{{url($thumbils)}}" alt="Smiley face" height="42" width="42">	
+			</li>	
+			@endif
+			@if($i%2==0 && $i!=1 && $i!=$filepagesCount)
+			<?php $next=$i+1;?>
+		    <li id="{{$i}}"  onclick="<?php echo 'pageTurn('.$i.')' ?>">
+			<img src="{{url($thumbils)}}"  alt="Smiley face" height="42" width="42" >	
+			@if(isset($thumbil[$i]))	
+			<img src="{{url($thumbil[$i])}}"  alt="Smiley face" height="42" width="42">
+			@endif	
+			</li>
+			@endif
+			@if($i==$filepagesCount)
+			<li id="{{$i}}"  onclick="<?php echo 'pageTurn('.$i.')' ?>">
+			<img src="{{url($thumbils)}}"  alt="Smiley face" height="42" width="42">
+			</li>	
+			@endif
+			<?php  $i++;?>
+			@endforeach
+		</ul>
+	</div>
+
 <script type="text/javascript">
+
+	
+function pageTurn(page){
+$('.sj-book').turn('page', page);	
+pageActive(page);	
+}	
+function pageActive(page){
+console.log(page);	
+$('.activethumbil').removeClass('activethumbil');		
+$('#'+page).addClass('activethumbil');	
+}	
 
 function loadApp() {
 	
@@ -138,6 +230,7 @@ function loadApp() {
 
 	// URIs
 	
+	
 	Hash.on('^page\/([0-9]*)$', {
 		yep: function(path, parts) {
 
@@ -206,7 +299,7 @@ function loadApp() {
 				var book = $(this),
 					currentPage = book.turn('page'),
 					pages = book.turn('pages');
-
+                   
 				if (currentPage>3 && currentPage<pages-3) {
 				
 					if (page==1) { 
@@ -229,8 +322,14 @@ function loadApp() {
 						return;
 					}
 				}
-
-				updateDepth(book, page);
+			   var pageactive;	
+			   if(currentPage==1){
+			   pageactive=currentPage+1;
+			   }else{
+			   pageactive=currentPage+2;	   
+			   }	
+               pageActive(pageactive);	
+			   updateDepth(book, page);
 				
 				if (page>=2)
 					$('.sj-book .p2').addClass('fixed');
@@ -319,11 +418,64 @@ yepnope({
 	test : Modernizr.csstransforms,
 	yep: ['{{ url("lib/turn.min.js")}}'],
 	nope: ['{{ url("lib/turn.html4.min.js")}}', '{{ url("css/jquery.ui.html4.css")}}', '{{ url("css/steve-jobs-html4.css")}}'],
-	both: ['{{ url("js/steve-jobs.js")}}', '{{ url("css/jquery.ui.css")}}', '{{ url("css/steve-jobs.css")}}'],
+	both: ['{{ url("js/steve-jobs.js")}}', '{{ url("css/jquery.ui.css")}}', '{{ url("css/steve-jobs.css")}}', '{{ url("css/lightslider.css")}}', '{{ url("js/lightslider.js")}}'],
 	complete: loadApp
 });
 
 </script>
+		
+<script src="{{ url('js/lightslider.js')}}"></script>
+<link href="{{ url('css/lightslider.css')}}" />	
+<script>
+	 $(document).ready(function() {
+		$("#content-slider").lightSlider({
+		item: 10,
+		});
+	});
+</script>
+ 
+<script>
+function offset(el) {
+    var rect = el.getBoundingClientRect(),
+    scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+    scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
+}
+
+// example use
+var div =  document.getElementById('canvas');
+var divOffset = offset(div);
+console.log(divOffset.left, divOffset.top);	
+function placeDiv(x_pos, y_pos) {
+  var d = document.getElementById('book-zoom');	
+ // d.style.position = "absolute";
+  d.style.left = 0+'px';
+  d.style.top = 0+'px';
+}		
+$('#rangezoom').on('change',function(){
+var rangeval=$('#rangezoom').val();
+if(rangeval > 1){
+$('#book-zoom').css('cursor','pointer');	
+$('#book-zoom').addClass('drag');
+$('.drag')
+    .draggable({cancel : '.sj-book animated'});	
+	
+}else{
+	
+placeDiv(divOffset.top,divOffset.left);	
+$('.drag').draggable( "destroy" );
+$('#book-zoom').css('cursor','default');	
+$('#book-zoom').removeClass('drag');
+}	
+});	
+</script>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+<script>	
+$('.drag')
+    .draggable({cancel : '.sj-book animated'});	
+</script> 
 
 </body>
 </html>

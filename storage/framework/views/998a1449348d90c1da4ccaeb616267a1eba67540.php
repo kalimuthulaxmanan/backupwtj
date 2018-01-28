@@ -1,7 +1,7 @@
-
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <!-- CSS -->   
     <style>
-	*{
+	/*{
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         font-weight: normal !important;
 		color: #6d6e71;
@@ -9,11 +9,20 @@
 		padding: 0;
 		margin: 0;
 		
-    }
+    } */
     @font-face{
-		font-family: 'helvetica25';
-		src: url(assets/fonts/helveticaneueltStd-ultLt25.ttf);
+		font-family: 'Meiryo';
+		src: url(assets/fonts/Meiryo.ttf);
 	}
+	*{
+        font-family: "Meiryo", Meiryo, Arial, sans-serif;
+        font-weight: normal !important;
+		color: #6d6e71;
+		font-size:12px;
+		padding: 0;
+		margin: 0;
+		
+    }	
 	h1{
 		font-family: 'helvetica25';
 	}
@@ -60,4 +69,9 @@
 		font-weight: 600!important;
 	}
 	</style>
+	</head>	
+<?php	
+$data = mb_convert_encoding($data, 'HTML-ENTITIES', 'UTF-8');	
+?>	
 <?php echo $data; ?>
+</html>	

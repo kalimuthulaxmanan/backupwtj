@@ -27,7 +27,7 @@
 	$this->get('/importExcel', 'ImportExcelDataController@importExcel');
 	$this->get('/backgroundWork', 'ImportExcelDataController@backgroundWork');
 	$this->get('/flipbook/{id}', 'FlipbookDataController@flipbook');
-    $this->post('/flipbook/fetchFlipData', 'FlipbookDataController@fetchFlipData');
+    $this->post('/flip/fetchFlipData', 'FlipbookDataController@fetchFlipData');
     $this->get('/flip/{name}','FlipbookDataController@flipURL');
     Route::get('/download/{filename}', function($filename)
      {
@@ -130,4 +130,8 @@
 
 	$this->post('/updateemailcheck/{id}', 'DashboardController@updatecheckemail');
 	$this->post('/updatephonecheck/{id}', 'DashboardController@updatephonecheck');
+	$this->get('/test/{filename}/{id}','testController@test');	
 });
+//Route::resource('/flipbook','\rudrarajiv\flipbooklaravel\FlipBookController');
+//Route::resource('/flipbookcreate','\rudrarajiv\flipbooklaravel\FlipBookController@create');
+//Route::resource('/flipbook','\rudrarajiv\flipbooklaravel\FlipBookController@store');

@@ -101,4 +101,7 @@
   'helvetica25' => array(
     'normal' => $fontDir . '/f7fa032ed59acc9d02065ebcfa98e46e',
   ),
+  'meiryo' => array(
+    'normal' => $fontDir . '/86770a83d106b060665ed50db7bdbcc4',
+  ),
 ) ?>

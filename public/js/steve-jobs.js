@@ -1,26 +1,53 @@
 /* Steve jobs' book */
 
-var wheight=$(window).height();
-var zoommes=(wheight-635)/635*100;
-zoommes=Math.round(zoommes-7);
-var zoom=100+zoommes+'%';
-console.log(zoom);
-console.log(wheight);
-if($(window).width()  > 1440) {
-    $("#canvas").css("zoom", zoom);
-}
+var wheight = $(window).height();
+var thumbnailheight = $(".thumbnail").outerHeight(true);
+console.log(thumbnailheight);
+var multiplication = (thumbnailheight*2);
+var zoommes = wheight-multiplication;
+zoommes = zoommes-600;
+zoommes = (zoommes/600)*100;
+var zoom=96+zoommes+'%';
+var zoom_mozila=(96+zoommes)/100;
+$("#canvas").css("zoom", zoom);
+$("#canvas").css("-moz-transform",'scale('+zoom_mozila+')');
 
 
 // Zoom Slider
 $(document).ready(function(){
 	$(".page-zoom .zoom").change(function(){
 		var zoom_value = $(this).val();
-		var zoom_percentage = parseInt(zoom_value) + 100 + zoommes + '%';
-		$("#canvas").css("zoom", zoom_percentage);
-		var owidth = parseInt(zoom_value) + 100 + zoommes;
-		if ( owidth > 123){
-			$("body").css("overflow-x", "scroll");
-		}
+		var zoom_valuemozila=(parseInt(zoom_value) + 100)/100;
+		var zoom_percentage = parseInt(zoom_value) + 100 + '%';
+		var margin_percentage = parseInt(zoom_value);
+		var marginvalue = margin_percentage/2;
+		var marginvaluehalf = marginvalue/2;
+		var bookmargin = '-' + marginvalue + '%';
+		var bookmarginhalf = '-' + marginvaluehalf + '%';
+		$("#book-zoom").css("zoom", zoom_percentage);
+		$("#book-zoom").css("-moz-transform",'scale('+zoom_valuemozila+')');
+		if (!(navigator.userAgent.indexOf("Firefox") != -1)) {
+           $("#book-zoom").css("margin-left", bookmargin);
+		   $("#book-zoom").css("margin-top", bookmarginhalf);
+	    }
+		
+		
+	});
+	$(".page-zoom .zoom").mousemove(function(){
+		var zoom_value = $(this).val();
+		var zoom_valuemozila=(parseInt(zoom_value) + 100)/100;
+		var zoom_percentage = parseInt(zoom_value) + 100 + '%';
+		var margin_percentage = parseInt(zoom_value);
+		var marginvalue = margin_percentage/2;
+		var marginvaluehalf = marginvalue/2;
+		var bookmargin = '-' + marginvalue + '%';
+		var bookmarginhalf = '-' + marginvaluehalf + '%';
+		$("#book-zoom").css("zoom", zoom_percentage);
+		$("#book-zoom").css("-moz-transform",'scale('+zoom_valuemozila+')');
+		if (!(navigator.userAgent.indexOf("Firefox") != -1)) {
+           $("#book-zoom").css("margin-left", bookmargin);
+		   $("#book-zoom").css("margin-top", bookmarginhalf);
+	    }
 	});
 });
 

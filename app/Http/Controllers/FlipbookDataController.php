@@ -251,10 +251,31 @@ class FlipbookDataController extends BaseController
 	{   try{
 		$id=$this->decodeUrlData($id);
 		$filepage = DB::table('pdf_content')->where('file_id',$id)->count();
+		$filename = DB::table('files_directory')->where('id',$id)->first();
+		return redirect("flip/$filename->upload_file");
+	   }catch(\Exception $e){
+	    $errorMessage="Unable to generate document, Because invalid arguments or invalid image names";
+		return Redirect::back()->withErrors(['message', "$errorMessage"]);
+	 }
+		
+	}
+
+	public  function flipURL($name){
+        $fileid=DB::table('files_directory')->where('upload_file',$name)->orderBy('id','desc')->first();
+        $id=base64_encode($fileid->id);
+		try{
+		$id=$this->decodeUrlData($id);
+		$filepage = DB::table('pdf_content')->where('file_id',$id)->count();
 		$summarycount = DB::table('files_directory')
 							->join('pdf_content', 'files_directory.id', '=', 'pdf_content.file_id')
 							->join('pdf_common_fields', 'files_directory.id', '=', 'pdf_common_fields.file_id')
 							->where([['files_directory.id',$id],['show_summery',1]])->count();
+		$flipStatus=DB::table('files_directory')->where('id',$id)->first();
+		if($flipStatus->flip_book_name!=1){
+		$errorMessage="please click genarate button to generate flip book";
+		return redirect('/dashboard')->withErrors(['message', "$errorMessage"]);
+		}
+		
 		$loopcount=round($summarycount/10);
 		$muli=$loopcount*2;
 		$filepagesCount=$filepage+$muli;
@@ -266,22 +287,32 @@ class FlipbookDataController extends BaseController
 		{
 	    $filepagesCount=$filepagesCount+1;
 		}
-		
+		$publicpath=public_path();
+		$dirname=base64_encode($id);
+		$dir=$publicpath.'/pdf/'.$dirname;
+		if (file_exists($dir) && is_dir($dir)) {
+        $dh  = opendir($dir);
+        while (false !== ($filename = readdir($dh))) {
+		if($filename!=".." && $filename!="."){	
+         $files[] = '/pdf/'.$dirname.'/'.$filename;
+		 }	
+        }
+		natsort($files);
+		foreach ($files as $file){
+		$imagefiles[]=$file;
+		}}else{
+		$imagefiles=[];
+		}	
 		//dd($request->all());
 		//dd(Session::all());die;
 		//echo "hai";
-		return view('flip.flipbook',['id'=>$id,'filepagesCount'=>$filepagesCount]);
+		return view('flip.flipbook',['id'=>$id,'filepagesCount'=>$filepagesCount,'thumbil' => $imagefiles]);
 	}
 	 catch(\Exception $e){
 	    $errorMessage="Unable to generate document, Because invalid arguments or invalid image names";
 		return Redirect::back()->withErrors(['message', "$errorMessage"]);
 	 }
-	}
-	public  function flipURL($name){
-	    $name=$name.'.zip';
-        $fileid=DB::table('files_directory')->where('upload_file',$name)->orderBy('id','desc')->first();
-        $id=base64_encode($fileid->id);
-        return redirect("flipbook/$id");
+        
     }
 	
 	

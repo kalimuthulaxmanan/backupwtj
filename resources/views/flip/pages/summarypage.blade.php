@@ -26,12 +26,12 @@
 				@foreach($data1 as $pages)
 
 				@if ($pages->show_summery == 1)
-				<?php if($i < 9){ ?> 
+				<?php if($i < 9){ 
+			    $num = $pages->content_order+session('pageadd');
+				$num_padded = sprintf("%02d", $num); ?> 
 				<tr>
-				<td><a href="#" style="color:#757575;background:none;">{!!  mb_substr($pages->title, 0,23)   !!}</a></td>
+				<td><a href="#"  style="color:#757575;background:none;">{!!  mb_substr($pages->title, 0,23)   !!}</a></td>
 				<td>Page <?php
-				$num = $pages->content_order+session('pageadd');
-				$num_padded = sprintf("%02d", $num);
 				echo $num_padded;
 				?></td>
 				</tr>

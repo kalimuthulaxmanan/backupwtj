@@ -107,10 +107,11 @@ private function insert_content($row,$templateId,$fileId,$count='NULL')
 			'content',
 			'empty_page_color',
 			'itinerary_date_with_title',
-			'content_order'			
+			'content_order',
+			'full_page_image'	
 		];
 		
-	   $fillableRow=['15','16','17','19','20','21','22','0'];
+	   $fillableRow=['15','16','17','19','20','21','22','0','14'];
 		if($row[1]=='content_only')
 		 {  
 			 

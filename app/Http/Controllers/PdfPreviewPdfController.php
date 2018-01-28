@@ -15,6 +15,7 @@ use DB;
 use View;
 use PDF;
 use StaticMap;
+use File;
 
 class PdfPreviewPdfController extends Controller
 {
@@ -71,6 +72,8 @@ class PdfPreviewPdfController extends Controller
             ->get();
 	
 		$appendData="";
+		mb_internal_encoding('UTF-8');
+        define("DOMPDF_UNICODE_ENABLED", true);
 		
 		if(!empty($data))
 		{
@@ -224,21 +227,31 @@ class PdfPreviewPdfController extends Controller
 			
 		}
 		$publicpath=public_path();
-		$filename=base64_encode($id);	
-		//dd($publicpath.'/pdf/'.$file_name.'.pdf');	
-		//dd($appendData);
-		 PDF::loadView('pdf.pdfview',['data'=>$appendData])->save($publicpath.'/pdf/'.$filename.'.pdf');
-		//		return view ('pdf.pdfview',['data'=>$appendData]);
-		//return view('pdf.pdfview',['data'=>$appendData]);
-        
+		$filename=base64_encode($id);		
+		PDF::loadView('pdf.pdfview',['data'=>$appendData])->save($publicpath.'/pdf/'.$filename.'.pdf');
+       // return PDF::loadView('pdf.pdfview',['data'=>$appendData])->stream($publicpath.'/pdf/'.$filename.'.pdf');
+	       
+	      $url= url('/test').'/'.$filename.'/'.$id;
+		    $ch = curl_init();
+			$timeout = 300;
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,false);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,false);
+			curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+			$data = curl_exec($ch);
+			curl_close($ch);
+			
+			
 		if (file_exists($publicpath.'/pdf/'.$filename.'.pdf')){
 			DB::table('files_directory')
             ->where('id', $id)
             ->update(['pdf_name' => '1']);		
 		}
-
-		
-		//dd($data);
+		return "Pdf are created";	
+		//return PDF::loadView('pdf.pdfview',['data'=>$appendData])->stream($publicpath.'/pdf/'.$filename.'.pdf');	
 		}
 		catch(\Exception $e){
 		$errorMessage="Unable to generate document, Because invalid arguments or invalid image names";
@@ -256,6 +269,24 @@ class PdfPreviewPdfController extends Controller
 		//dd($returndata);
 		return $returndata;
 		
+	}
+	
+	public function deleteDirectory($dirname){
+	 if (is_dir($dirname))
+           $dir_handle = opendir($dirname);
+	 if (!$dir_handle)
+	      return false;
+	 while($file = readdir($dir_handle)) {
+	       if ($file != "." && $file != "..") {
+	            if (!is_dir($dirname."/".$file))
+	                 unlink($dirname."/".$file);
+	            else
+	                 delete_directory($dirname.'/'.$file);
+	       }
+	 }
+	 closedir($dir_handle);
+	 rmdir($dirname);
+	 return true;
 	}
 
     /**

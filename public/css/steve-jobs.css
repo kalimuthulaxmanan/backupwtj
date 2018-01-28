@@ -6,7 +6,6 @@ body{
 	margin:0;
 	padding:0;
 	overflow:hidden;
-	overflow-y:scroll!important; 
 }
 body::-webkit-scrollbar {
     width: 5px;
@@ -38,7 +37,7 @@ ul, table, form{
 	bottom: 0;
 	top: 0;
 	overflow: hidden;
-    padding: 15px 50px 30px;
+    padding: 0px;
 }
 
 #book-zoom{
@@ -679,6 +678,7 @@ ul, table, form{
 	margin: 0;
     font-size: 70px;
     padding-right: 15px;
+	line-height: 1.2;
     text-transform: capitalize;
 }
 .summary-footer {
@@ -717,8 +717,8 @@ ul, table, form{
 
 /*** New Styles ***/
 #canvas {
-    position: relative;
-	height: auto
+    position: absolute;
+	z-index: 0;
 }
 #zoom {
     position: relative;
@@ -736,7 +736,7 @@ ul, table, form{
     position: absolute;
     top: 0;
     bottom: 0;
-    height: 100%;
+    height: calc(100%);
     z-index: 1000;
 	opacity: 0;
 }
@@ -748,33 +748,30 @@ ul, table, form{
     width: 50px;
     text-align: center;
 	cursor: pointer;
-    height: 70%;
+    height: 100%;
 	margin: auto;
-    background: #3a3a3a;
+    background: transparent;
     bottom: 0;
     top: 0;
 }
-.arrow a span{ 
-    height: 0px;
-	border-top: 10px solid transparent;
-	border-bottom: 10px solid transparent; 
-	border-right:10px solid white; 
+.arrow a svg{ 
     position: absolute;
     top: calc(50% - 15px);
     left: calc(50% - 7px);
-    opacity: 0.5;
+    fill: #aab2c3;
+    transition: fill .2s ease;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, .7));
 }
 .arrow:hover span{
 	opacity: 1;
 }
 .arrow-right{
-	right: 0;
+	right: 0px;
 }
 .arrow-right a{
     right: 0;
 }
 .arrow-right a span{
-    transform: rotate(180deg);
     left: auto;
     right: calc(50% - 7px);
 }
@@ -785,18 +782,14 @@ ul, table, form{
 	.arrow{
 		opacity: 1!important
 	}
-	.arrow-left{
-		left: -50px;
-	}
-	.arrow-right{
-		right: -50px;
-	}
 }
-
 .page-options{
 	display: block;
     padding: 0 0 15px;
-	height: 45px;
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+    padding: 15px;
 	text-align: center
 }
 .page-options .options-box{
